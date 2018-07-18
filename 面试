@@ -52,6 +52,7 @@
                                          5>jvm
                                          6>序列化
                                          7>内部类
+                                         8>socket
                                          
                                2)如何做
                                        1>.业务实现     那些场景会使用到原生上述内容？
@@ -62,11 +63,14 @@
                                1)是什么
                                2)场景
                                3)设计技能点
-                                       1>jsp servlet session cookie 
-                                       2>框架
+                                       1>jsp  session  cookie 
+                                       2>servlet
+                                       3>orm
+                                       4>框架
+                                       
                                4)技术选型 诊断 优化(基于j2ee)
-             3>
-             4> 项目
+             
+     6.项目
                   1)模块
                          1>基础   log  test  监控
                          2>业务   uedit  图片
