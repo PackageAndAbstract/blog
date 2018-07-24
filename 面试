@@ -74,6 +74,7 @@
                                        7>框架 spring-springMVC-mybatis
                                     
                                      2)高级部分  
+                                       1>自定义注解
                                
                                2)技术选型 诊断 优化(基于j2ee)
              
@@ -84,7 +85,7 @@
                          2>业务   uedit  图片  echart poi 
                          3>诊断   监控
                    2)架构
-                         缓存  静态化  分离  服务化  ha
+                         restful 缓存  静态化  分离  服务化  ha
                          mysql nginx  webservice redis 
              2>电商
                    1)
