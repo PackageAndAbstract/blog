@@ -75,18 +75,27 @@
                                     
                                      2)高级部分  
                                        1>自定义注解
+                                       2>
+                                
                                
                                2)技术选型 诊断 优化(基于j2ee)
+                                       1>秒杀系统设计(同时给10万个人发工资，怎么样设计并发方案，能确保在1分钟内全部发完 )
              
      6.项目
              1>bookstore
                    1)模块
-                         1>基础   log  test  transaction  缓存刷新
-                         2>业务   uedit  图片  echart poi 
+                         1>基础   log  test  transaction  缓存刷新   SSO   图片验证  防攻击
+                         2>业务   uedit  图片  echart poi  webservice 集成天气 / 支付等接口并展示  搜索
                          3>诊断   监控
                    2)架构
-                         restful 缓存  静态化  分离  服务化  ha
-                         mysql nginx  webservice redis 
+                         restful 
+                         缓存(缓存击穿 雪崩  降级)  redis
+                         静态化  
+                         mysql读写分离
+                         服务化 
+                         ha
+                         nginx负载
+                         webservice 
              2>电商
                    1)
                    
