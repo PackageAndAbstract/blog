@@ -27,7 +27,39 @@
               5.configuration - sessionFactoty - session - tansaction - save() -close  
                          {后期无需关闭手动关闭session 由容器spring管理}
                          {解决同一线程使用同一session ，使用了threadLocal}
-        2.session 和 HibernateTemple关系  
+        2.session 和 HibernateTemple关系 
+        3.hibernate三种对象状态
+              1.瞬时状态  translent       数据库中没有对应记录，不受session管理
+              2.游离状态  detached        数据库中有对应记录(只看主键有没有 不管其他值是否一致)，不受session管理
+              3.持久状态  persistent      数据库中有对应记录，受session管理
+             
+             **有对应记录：在树据库中能找到主键id对应的数据
+             **受session管理：由session查询出或作为参数交由session管理的对象
+               
+               User user = new User(null , "ywj" , 22);   瞬时    无主键
+               ....
+               session.save(user);                        持久    生成主键 保持和数据库数据一致   自动  mybatis需要配置
+               .... 
+               session.close();                           游离
+        
+         4.脏对象 脏检查  保持数据一致性
+              脏对象：在hibernate中对象状态签后发生改变
+              脏检查：判断是否为脏对象的时机：当提交事务或刷新缓存时，hibernate对session中持久状态对象检查。如果发生改变则将数据与数据库同步
+              
+              问题：bbsp项目中对脏读的处理？
+        
+         5.session API
+               save()
+             ** delete()    必须已知主键  也只根据主键   其他属性不会影响删除操作 其他属性传不传无意义  主键不存在 报错
+               get()  load()  load()只能根据id ，且为懒加载
+             ** update()    1必须已知主键   主键new User(1，“xin”,"xin") ;
+                            2.当使用new User() user.setId(1) ;user.setName("xin") - update会重新载入数据，将id=1原有数据统一覆盖插入新的
+                                 1.load() -> setName() -》update   对象对应属性的都在
+                                 2.动态dml语句
+               
+        
+        
+        
         
         
         
