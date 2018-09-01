@@ -19,7 +19,8 @@
                   mapper配置文件中配置sql语句和映射关系
                   
               1.添加hibernate.jar mysql-java-x.jar  添加源码  extend foler -->选择project - xxx core - java 止
-              2.dtd文件添加 。问题dtd和xsd对比：
+              2.dtd文件添加 。
+                   dtd和xsd对比：https://blog.csdn.net/z69183787/article/details/38563457
               3.hibernate.hbm.xml和 mapper.hbm.xml配置映射关系    
               4.创建对应的映射类
               注意：mapper.xml和映射类可以通过反向工程获取  <=先设计表
