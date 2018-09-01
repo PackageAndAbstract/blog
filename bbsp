@@ -7,7 +7,8 @@
  --------------hibernate---------------------------------
  以下内容来自对http://edu.51cto.com/course/10747.html?source=so视频学习摘录
  1.是什么
-        orm框架  对jdbc封装 完全面向对象(提供处理sql的方法)
+        orm框架  对jdbc封装 完全面向对象(提供处理sql的方法)  银行这种业务为主的系统一定以关系型树据库 - hibernate对象 - 封装多个条件而不是直接写sql，
+                 也便于业务逻辑的实现。而互联网公司业务逻辑没那么复杂，数据库也是以非关系型为主，注重性能。。
         映射关系：表 ==  类(反向工程生成 生成对应的xxx.hbm.xml文件和xxx.java entity)
                 记录 == 对象
                 字段 == 属性
@@ -55,12 +56,43 @@
              ** update()    1必须已知主键   主键new User(1，“xin”,"xin") ;
                             2.当使用new User() user.setId(1) ;user.setName("xin") - update会重新载入数据，将id=1原有数据统一覆盖插入新的
                                  1.load() -> setName() -》update   对象对应属性的都在
-                                 2.动态dml语句
-               
-        
-        
-        
-        
+                                 2.动态dml语句   在mapper文件中定义dynamic-update="false"  dynamic-insert="false"
+                                   实现只插入非空的   只更新不为null的(对象必须时持久对象)
+                saveOrUpdate()  如果对象id为null执行save(),如果不为null则执行update()       
+            问题：前台传入一个非id数据，如何进行del和up操作？
+                  ？？？？？先查？查也是不准确的呀？?????? 《 ---读取数据展示时，就要将id作为hidden,update或者del再次传入
+                  无论时hibernate还是mybatis都要注意主键，一定确定唯一性。而不是再去查，
+                  确定唯一记录除了主键 如 user有树据库自增主键，但有usrid ,所以传入userid也行++
+                  不过 如mapping表中gid+uid可以确定一条记录，但这里也必须查出来，在删除。。。。。不够灵活。
+               merge()   需要接收返回对象，对传入对象状态不做修改，如 user = new User(新)  merge(user) 此时user.getId为null需要将返回值再.getId
+          6.no session
+             在分层开发中，dao层获取数据，service进行数据业务处理和事务操作(session关闭)，如果使用load()获取数据===数据在第一次访问时才会加载，则会因为
+             session的关闭造成无法取到值。
+             get()
+      *** 7.hibernate中查询语句及执行方法分类及对比
+                  1.主键查询   get()  load()   无须写sql 直接User user = (User)session.load(User.class, 1);
+                  1.hql        hibernate query langauage  其中没有表，字段概念；由类，对象，属性代替
+                          [select 别名/属性
+                                         1.(自动封装为object数组  list<object[]>)
+                                         2. 属性组成的对象=new(xx,xx)需要定义该构造方法//
+                                         3.new Map(name,age)...其中key是0 1.。而不是name.
+                                         4. new Map(u.name as name ,u.age as age)起别名后key和value ] 
+                          from 类型   必输
+                          [where] [group by] [having] [orderby ] [limit]
+                                         1.?占位符                      session.creatQuery(hql).setName(0,xx).setAge(1,xx)
+                                         2.命名参数 xxxname like :name      session.creatQuery(hql).setName(name,xx).setAge(age,xx)
+                                         3.封装为searchBean   
+                          ====》工具类实现对  ***条件拼接*** 动态
+                         session.createQuery(hql).list()
+                         
+                         分页    query提供了setFirstResult() hibernte自动生成分页语句 来限定从第几条开始读取 等方法来实现。 bbsp中的   {{Page对象 + 拼接sql来实现分页}}
+                         聚合函数
+                                 select count(u.id) from User u ; 其他聚合函数
+                         子查询 
+                         ....
+                  2.sql
+                  3.critrie
+                  4.命名参数
         
         
  ----------------struts-------------------------------------
