@@ -24,4 +24,20 @@
               3.hibernate.hbm.xml和 mapper.hbm.xml配置映射关系    
               4.创建对应的映射类
               注意：mapper.xml和映射类可以通过反向工程获取  <=先设计表
-                  
+              5.configuration - sessionFactoty - session - tansaction - save() -close  
+                         {后期无需关闭手动关闭session 由容器spring管理}
+                         {解决同一线程使用同一session ，使用了threadLocal}
+        2.session 和 HibernateTemple关系  
+        
+        
+        
+ ----------------struts-------------------------------------
+ 问题:哪里使用转发？转发是否可以保留数据？
+      如何使用session ，表单提交是否数据+回显就数据是否可以先放到session中
+      
+      
+      
+      
+      
+      
+      
