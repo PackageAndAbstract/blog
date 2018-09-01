@@ -71,7 +71,7 @@
              get()
       *** 7.hibernate中查询语句及执行方法分类及对比
                   1.主键查询   get()  load()   无须写sql 直接User user = (User)session.load(User.class, 1);
-                  1.hql        hibernate query langauage  其中没有表，字段概念；由类，对象，属性代替
+                  2.hql        hibernate query langauage  其中没有表，字段概念；由类，对象，属性代替
                           [select 别名/属性
                                          1.(自动封装为object数组  list<object[]>)
                                          2. 属性组成的对象=new(xx,xx)需要定义该构造方法//
@@ -90,14 +90,32 @@
                                  select count(u.id) from User u ; 其他聚合函数
                          子查询 
                          ....
-                  2.sql
-                  3.critrie
-                  4.命名参数
-        
-        
+                  3.sql
+                          String sql = "xxxxx";
+                          SQLQuery query =session.createSqlQuery(sql);
+                          query.addEntity(User.class);  -----------   封装搜结果到对象
+                  4.critria
+                         完全面向对象，提供了很多静态方法来提供条件限制。
+                                  session.createCritria(User.class).add(restriction.eq("name","tom"));
+                  5.命名查询
+                         在xx.hbm.xml中写hql语句
+                         
+                  6.hibernate4.0对jdbc支持
+                         dowork() - executeUpdate() -.....
+      *** 8.关联关系
+                  1.一对一 
+                  2.多对一
+                  3.一对多
+                  4.多对多
+                  5.联结查询
+      
+      
+      
+      
  ----------------struts-------------------------------------
  问题:哪里使用转发？转发是否可以保留数据？
       如何使用session ，表单提交是否数据+回显就数据是否可以先放到session中
+      域概念   哪些属性对象可以跨域 ，哪些是不能的?
       
       
       
