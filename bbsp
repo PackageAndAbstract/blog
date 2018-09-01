@@ -1,0 +1,26 @@
+ 场景：bbsp系统使用使用原生的jsp+javaScript+dwr+ssh+db2搭建系统
+ 系统优势：系统业务较复杂，其中service中对多个对象约束进行控制 ; 系统内部集成emu ; 更多原生代码逻辑对js /baseDao /Page等类进行封装.... ；
+          多个工具类，校验，转换类实现 ；事务配置 ； 日志系统 ；异常系统 .....
+ 目的：对基础学习，减少在做项目中走弯路。
+ 时间：2018-09-01  08：59
+ 
+ --------------hibernate---------------------------------
+ 以下内容来自对http://edu.51cto.com/course/10747.html?source=so视频学习摘录
+ 1.是什么
+        orm框架  对jdbc封装 完全面向对象(提供处理sql的方法)
+        映射关系：表 ==  类(反向工程生成 生成对应的xxx.hbm.xml文件和xxx.java entity)
+                记录 == 对象
+                字段 == 属性
+ 2.如何做
+       1.对比mybatis
+              1.添加mybatis。jar  mysql-java-x.jar
+              2.添加config.dtd 和 mapper.dtd约束文件   约束配置文件的规范(系统会检测)  /  书写提示  <==创建配置文件时，每个配置文件的头信息注意
+              3.在config配置文件中配置数据源，运行时环境变量，映射文件路径
+                  mapper配置文件中配置sql语句和映射关系
+                  
+              1.添加hibernate.jar mysql-java-x.jar  添加源码  extend foler -->选择project - xxx core - java 止
+              2.dtd文件添加 。问题dtd和xsd对比：
+              3.hibernate.hbm.xml和 mapper.hbm.xml配置映射关系    
+              4.创建对应的映射类
+              注意：mapper.xml和映射类可以通过反向工程获取  <=先设计表
+                  
