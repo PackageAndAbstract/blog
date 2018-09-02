@@ -1,10 +1,15 @@
 场景：随着业务的扩大，如何合理设计表结构，关联关系
 时间：2018-09-01 10:33
 1.业务 --> 表 表字段 
-
+     1.表主键由业务字段维护还是树据库维护？                  https://blog.csdn.net/iprettydeveloper/article/details/53943629
+                                                          https://blog.csdn.net/listen2you/article/details/80372342
+     
 2.关联关系 
-     1.是否设计外键    范式
-     2.是否设计中间表  xxmapping
+     1.是否设计外键  ==  范式 == 是否使用外键约束逻辑放到代码中控制
+         1. 三大范式和反范式                                https://blog.csdn.net/Dream_angel_Z/article/details/45175621
+         2.  使用外键约束还是还是自己来写代码做约束？         https://www.zhihu.com/question/21863571
+     
+     2.是否设计中间表  xxmapping   ==> 来自范式理解
      
    案例：字段缓存表
         组-mapping-用户表  
