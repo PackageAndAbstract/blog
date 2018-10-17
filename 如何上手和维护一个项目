@@ -1,5 +1,41 @@
 快速上手一个项目
+------
+  搭建环境：
+       jdk已安装-  myeclipse破解安装 - 配置基本的字符集，字体，javahome,javac注意一定一致。
+       svn已安装 --仓库设置  
+                        respo 浏览
+                        checkout
+                        add - commit 
+                        每次提交记得更新当前状态
+                        svn代码比对 
+                        svn历史
+                        如何将远程代码更新到本地 单个文件            
+       svn插件安装
+       tomcat配置
+       dbvisual配置
+       项目下载
+           svn上项目结构 
+       项目导入 svn代码没有问题，本地环境问题 
+          到处哪个工程(当前开发到哪个阶段)
+          1.检出和导出区别？
+            第一次才会使检出，以后每次比对 ， 更新 
+          2.灰色信号:本地修改未提交          
+            更新/与资源库同步/提交 ：https://blog.csdn.net/u014771464/article/details/52769000
+            常用操作:https://www.cnblogs.com/keyi/p/5949370.html
+            分支/合并：
+          3.编译慢 validaiton太慢 
+          4.报错可能原因：
+               1.编译器和jdk版本不同   
+               2.project-clean 
+               3.报错如何解决？    所有jar包来自webinfo/lib下 删除引入  重新引入build path   jdk也可以
 
+       等测试环境 - 点击
+  
+  
+  
+  
+  
+ ------ 
   步骤不是固定的，也不是只执行一遍。第一遍按步骤浏览  ， 第二遍流程泡桐 ，第三遍重点，疑点解答。
    文档 -> 前台按钮 -> 表结构->类结构（元素 pojo/dao....）->流程控制web.xml->mvc->spring ioc->log|切面等->代码
       -1.项目配套的开发文档概要阅读
