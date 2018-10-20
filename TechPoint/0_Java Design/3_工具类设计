@@ -1,0 +1,39 @@
+-------------工具类设计-----------------------------------------------------------------
+
+bbsp项目中工具类用到很多，对泛型，反射....等知识使用较多
+1.如何合格的抽象出一个工具类呢？ 特别是业务需要，相关的？
+
+
+1.数组  collection map
+      1.使用场景 
+              1.   String s1 = "we,are,a,dog";
+                   String[] s  =  s1.split(",");
+                   for(int i =0 ; i<= s.length -1  ; i++){
+                        System.out.println(s[i]);
+                      }
+                 优化：将for中条件
+                   for(int i = 0 ; i.hasnex...?????)
+                 是不是数组使用最最多呢？
+               2.list选型
+
+2.for  while fore  iterator   
+               1.for(;;)  死循环  判断条件为> <  i为++还是--  ++i ?  i操作放到方法中 ..
+               2.while 条件必执行一次
+               3.
+               4. Iterator 是工作在一个独立的线程中，并且拥有一个 mutex 锁。 Iterator 被创建之后会建立一个指向原来对象的单链索引表，当原来的对象数量发生变化时，这个索引表的内容不会同步改变，所以当索引指针往后移动的时候就找不到要迭代的对象，所以按照 fail-fast 原则
+                  Iterator 会马上抛出 java.util.ConcurrentModificationException 异常。
+                  所以 Iterator 在工作的时候是不允许被迭代的对象被改变的。但你可以使用 Iterator 本身的方法 remove() 来删除对象， 
+                  Iterator.remove() 方法会在删除当前迭代对象的同时维护索引的一致性。  
+                  1.如果当前单个线程在更改容器(add, delete....)，那么迭代的时候采用iterator.remove()方法可以确保迭代器在查找next的时候，指针不会丢失。
+                    while(iterator.hasNext() {
+                        Object item = iterator.next();
+                        iterator.remove();   //避免ConcurrentModificationException
+                         ......
+                     }
+                  2.如果当前有多个线程在对容器进行操作，例如一个线程正在向容器中写数据，而另一个线程在迭代此容器，这时候就必须考虑并发下的线程安全问题。
+                     ConcurrentModificationException官方文档第一句就指出：
+                    This exception may be thrown by methods that have detected concurrent modification of an object when such modification is not permissible.
+                    这时候可以采用java.util.concurrent包下面的线程安全的容器解决此异常。
+ 
+ 3.自定义标签  注解
+ 4.
