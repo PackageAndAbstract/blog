@@ -1,5 +1,57 @@
 question:1.哪里应该使用异常？
-         2.异常应该抛出，捕获
+                捕获异常是一件十分耗费时间的事，不要在非必要的时候使用异常，比如如果能用X.isXxx()来测试是否满足条件的情况下不要使用异常。
+                不要过分细化异常。尽量在一个try块中完成所有异常的捕获。增加代码可读性。
+         2.异常应该抛出还是捕获？哪里捕获？
+            答：只有一个问题，什么时候应该向上抛出。即：不抛出的地方就是捕获
+                第一、传递一个危险信号，需要让调用方知道。
+                第二、本方法没有能力处理的异常，调用方有能力处理。
+                第三、抛出是框架层面的选择。
+                第四、当goto来用，一种code review时没人发难的优雅的goto
+                打个比方，小孩摔倒了，伤口流血。告诉爸妈是一个危险信号。告诉医生是他们有能力处理。告诉身体，是框架层面的，自动去调节身体免疫系统。(
+                 struts中将抛出异常封装到jsp捕获 显示)
+                 
+                demo中将FileNotFindException捕获其实是错误的。因为任何异常理论上都应该得到处理。即使不可通过编程解决，也需要转义合理给用户展示。
+                如何处理呢？
+                bbsp 大型项目中如果代码抛出异常，需要调用“前面流程完成的所有操作回退，这里完全可能不在一个事务中。还需要调用其他系统的冲账接口
+                将完成的部分冲掉”。这是有处理能力的表现。
+                                
+                一个例子：某方法String readFile(String filename)，会去尝试读出指定文件的内容并返回，其使用FileInputStream来读取指定文件，
+                而FileInputStream的构造方法会抛出FileNotFoundException，这是一个Checked Exception。那么readFile方法是应该捕获这个异常，
+                还是抛出这个异常呢？很显然应该抛出。因为readFile这个方法可能会在不同的场景下，被不同的代码调用，在这些场景中，
+                出现“文件未找到”的情况时的处理逻辑可能是不同的，例如某场景下要发出告警信息，另一场景下可能会尝试从另一个文件中读取，
+                第三个场景下可能需要将错误信息提示给用户。在这种情况下，在readFile方法内的作用域中，是处理不了这个异常的，需要抛出，交由上层的，
+                具备了处理这个异常的能力的作用域来处理。
+                这种假设就是调用者有分别处理能力，但被掉方法没有，或者说不具有通用性。
+
+                因此说：两种异常的分类只是一个规范并没有本质区别。   这与抛出捕获没有关系。
+                受检异常是大家的通病。高手低手都有可能犯的。所以虚拟机将他作为受检关注。
+                           Java.lang.ClassNotFoundException
+                           Java.lang.CloneNotSupportedException
+                           Java.lang.IllegalAccessException
+                           Java.lang.InterruptedException
+                           Java.lang.NoSuchFieldException
+                           Java.lang.NoSuchMetodException
+                           .....
+                runtimeException:应该从编程的角度将这种问题考虑到 。java高手会在编程中考虑到这些情况从而避免
+                           Java.lang.ArithmeticException
+                           Java.lang.ArrayStoreExcetpion
+                           Java.lang.ClassCastException
+                           Java.lang.EnumConstantNotPresentException
+                           Java.lang.IllegalArgumentException
+                           Java.lang.IllegalThreadStateException
+                           Java.lang.NumberFormatException
+                           Java.lang.IllegalMonitorStateException
+                           Java.lang.IllegalStateException
+                           Java.lang.IndexOutOfBoundsException
+                           Java.lang.ArrayIndexOutOfBoundsException
+                           Java.lang.StringIndexOutOfBoundsException
+                           Java.lang.NegativeArraySizeException’
+                           Java.lang.NullPointerException
+                           Java.lang.SecurityException
+                           Java.lang.TypeNotPresentException
+                           Java.lang.UnsupprotedOperationException
+                           ....
+                  
          3.自定义异常 其中有常见的几种形式 其中构造器中的super内容如何包含 以及 翻译和调用链
          
 point:
