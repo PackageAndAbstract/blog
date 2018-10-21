@@ -1,0 +1,186 @@
+question:1.哪里应该使用异常？
+         2.异常应该抛出，捕获
+         3.自定义异常 其中有常见的几种形式 其中构造器中的super内容如何包含 以及 翻译和调用链
+         
+point:
+        1. 只针对异常的情况才使用异常
+        2. 对可恢复的情况使用受检异常，对编程错误使用运行时异常
+        3. 避免不必要地使用受检的异常
+        4. 优先使用标准的异常
+        5. 抛出与抽象相对应的异常
+        6. 每个方法抛出的异常都要有文档
+        7. 在细节消息中包含能捕获失败的信息
+        8. 努力使失败保持原子性
+        9. 不要忽略异常
+
+
+implement:
+       1.只针对异常的情况才使用异常
+           下面展示两种遍历数组元素的实现方式。
+            try {
+                int i = 0;
+                while(true)
+                    range[i++].climb();
+            } catch(ArrayIndexOutOfBoundsException e) {
+            }
+            for (Mountain m : range)
+                m.climb();
+            第一种方式在访问数组边界之外的第一个数组元素时，用  抛出、捕获、忽略异常  的手段来达到终止无限循环的目的。
+            第二种方式是数组循环的标准模式。
+            基于异常的循环模式不仅模糊了代码的意图，降低了性能，而且还不能保证正常工作。
+            异常应该只用于异常的情况下，不应该用于正常的控制流。
+            应该优先使用标准的、容易理解的模式，而不是那些声称可以提供更好性能的、弄巧成拙的方法。
+
+            设计良好的API "不应该强迫客户端为了正常的控制流而使用异常"。
+            如果类具有“状态相关”的方法，即只有特定的不可预知的条件下才可以被调用的方法，这个类往往也应该有个单独的“状态测试”方法，即指示是否可以调
+            用这个状态相关的方法。例如，Iterator接口有一个“状态相关”的next方法，和相应的状态测试方法hasNext方法。            
+            for(Iterator<Foo> i = collection.iterator(); i.hasNext(); ) {
+                Foo foo = i.next();
+            }
+            如果Iterator缺少hasNext方法，客户端将被迫改用下面的做法：
+            try {
+                Iterator<Foo> i = collection.iterator();
+                while(true) {
+                    Foo foo = i.next();
+                }
+            } catch (NoSuchElementException e) {
+
+            }
+       2.对可恢复的情况使用受检异常，对编程错误使用运行时异常
+            Java提供了三种可抛出结构：受检的异常（checked exception）、运行时异常（run-time exception）和错误（error）。
+            如果期望调用者能够适当地恢复，使用受检的异常。
+            两种未受检的可抛出结构：运行时异常和错误。
+            在行为上两者是等同的：都是不需要也不应该被捕获的可抛出结构。
+            用运行时异常表明编程错误。大多数的运行时异常都表示前提违例（precondition violation）。前提违例是指API的客户没有遵守API规范建立的约定。
+            例如，数组访问的约定指明了数组的下标值必须在零和数组长度减1之间。ArrayIndexOutOfBoundsException表明这个前提被违反了。
+            最好，所有未受检的抛出结构都应该是RuntimeException的子类。
+
+       3.避免不必要地使用受检的异常
+            过分使用受检的异常会使API使用起来非常不方便。
+            如果方法抛出一个或者多个受检的异常，调用该方法的代码就必须在一个或者多个catch块中处理这些异常，或者声明它抛出这些异常，并让它们传播出去。
+            如果正确地使用API并不能阻止这种异常条件的产生，并且一旦产生异常，使用API的程序员可以立即采取有用的动作，这种负担就被认为是正当的。
+            除非这两个条件都成立，否则更适合于使用受检的异常。
+            “把受检的异常变成未受检的异常”的一种方法是，把这个抛出异常的方法分成两个方法，其中一个方法返回一个boolean，表明是否应该抛出异常。
+
+            try {
+                obj.action(args);
+            } catch(TheCheckedException e) {
+                // Handle exceptional condition
+                ...
+            }
+            重构为：
+
+            if (obj.actionPermitted(args)) {
+                obj.action(args);
+            } else {
+                // Handle exceptional condition
+                ...
+            }
+            如果对象在缺少外部同步的情况下被并发访问，或者可被外界改变状态，这种重构就是不恰当的。因为在actionPermitted和action这两个调用的时间
+            间隔之中，对象的状态有可能会发生变化。如果单独的actionPermitted方法必须重复action方法的工作，出于性能的考虑，这种API重构就不值得去做。
+
+       4.优先使用标准的异常
+            Java平台类库提供了一组基本的未受检的异常，它们满足了绝大多数API的异常抛出需要。
+            重用现有的异常有多方面的好处。其中最主要的好处是，使API更加易于学习和使用，因为它与程序员已经熟悉的习惯用法是一致的。
+            第二个好处是，可读性会更好，因为不会出现很多程序员不熟悉的异常。
+            常用的异常以及其使用场合：
+            IllegalArgumentException（非null的参数值不正确）
+            IllegalStateException（对于方法调用而言，对象状态不合适）
+            NullPointerException（在禁止使用null的情况下参数值为null）
+            IndexOutOfBoundsException（下标参数值越界）
+            ConcurrentModificationException（在禁止并发修改的情况下，检测到对象的并发修改）
+            UnsupportedOperationException（对象不支持用户请求的方法）
+            选择重用哪个异常并不总是那么精准，因为上表中的“使用场合”并不是相互排斥的。
+
+       5.抛出与抽象相对应的异常
+            如果方法抛出的异常与它所执行的的任务没有明显的关系，这种情形将会使人不知所措。
+            为了避免这个问题，“ 更高层的实现应该捕获低层的异常，同时抛出可以按照高层抽象进行解释的异常。这种做法被称为异常转译 ”（exception translation）。
+            取自AbstractSequentialList类的异常转译例子：
+
+            /**
+             * Returns the element at the specified position in this list.
+             *
+             * <p>This implementation first gets a list iterator pointing to the
+             * indexed element (with <tt>listIterator(index)</tt>).  Then, it gets
+             * the element using <tt>ListIterator.next</tt> and returns it.
+             *
+             * @throws IndexOutOfBoundsException {@inheritDoc}
+             */
+            public E get(int index) {
+                try {
+                    return listIterator(index).next();
+                } catch (NoSuchElementException exc) {
+                    throw new IndexOutOfBoundsException("Index: "+index);
+                }
+            }
+            一种特殊的异常转译形式称为异常链（exception chaining）。如果低层的异常对于调试导致高层异常的问题非常有帮助，使用异常链就很合适。
+
+            // Exception Chaining
+            try {
+                // use lower-level abstraction to do our bidding
+            } catch(LowerLevelException cause) {
+                throw new HigherLevelException(cause);
+            }
+            // Exception with chaining-aware constructor
+            class HigherLevelException extends Exception {
+                HigherLevelException(Throwable cause) {
+                    super(cause);
+                }
+            }
+          异常链不仅让你可以通过程序（用getCause）访问原因，还可以将原因的堆栈轨迹集成到更高层的异常中。
+          处理来自低层异常的最好做法是，在调用低层方法之前确保它们会成功执行，从而避免它们抛出异常。有时候，在给低层传递参数之前，检查更高层方法的
+          参数的有效性，也能避免低层方法抛出异常。
+          如果无法避免低层异常，可以将异常记录下来。这样有助于调查问题，同时又将客户端代码和最终用户与问题隔离开。
+          总之，如果不能阻止或者处理来自低层的异常，一般做法是使用异常转译，除非低层方法碰巧可以保证它抛出的所有异常对高层也合适，才可以将异常从低
+          层传播到高层。异常链对高层和低层异常都提供了最佳的功能：允许抛出适当的高层异常，同时又能捕获低层的原因进行分析。
+
+       6.每个方法抛出的异常都要有文档
+          始终要单独地声明受检的异常，并且利用Javadoc的@throws标记，准确地记录下抛出每个异常的条件。
+          使用Javadoc的@throws标签记录下一个方法可能抛出的每个未受检异常，但是不要使用throws关键字将未受检的异常包含在方法的声明中。
+          如果一个类中的许多方法出于同样的原因而抛出同一个异常，在该类的文档注释中对这个异常建立文档，这是可以接受的，而不是为每个方法单独建立文档。
+       7.在细节消息中包含能捕获失败的信息
+          当程序由于未被捕获的异常而失败的时候，系统会自动地打印该异常的堆栈轨迹。在堆栈轨迹中包含该异常的字符串表示法，即它的toString方法的调用结果。
+          异常类型的toString方法应该尽可能多地返回有关失败原因的信息。
+
+          为了捕获失败，“ 异常的细节信息应该包含所有“对该异常有贡献”的参数和域的值 ”。
+          为了“ 确保在异常的细节信息中包含足够的能捕获失败的信息，一种办法是在异常的构造器中引入这些信息 ”。例如：
+            /**
+             * Construct an IndexOutOfBoundsException.
+             *
+             * @param lowerBound the lowest legal index value.
+             * @param upperBound the highest legal index value plus one.
+             * @param index      the actual index value.
+             */
+            public IndexOutOfBoundsException(int lowerBound, int upperBound, int index) {
+                super("Lower bound: " + lowerBound +
+                      ", Upper bound: " + upperBound +
+                      ", index: " + index);
+                this.lowerBound = lowerBound;
+                this.upperBound = upperBound;
+                this.index = index;
+            }
+       8.努力使失败保持原子性
+            一般而言，失败的方法调用应该使对象保持在被调用之前的状态。具有这种属性的方法被称为具有失败原子性（failure atomic）。
+            有四种途径可以实现这种效果。
+                第一种是设计一个不可变的对象。
+                第二种是在执行操作之前检查参数的有效性。这可以使得在对象的状态被修改之前，先抛出适当的异常。例如，Stack.pop方法。
+                public Object pop() {
+                    if (size == 0)
+                        throw new EmptyStackException();
+                    Object result = elements[--size];
+                    elements[size] = null; // Eliminate obsolete reference
+                    return result;
+                }
+                还有类似的办法是，调整计算处理过程的顺序，使得任何可能会失败的计算部分都在对象状态被修改之前发生。
+                第三种是编写一段恢复代码，来拦截操作过程中发生的失败，以及使对象回滚到操作开始之前的状态。这种办法主要用于永久性的数据结构。
+                第四种是在对象的一份临时拷贝上执行操作，当操作完成之后再用临时拷贝中的结果代替对象的内容。
+            一般，作为方法规范的一部分，产生的任何异常都应该让对象保持在该方法调用之前的状态。
+       9.不要忽略异常
+            当API的设计者声明一个方法将抛出某个异常的时候，等于正在试图说明某些事情。所以，请不要忽略它。
+            有一种情形可以忽略异常，即关闭FileInputStream的时候。因为还没有改变文件的状态，因此不必执行任何恢复动作，并且已经从文件中读取到所
+            需要的信息，因此不必终止正在进行的操作。即使在这种情况下，把异常记录下来还是明智的做法。
+
+
+
+
+
