@@ -3,3 +3,5 @@ point
       受检异常通过IDE在编译时报错  
       runtimeException是关注的重点，api中的信息可以帮助我们在编码时“提前”将异常情况考虑加入if .也可以根据业务将异常“信息”传递出去
       最后做到运行时异常中，只有“自己想要抛出的异常(这个异常可以借用java api定义的)”
+      
+   2.https://blog.csdn.net/mahoking/article/details/45064259
