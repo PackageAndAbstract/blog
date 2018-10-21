@@ -1,0 +1,212 @@
+question:1.如何写一个方法 特别是复杂的
+           首先明确方法的作用 - 签名/参数(肯定是不准确 后期需要调整) - 按着流顺序一步一步往下走，其中可能需要某个参数则新增参数，需要调用某个方法
+           则调用方法获取，这也可能是方法中需要的参数
+
+point:
+     1. 检查参数的有效性
+     2. 必要时进行保护性拷贝 即：为什么使用getTime()将问题复杂化原因
+     3. 谨慎设计方法签名
+     4. 慎用重载
+     5. 慎用可变参数
+     6. 返回零长度的数组或者集合，而不是null
+     
+implement:     
+     1.检查参数的有效性
+       每当编写方法或者构造器时，应该考虑它的“ 参数有哪些限制 (定义泛型时使用final 定义参数)”。应该把这些限制写到文档中，并且在这个方法体开头处，
+       通过显示的检查来实施这些限制。养成这样的习惯非常重要。
+
+     2.必要时进行保护性拷贝
+            public final class Period {
+                private final Date start;
+                private final Date end;
+
+                public Period(Date start, Date end) {
+                    if (start.compareTo(end) > 0) {
+                        throw new IllegalArgumentException(start + " after " + end);
+                    }
+                    this.start = start;
+                    this.end = end;
+                }
+
+                public Date start() {
+                    return start;
+                }
+
+                public Date end() {
+                    return end;
+                }
+            }
+            因为Date类本身时可变的，所以，
+              Date start = new Date();
+              Date end = new Date();
+              Period p = new Period(start, end);
+              end.setYear(78); // 这个操作把实例的内部信息修改了。
+            为了保护Period实例的内部信息避免受到这种攻击，对于构造器的每个可变参数进行保护性拷贝是必要的，并且使用备份对象作为Period实例的组件，
+            而不是使用原始的对象。
+            “ 这种看似没用，回退的操作实质是必要的。”
+            public Period(Date start, Date end) {
+                this.start = new Date(start.getTime());
+                this.end = new Date(end.getTime());
+
+                if (this.start.compareTo(this.end) > 0) {
+                    throw new IllegalArgumentException(start + " after " + end);
+                }
+            }
+            注意，保护性拷贝是在检查参数的有效性之前进行的，并且有效性检查是针对拷贝之后的对象，而不是原始的对象。
+
+            但是改变Period实例仍然是有可能的，因为它的访问方法提供了对其内部成员的访问能力。
+              Date start = new Date();
+              Date end = new Date();
+              Period p = new Period(start, end);
+              p.end().setYear(78); // 这个操作把实例的内部信息修改了。？这种可以吗？不是final吗？
+              为了防御这第二种攻击，只需改这两个访问方法，使它返回可变内部域的保护性拷贝即可。
+
+              public Date start() {
+                  return new Date(start.getTime());
+              }
+
+              public Date end() {
+                  return new Date(end.getTime());
+              }
+              在内部组件被返回给客户端之前，对它们进行保护性拷贝也是同样的道理。
+              只要“ 有可能，都应该使用“ 不可变的对象作为对象内部的组件”，这样就不必再为保护性拷贝操心。”
+
+              如果 “ 类具有从客户端得到或者返回到客户端的可变组件，类就必须保护性地拷贝这些组件。 ”
+              如果拷贝的成本受到限制，并且类信任它的客户端会恰当地修改组件，就可以在文档中指明客户端的职责使不得修改受到影响的组件，以此来代替
+              保护性拷贝。
+
+     3.谨慎设计方法签名
+              谨慎地选择方法的名称
+              首要目标是选择易于理解的。
+
+              第二目标是选择与大众认可的名称相一致的名称。
+
+              不要过于追求提供便利的方法
+              每个方法都应该尽其所能。方法太多会使类难以学习、使用、文档化、测试和维护。
+
+              对于类和接口所支持的每个动作，都提供一个功能齐全的方法。
+
+          避免过长的参数列表
+              目标是四个参数，或者更少。
+                  有三种方法可以缩短过长的参数列表。
+                  第一种是把方法分解成多个方法，每个方法只需要这些参数的一个子集。
+                  第二种是创建辅助类，用来保存参数的分组。
+                  第三种是从对象构建到方法调用都采用Builder模式。
+
+          对于参数类型，要优先使用接口而不是类
+             如果使用的是类而不是接口，则限制了客户端只能传入特定的实现，如果碰巧输入的数据是以其他的形式存在，就会导致不必要的、
+             可能非常昂贵的拷贝操作。
+             对于boolean参数，要优先使用两个元素的枚举类型
+             它是代码更易于阅读和编写，也使以后更易于添加更多的选项。
+
+     4.慎用重载
+            下面的程序试图根据一个集合是Set、List，还是其他的集合类型来分类。
+              public class CollectionClassifier {
+                  public static String classify(Set<?> set) {
+                      return "Set";
+                  }
+
+                  public static String classify(List<?> list) {
+                      return "List";
+                  }
+
+                  public static String classify(Collection<?> collection) {
+                      return "Unknow Collection";
+                  }
+
+                  public static void main(String[] args) {
+                      Collection<?>[] collections = {
+                          new HashSet<String>(),
+                          new ArrayList<BigInteger>(),
+                          new HashMap<String, String>().values()
+                      };
+
+                      for(Collection<?> collection : collections) {
+                          System.out.println(classify(collection));
+                      }
+                  }
+              }
+              可能期望会打印“Set”，接着是“List”，以及“Unknow Collection”，实际上不是这样。而是“Unknow Collection”打印三次。
+              因为classify方法被重载（overload）了，而要“ 调用哪个重载方法是在编译时做出决定的  ”。对于for循环中的三次迭代，参数的编译时类型都是相同的，
+              Collection<?>。每次迭代的运行时类型都是不同的，但这并不影响对重载方法的选择。因为该参数的编译时类型为Collection<?>，所以，唯一合适
+              的重载方法是第三个，classify(Collection<?>)，在循环的每次迭代中，都会调用这个重载方法。
+
+              “ 对于重载方法（overload method）的选择是静态的，而对于被覆盖的方法（overriden method）的选择则是动态的。“
+              即：编译时就确定参数类型
+
+                  选择被覆盖的方法的正确版本是在运行时的，选择的依据时被调用方法所在对象的运行时类型。
+
+                  再看看下面这个程序。
+
+                  class Wine {
+                      String name() {
+                          return "wine";
+                      }
+                  }
+
+                  class SparklingWine extends Wine {
+                      @Override
+                      String name() {
+                          return "sparkling wine";
+                      }
+                  }
+
+                  class Champagne extends SparklingWine {
+                      @Override
+                      String name() {
+                          return "champagne";
+                      }
+                  }
+
+                  public class Overriding {
+                      public static void main(String[] args) {
+                          Wine[] wines = {
+                              new Wine(),
+                              new SparklingWine(),
+                              new Champagne()
+                          };
+
+                          for(Wine wine : wines) {
+                              System.out.println(wine.name());
+                          }
+                      }
+                  }
+                  这个程序打印“wine”、“sparkling wine”和“champagne”。
+
+                  可以对第一个程序修改一下，用单个方法替换三个重载的classify方法，如下。
+              ****
+                  public static String classify(Collection<?> collection) {
+                      return collection instanceof Set ? "Set" :
+                             collection instanceof List ? "List" : "Unknow Collection";
+                  }
+                  因为覆盖机制时规范，而重载机制是例外。
+                到底怎样才算是胡乱使用重载机制呢？这个问题仍有争议。安全而保守的策略是，永远不要导出两个具有相同参数数目的重载方法。
+
+     5.慎用可变参数
+                Java 1.5发行版本中增加了可变参数方法，一般称作variable arity method（可匹配不同长度的变量方法）[JLS，8.4.1]。
+                 可变参数方法接受零个或者多个指定类型的参数。可变参数机制通过先创建一个数组，数组的大小为在调用位置所传递的参数数量，然后将参数值
+                 传到数组中，最后将数组传递给方法。
+                  static int sum(int... args) {
+                      int sum = 0;
+                      for (int arg : args) {
+                          sum += arg;
+                      }
+                      return sum;
+                  }
+                  当真正需要让一个方法“ 带有不定数量的参数 ”时，可变参数就非常有效。可变参数是为printf而设计的。printf和反射机制都从可变参数中极大地受益。
+                  在重视性能地情况下，需要小心。可变参数方法的每次调用都会导致进行一次数组分配和初始化。
+                  需要可变参数的灵活性，但又无法承受性能成本，可以这么做。
+                  public void foo() {}
+                  public void foo(int a1) {}
+                  public void foo(int a1, int a2) {}
+                  public void foo(int a1, int a2, int a3) {}
+                  public void foo(int a1, int a2, int a3, int... rest) {}
+                  在定义参数数目不定的方法时，可变参数方法是一种很方便的方式，但是不应该被过度滥用。如果使用不当，会产生混乱的结果。
+
+     6.返回零长度的数组或者集合，而不是null
+                 对于一个返回null而不是零长度数组或者集合的方法，几乎每次调用该方法都需要曲折的处理方式。这样很容易出错，因为编写客户端程序的程序
+                 员可能会忘记写专门的代码来处理null返回值。
+
+
+
+
