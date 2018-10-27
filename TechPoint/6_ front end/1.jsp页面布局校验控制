@@ -1,0 +1,31 @@
+本文以bbsp项目为例。以ssh框架为准提供前台布局，展示，传值，校验....
+   问题：1.展示时list嵌套问题???
+         2.内容值取自值栈？session ?...
+         3.struts中namespace作用
+         4.什么时候取值使用${} / 直接对象.属性 / %{#xxx} ? 如何准确定位到。
+         5.form标签里出现了action="#"， https://bbs.csdn.net/topics/390531457?list=lz
+         6.struts标签学习：https://www.yiibai.com/struts_2/struts-2-updownselect-example.html
+
+
+
+--------------------------------------------------------------------------------------------
+<html>
+ <tablib prefix="c" .....>   引入标签库
+  <head>
+      <title ....> 显示在浏览器标题
+        引入js库
+        提交方式：方式1.<s:form name="mytab" ...>
+                       js代码中进行绑定校验后 mytab.submit();
+  </head>
+
+  <body>
+        取值展示：方式1.<s:iterator value="list"> 
+	                        <s:property value="propertyNameOfObjectInList">
+                 方式2.<s:textfield id="id" name="quoteInfo.name"...>。name属性可以作为key携带输入值传到后台，也可以反显值。
+                 方式3.<s:textfield id="id" name="quoteInfo.name" value="%{#quoteInfo.name}" ..> 当由value时，展示由value负责，这是就可以
+                          对值进行处理。比如  国际化 / 科学记数法 / 格式化 ...
+                 方式4.<s:input  id = "<s:property value="quoteinfo.id"> ..."    ..> 作为单选复选框
+  </body>
+<html>
+--------------------------------------------------------------------------------------------
+
