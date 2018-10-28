@@ -1,4 +1,30 @@
 1.==  、 equals 、compareTo instanceof判断和equals 、 hashcode 、compareTo重写 关系和实现
+    1）== 
+         1.整型     i == 4 ? 
+         2.null     s == null  s != null
+         3.bolean   b == true 
+      本质：比较两个对象的地址
+    2.equals
+      本质：比较两个对象的地址 但“ 这种比较逻辑是从机器角度看，通常需要重写自定义这种比较逻辑 ”
+         1.Java api 中已重写  如String 
+         2.自定义类中重写equals 首先看该类是否有必要重写。比如vo ... 都是没有必要的。需要时根据逻辑重写
+   
+     @Override
+	public boolean equals(Object obj){
+          return (obj != null && obj instanceof  TestEq && (this == obj || ((TestEq)obj).getId() ==  id  ))? true :false ;
+	}
+	    //两种思路   1.排除所有不满足条件和return false 最后return  true  
+                         if(!s.name.equals(name)) return  false ;              注意这种分支，if..else../ if() return 异性分支  / if()家条件的分支
+                         ....
+                         return true ;
+          
+                      2.排除成立的条件 return ture  最后return false  
+	    //视情而定：核心做最少的判断成立条件情形少，就做成立判断； 不成立情形少，就做不成立判断。****
+	   
+
+
+
+
 2.valueOf  parseOf toString 和 基本类型 ，包装器类型 ，String关系，使用场景即转换
 3.数组 集合使用场景及相互转换，多层嵌套模型, Collections使用
 4.this.super.super() 创建对象到底做了什么为什么构造方法中什么也没有就这么特殊。名字？
@@ -12,7 +38,7 @@
             注意：1.当逻辑简单到判断，返回这种情形时，考虑使用三元表达式来使结构紧凑。如果判断后需要一些逻辑业务处理则不可以使用。
                  2.同样可以在false之后，接着使用三元表达式进行再判断。
               
-5. 属性/方法私有的意义 ？ 私有为什么还提供公开的getter/setter?
+5. 属性/方法私有的意义 ？ 私有为什么还提供公开的getter/setter? 
     private属性
         1.属性通常时私有。但如果是为外界展示比如Integer.MAXVALUE 这种” 常量边界 ”供外界使用也是有意义的
         2.为什么属性要私有，但提供对应的getter/setter呢？    方法可以进行校验以及更多控制。比如类型的转换，码值的转换，校验......
