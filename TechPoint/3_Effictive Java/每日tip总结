@@ -1,6 +1,7 @@
-1.==  、 equals 、compareTo判断和equals 、 hashcode 、compareTo重写 关系和实现
+1.==  、 equals 、compareTo instanceof判断和equals 、 hashcode 、compareTo重写 关系和实现
 2.valueOf  parseOf toString 和 基本类型 ，包装器类型 ，String关系，使用场景即转换
 3.数组 集合使用场景及相互转换，多层嵌套模型, Collections使用
+4.this.super.super() 创建对象到底做了什么为什么构造方法中什么也没有就这么特殊。名字？
 
 
 4.三元表达式
