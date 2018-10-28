@@ -1,10 +1,29 @@
 1.==  、 equals 、compareTo判断和equals 、 hashcode 、compareTo重写 关系和实现
+2.valueOf  parseOf toString 和 基本类型 ，包装器类型 ，String关系，使用场景即转换
+3.数组 集合使用场景及相互转换，多层嵌套模型, Collections使用
 
 
-三元表达式
-   下面是一个Boolean简单的例子（boolean基本类型的包装类）。 此方法将boolean基本类型转换为Boolean对象引用：
-          public static Boolean valueOf(boolean b) {
-              return b ? Boolean.TRUE : Boolean.FALSE;
-          }
-         注意：1.当逻辑简单到判断，返回这种情形时，考虑使用三元表达式来使结构紧凑。如果判断后需要一些逻辑业务处理则不可以使用。
-              2.同样可以在false之后，接着使用三元表达式进行再判断。
+4.三元表达式
+      下面是一个Boolean简单的例子（boolean基本类型的包装类）。 此方法将boolean基本类型转换为Boolean对象引用：
+             public static Boolean valueOf(boolean b) {
+                 return b ? Boolean.TRUE : Boolean.FALSE;
+             }
+            注意：1.当逻辑简单到判断，返回这种情形时，考虑使用三元表达式来使结构紧凑。如果判断后需要一些逻辑业务处理则不可以使用。
+                 2.同样可以在false之后，接着使用三元表达式进行再判断。
+              
+5. 属性/方法私有的意义 ？ 私有为什么还提供公开的getter/setter?
+    private属性
+        1.属性通常时私有。但如果是为外界展示比如Integer.MAXVALUE 这种” 常量边界 ”供外界使用也是有意义的
+        2.为什么属性要私有，但提供对应的getter/setter呢？    方法可以进行校验以及更多控制。比如类型的转换，码值的转换，校验......
+
+    private方法
+        1.指定该方法只在本类中使用，即使类在其他地方实例化也不可以调用。
+        2.适用于对方法进行重构，重构拆出来的部分只能在本类中使用。
+       
+6.  缓存实例的方式 ：
+        1.静态属性 类中只有一份且保存 单例  实例控制
+        2.工具 如list  map 是否为static需要视情况而定
+        3.域  session
+
+
+
