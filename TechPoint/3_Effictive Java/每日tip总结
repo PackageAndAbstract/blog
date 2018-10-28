@@ -4,10 +4,10 @@
          2.null     s == null  s != null
          3.bolean   b == true 
       本质：比较两个对象的地址
-    2.equals
+    2)equals
       本质：比较两个对象的地址 但“ 这种比较逻辑是从机器角度看，通常需要重写自定义这种比较逻辑 ”
          1.Java api 中已重写  如String 
-         2.自定义类中重写equals 首先看该类是否有必要重写。比如vo ... 都是没有必要的。需要时根据逻辑重写
+         2.自定义类中重写equals 对象比较   首先看该类是否有必要重写。比如vo ... 都是没有必要的。需要时根据逻辑重写
    
      @Override
 	public boolean equals(Object obj){
@@ -20,8 +20,37 @@
           
                       2.排除成立的条件 return ture  最后return false  
 	    //视情而定：核心做最少的判断成立条件情形少，就做成立判断； 不成立情形少，就做不成立判断。****
-	   
-
+      3)compareTo
+         本质：比较大小
+	  1.Java api 中已重写  如Double等浮点型数据比较值大小 必须使用compareTo 因为考虑到小数点问题。
+	  2.类实现compareTo接口/  来对对象排序 通常在集合中添加时使用到
+		double d1 = 2.12d;
+		float d2 = 2.12f;
+		
+		System.out.println(d1 ==(double) d2);  //false
+		System.out.println(Double.valueOf(d1).compareTo(Double.valueOf((double)d2))); //1
+		System.out.println(Double.valueOf(d1));//2.12
+		System.out.println(Double.valueOf(Double.valueOf((double)d2))); //2.11999
+		//化为bigDecimal
+		BigDecimal bd1  = new BigDecimal(Double.valueOf(d1).toString());
+		BigDecimal bd2  = new BigDecimal(Float.valueOf(d2).toString());
+		System.out.println(bd1.equals(bd2));  //ture
+		//使用常规会偶发性出现误差 ，浮点数运算使用bigDecimal 同类型比较使用compareTo
+		
+		
+	
+	4) 基本类型占用空间更小，所以尽可能使用基本类型而不是包装器类型。注意隐含的转换对性能的影响。
+	    所以对基本类型 -                 包装器类型                 - string类型转换
+	                -->Double.vlaueOf                  ->toString
+			   构造方法
+			   
+			<--d.DoubleValue()                <--  Double.parseOf(d)
+			   BigDecimal bd.IntValue()
+	    
+        5) int 最大值10位  long最大值19位 
+	   float最大值1.7976931348623157E308
+	   BigDecimal和BigInteger 无限大 
+		
 
 
 
