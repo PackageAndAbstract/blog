@@ -1,1 +1,10 @@
 1.==  、 equals 、compareTo判断和equals 、 hashcode 、compareTo重写 关系和实现
+
+
+三元表达式
+   下面是一个Boolean简单的例子（boolean基本类型的包装类）。 此方法将boolean基本类型转换为Boolean对象引用：
+          public static Boolean valueOf(boolean b) {
+              return b ? Boolean.TRUE : Boolean.FALSE;
+          }
+         注意：1.当逻辑简单到判断，返回这种情形时，考虑使用三元表达式来使结构紧凑。如果判断后需要一些逻辑业务处理则不可以使用。
+              2.同样可以在false之后，接着使用三元表达式进行再判断。
