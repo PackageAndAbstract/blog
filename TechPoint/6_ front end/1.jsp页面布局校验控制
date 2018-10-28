@@ -1,4 +1,11 @@
 本文以bbsp项目为例。以ssh框架为准提供前台布局，展示，传值，校验....
+   问题：1.页面布局标签中那些标签是有“实际展示效果的”？<div> - 块化 <a ...都没有实际效果   <td> <tr> ...等都是由效果的
+         2. 弹出框 dialog  iframe 以及应该传递哪些值过去？如何传递
+	 3.下拉框  全选 实现
+	 4.hidden元素
+	 5.必填 选填  校验  关联更改
+	 6.分页 传参传哪些？
+   
    问题：1.展示时list嵌套问题???
          2.内容值取自值栈？session ?...
          3.struts中namespace作用
@@ -13,12 +20,17 @@
  <tablib prefix="c" .....>   引入标签库
   <head>
       <title ....> 显示在浏览器标题
-        引入js库
+        引入js库 
+	引入页面 因为head中不显示，所以类似于引入了其中的js 但建立统一管理 
+	引入css
+	window事件绑定  window.attach("onload",funciton{ ....  })
+        	
         提交方式：方式1.<s:form name="mytab" ...>
                        js代码中进行绑定校验后 mytab.submit();
   </head>
 
   <body>
+        引入页面(比如说详情页，导航页 ... 大型的项目许多公共页面的引入 公共页面也有许多特定的元素，所以注意和业务一致 进行if判断显示 级联等)
         取值展示：方式1.<s:iterator value="list"> 
 	                        <s:property value="propertyNameOfObjectInList">
                  方式2.<s:textfield id="id" name="quoteInfo.name"...>。name属性可以作为key携带输入值传到后台，也可以反显值。
