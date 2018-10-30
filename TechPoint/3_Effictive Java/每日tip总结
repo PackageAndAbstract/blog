@@ -37,24 +37,60 @@
 		System.out.println(bd1.equals(bd2));  //ture
 		//使用常规会偶发性出现误差 ，浮点数运算使用bigDecimal 同类型比较使用compareTo
 		
+		@Override
+	public int compareTo(Student o) {
+		1.//排序由集合特性（set） +  对象compareTo 共同完成 默认是自然排序(字母，数值..类就不同了)
 		
+		2.//compareTo的重写对于排序简化了许多，屏蔽了 希尔排序，冒泡排序等细节 。留下规律：每次add新值，新值调用自己的compareTo(),通过指定排序算法（无需细节）
+		// 当实现中 id - o.id > 0 则 id > o.id  则 新加对象 > 当前已存在对象       ||| -集合定的逻辑   >0 往后放   所以参数放到后面 全部比较完后   ： 依次 形成了 1 2 3  升序 
+		// 当实现中 o.id - id > 0 则 id > o.id  则 当前已存在对象 > 新加对象       |||                >0 往后放   所以参数放到后面 全部比较完后   ： 依次 形成了 3 2 1  降序
+		
+		3.//按照重要性依次进行比较
+		if( id != o.id) return id -o. id ;  //if判断之二 return ->三  增加条件  一：if /else
+		if( !name.equals(o.name)) return name.compareTo(o.name); //此时即使id相同也是可以塞入的   //jvm api常用的都已重写compareTo    //return 优先级低  ！优先级低于“.”但不优于&&..
+		return 0;
 	
-	4) 基本类型占用空间更小，所以尽可能使用基本类型而不是包装器类型。注意隐含的转换对性能的影响。
-	    所以对基本类型 -                 包装器类型                 - string类型转换
-	                -->Double.vlaueOf                  ->toString
-			   构造方法
-			   
-			<--d.DoubleValue()                <--  Double.parseOf(d)
-			   BigDecimal bd.IntValue()
-	    
-        5) int 最大值10位  long最大值19位 
-	   float最大值1.7976931348623157E308
-	   BigDecimal和BigInteger 无限大 
+
+        4)hashcode
+	  保持equals逻辑上的一致性，所以重写equals必须重写hashcode保持逻辑上一致性。
+	  	@Override
+	       public int hashCode(){
+		//hashset   + hashcode 共同完成 。hashcode值一致，则不可存入
 		
+		//equals涉及的元素，不多不少
+		int result  = id ;
+		result  = 31 * result  + name.hashCode();  //Double.hashCode(money)
+		result = 31* result + age ;
+		return result;
+	}
+	
+	
+	1.TreeSet 是二差树实现的,Treeset中的数据是自动排好序的，不允许放入null值
+        2.HashSet 是哈希表实现的,HashSet中的数据是无序的，可以放入null，但只能放入一个null，两者中的值都不能重复，就如数据库中唯一约束 
+        3.HashSet要求放入的对象必须实现HashCode()方法，放入的对象，是以hashcode码作为标识的，而具有相同内容的String对象，hashcode是一样，所以放入的内容不能重复。但是同一个类的对象可以放入不同的实例
+    适用场景分析:HashSet是基于Hash算法实现的，其性能通常都优于TreeSet。我们通常都应该使用HashSet，在我们需要排序的功能时，我们才使用TreeSet。
+	
+注：详尽的解析查看3_Effictiva Java/ equal-hashcode-compare相关章节。
+	
+	
+
+2.值范围 及 valueOf  parseOf toString 和 基本类型 ，包装器类型 ，String关系，使用场景即转换
+         1）值范围
+		  1） int 最大值10位  long最大值19位 
+		      float最大值3.4028235E38 Double最大值1.7976931348623157E308
+		      BigDecimal和BigInteger 无限大 
+		  2）金额 Double
+		  3) 优先使用  基本类型 而不是包装器类型。用到的时候在转换****
+	 
+	 2）所以对基本类型 -                 包装器类型                     - string类型转换           
+	                -->Double.valueOf               <--  Double.parseOf(d)  
+			  
+			  构造方法
+			   
+			<--d.DoubleValue()              ->toString  
+			   BigDecimal bd.IntValue()
 
 
-
-2.valueOf  parseOf toString 和 基本类型 ，包装器类型 ，String关系，使用场景即转换
 3.数组 集合使用场景及相互转换，多层嵌套模型, Collections使用
 4.this.super.super() 创建对象到底做了什么为什么构造方法中什么也没有就这么特殊。名字？
 
@@ -80,6 +116,9 @@
         1.静态属性 类中只有一份且保存 单例  实例控制
         2.工具 如list  map 是否为static需要视情况而定
         3.域  session
+
+7.
+		
 
 
 
