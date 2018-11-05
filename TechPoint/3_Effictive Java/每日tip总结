@@ -147,7 +147,13 @@
          判断，如遍历等操作时可以判断list.isEmpty问题，否则没必要
 	 return  new QuoteInfo() ;
 
-
+10.创建一个类 从类的修饰符-类名-属性修饰符-属性名- 构造方法是否公开/构造方法需要初始化哪些 - get/set/tostring/equals/compareTo/hashcode 
+    - 作为服务方法中的修饰符-返回类型-方法名-参数（个数及类型 是否泛型）方法实现 / 是否有必要将方法重构/是否有必要将方法放入到baseDao或abstractClass
+   类向下 ->对象
+   类向上 -> abstract /接口 /设计模式
+   
+   修饰符分类
+   
 
 
 
