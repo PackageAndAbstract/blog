@@ -3,4 +3,76 @@
   
 2. “ 即使是安全的语言，如果不采取一点措施，还是无法与其他的类隔离开来 ”
    假设客户端尽其可能来破坏这个类的约束条件，或者对比的API产生误解 ,因此你必须保护性的设计程序来处理各种不可预期的行为。->健壮性。
+              public final class Period {
+                        private final Date start;
+                        private final Date end;
+
+                        public Period(Date start, Date end) {
+                            if (start.compareTo(end) > 0) {
+                                throw new IllegalArgumentException(start + " after " + end);
+                            }
+                            this.start = start;
+                            this.end = end;
+                        }
+
+                        public Date start() {
+                            return start;
+                        }
+
+                        public Date end() {
+                            return end;
+                        }
+                    }
+      1> 该类中进行了参数检测。但是“ Date类本身时可变的 ”，所以，
+              Date start = new Date();
+              Date end = new Date();
+              Period p = new Period(start, end);
+              end.setYear(78); // 这个操作把实例的内部信息修改了。
+      2> 为了保护Period实例的内部信息避免受到这种攻击，对于构造器的" 每个可变参数进行保护性拷贝 "是必要的，并且使用备份对象作为Period实例的组件，
+            而不是使用原始的对象。 “ 这种看似没用，回退的操作实质是必要的。”
+            public Period(Date start, Date end) {
+                this.start = new Date(start.getTime());
+                this.end = new Date(end.getTime());
+
+                if (this.start.compareTo(this.end) > 0) {
+                    throw new IllegalArgumentException(start + " after " + end);
+                }
+            }
+      *** 注意，保护性拷贝是在检查参数的有效性之前进行的，并且有效性检查是针对拷贝之后的对象，而不是原始的对象。避免在危险时间的修改。
+      *** 不适用clone()  因为Date是非final的，不能保证clone方法一定返回类的java.util.Date的对象：它可能返回专门出于恶意的母的而设计的不可信任的子类实例                   
+                         例如：这样的子类可以在每个实例被创建的时候，把指向该实例的引用记录到一个私有的静态列表中，并且允许攻击者访问这个列表，
+                         这将是的攻击者可以自由的控制所有实例。
+                         
+                         因此说：对于参数类型可以被不可信任方的子类化的参数，请不要使用clone方法进行保护性拷贝
+                         
+                         
+
+      3>  但是改变Period实例仍然是有可能的，因为它的访问方法提供了对其内部成员的访问能力。
+              Date start = new Date();
+              Date end = new Date();
+              Period p = new Period(start, end);
+              p.end().setYear(78); // 这个操作把实例的内部信息修改了。
+              
+      ***  ？这种可以吗？不是final吗？ 
+              final修饰引用类型时代表：引用地址不可变，但是该引用对应的对象的属性是可变的
+            
+             为了防御这第二种攻击，只需改这两个访问方法，使它返回可变内部域的保护性拷贝即可。
+              public Date start() {
+                  return new Date(start.getTime());
+              }
+
+              public Date end() {
+                  return new Date(end.getTime());
+              }
+              
+              在内部组件被返回给客户端之前，对它们进行保护性拷贝也是同样的道理。至此，将所有可变的组件全部封装，只有类自身可以访问，外界不可以。
+              只要“ 有可能，都应该使用“ 不可变的对象作为对象内部的组件”，这样就不必再为保护性拷贝操心。” 
+
+  总结：
+           1.每当编写方法或者构造器时，如果允许客户提供的对象进入到内部数据结构中，则有必要考虑一下，客户提供的对象是否可能是可变的。如果是，
+                 就考虑你的类是否容忍对象进入数据结构之后发生变化。例如map 、set中对象值
+           2.如果 “ 类具有从客户端得到或者返回到客户端的可变组件，类就必须保护性地拷贝这些组件。 ”
+           3.如果拷贝的成本受到限制，并且类信任它的客户端会恰当地修改组件，就可以在文档中指明客户端的职责使不得修改受到影响的组件，以此来代替
+              保护性拷贝。即通过“ api约束 ” 来简化。例如对于不公开的类，可以不。但是对于提供的api就需要考虑
+
    
