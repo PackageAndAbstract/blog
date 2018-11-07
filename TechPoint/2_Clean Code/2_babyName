@@ -1,0 +1,50 @@
+1.名副其实  明确
+             如果名称需要注释来补充，那就不算是名副其实。
+                           public List<int[]> getThem(){
+                              List<int[]> list1 = new ArrayList<int[]>();
+                               for(int[] x :theLiST)
+                                 if(x[0] == 4)
+                                   list1.add(x);
+                               return list1;
+                           }
+             以上代码是模糊的：theList是什么类型东西  [0]代表什么意义  值4是什么  怎样使用返回的列表 
+                              
+                          public List<int[]> getFlaggedCells(){
+                              List<int[]> flaggedCells = new ArrayList<int[]>();
+                               for(int[] cell :gameBoard)
+                                 if(cell[STATUS_VALUE] == FLAGGED)
+                                   flaggedCells.add(cell);
+                               return flaggedCells;
+                           }
+              掩盖魔术数
+                       public List<Cell> getFlaggedCells(){
+                                  List<Cell> flaggedCells = new ArrayList<int[]>();
+                                   for(Cell cell :gameBoard)
+                                     if(cell.isFlagged)
+                                       flaggedCells.add(cell);
+                                   return flaggedCells;
+                               } 
+
+2.避免误导
+              特有 : aix(unix平台专有)
+              混用关键词：accountList  误导使用了List类型
+
+3.局部，成员变量都要思考，而不能随意的取名temp i j  a1/a2....这些伪值
+
+4.做有意义的区分
+      productData  vs  productInfo   vs  product  没有区分的意义。所以product更加的直截了当
+      moneyAmount  vs  money 
+      
+5.使用读得出来的名称
+      genymdhms --> generationTimestamp 
+      modymdhms --> modificationTimestamp
+      
+6.使用可搜索的名称
+      for(int j  0 ; j<34 ;j) s+=（t[j]*4）/5;
+      -->
+      int realDaysPerIdealDay = 4 ;
+      int WORK_DAYS_PER_WEEK = 5 ;
+      int sum ;
+      ....
+
+
