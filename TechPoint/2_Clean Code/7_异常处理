@@ -1,1 +1,35 @@
 该文结合effective java中的异常处理，本文着重在编码中异常处理规范性问题，后者则着重如何使用异常来实现程序的健壮性思考！
+
+异常很重要，但是使用不当会造成代码逻辑的混乱。
+1.场景
+    受检异常：
+            1.编译器约束
+            2.一组方法为事务性操作
+            3.当if else中的else分支均“ 无操作 ” 只是“ 记日志 ” 即 if...if...单一下去
+            4.当选择throw传递信息到调用者处理 / 或者使用catch块 catch块中提供：
+                                                            + 提供log 
+                                                            + 提供恢复机制(noFileException 去加载其他位置文件)
+                                                            + 补偿机制（保证一致性 冲销）
+                      当该异常无法正常解决又想打印日志和补偿时使用：catch(throw new ...)组合
+            
+    runtime
+            1.系统无法处理的异常，向外抛是好的，可以定位问题且不会发生不可预料的问题
+            2.由于没有正确理解api导致 比如数组越界....
+            
+ 
+ 2.使用异常而非返回码
+ 3.代码右键添加try catch finally 
+ 4.使用不可控异常
+ 5.给出异常发生的环境说明
+ 6.依调用者需要定义异常类
+ 7.定义常规流程
+ 
+ 8.别返回null
+        1.没有结果时返回默认值而非null
+            if( ret != null) ...
+            这种代码时糟糕的。所以在被调用方法中定义return Collections.emptyList() ;或者 new ArrayList（）在局部变量中，赋值，返回即使是没有数据他也是对象而不是null
+ 9.别传递null
+        1.当存在大量调用该方法实例传入null才可以时，考虑重构该方法(当该null只在少数情形下使用)或者使用builder模式定义包装原方法
+            public int getB(String s , String s1 ){
+               public int getA(String s , String s1 ,null)
+            }
