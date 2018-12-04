@@ -1,1 +1,59 @@
 该文和effective java中的类设计结合认识
+
+1.抽象
+     1.使用接口而不暴露实现
+     2.以最好的形式呈现某个对象包含的数据
+          通过具象手段和汽车燃油层通信 vs  百分比 (汽车码表)
+
+2.数据对象的反对称性
+     1.对象和数据结构之间的差异
+      对象把数据隐藏于抽象之后，暴露操作数据的函数。数据机构暴露其数据，没有提供有意义的函数。留意这两种定义的本质。他们是对立的。这种差异貌似微小，
+      但却有深远的含义。
+      square{ 
+        public point topLeft;
+        public double side ;
+        }
+      
+      Rectangle{ 
+        public point topLeft;
+        public double height ;
+        }
+        
+      ...
+      public double area(Object shape) throws NoSuchShapeException{
+         if(shape instanceof square)
+          return s.side*s.side
+         if....
+          return ....
+          
+      }
+      
+      面向对象的程序员对此嗤之以鼻，抱怨过程式代码。但是如果给area所在类添加一个新的方法，那么形状类根本不会受到影响。但如果新加一个类，就需要修改
+      该类中所有函数来处理它 。
+      
+      多态式形状
+      Square implements Shape{
+        private Point topLeft ;
+        private double side ;
+        
+        public double arar(){
+         return side * side ;
+        }
+      }
+      .....
+      综上所述：过程式代码(使用数据结构的代码)便于在不改动既有数据结构的前提下添加新函数，面向对象代码便于在不改动既有函数的前提下添加新类。
+
+      在一个复杂系统中，都会有需要添加新数据类型而不是新函数的时候，这时，对象和面向对象就比较适合。另一方面，也会有想要添加新函数而不是数据结构
+      的时候，这种情况下，过程式代码和数据机构更合适。
+      
+      visitor模式  双向分派 
+      
+      避免两种结构的混杂
+ 
+ 3.数据传送对象
+      最为精炼的数据机构，是一个只有公共变量，没有函数的类。DTO(data transfer objects) 在数据库通信，解析套接字传递消息之类的场景中，将数据
+      对象整合传递至前台或者后台起到重要作用
+     
+      
+      
+      
