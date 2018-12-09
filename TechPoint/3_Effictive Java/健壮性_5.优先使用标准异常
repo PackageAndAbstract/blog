@@ -1,0 +1,16 @@
+专家级程序员和缺乏经验的程序员最主要的一个区别在于：专家追求并且通常也能够实现“ 高度的代码重用 ”。这时一条通用的规则，异常也不例外。
+Java平台类库提供了一组 “ 基本的未受检异常 ”，他们满足绝大多数api的异常抛出需要。
+
+好处：
+    1.已经熟悉的习惯用法
+    2.可读性更好
+    3.异常类越少，意味着内存footprint就越少，装这些类的时间开销就越少
+    
+IllegalArgumentException
+IllegalStateException
+NullPointException
+IndexOutOfBoundException
+ConcurrentModificationExcetion
+UnsupportedOperationException
+ArithmeticException
+NumberFormatExcetion    
