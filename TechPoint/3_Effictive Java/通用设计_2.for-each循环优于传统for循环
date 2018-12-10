@@ -1,1 +1,87 @@
 
+数组  集合 选择
+    1.数组        范围更广(js .)，更快速 ，更底层 . 当已知大小，并且只做查询 /或者转化中间态使用 (数组的增删改并不方便 需要转化为list或者Apache common)
+    2.ArrayList   查多 增删少
+    3.LinkList    查少 增删多
+    4.HashSet     塞入时保证不重复  默认比较compareTo
+    5.TreeSet     塞入时保证不重复且按照compareTo规则排序 如果没有单独实现，按照默认规则
+    
+    数组 集合转化
+      Arrays.asList(arr)      这种方式返回不能使用其修改集合相关的方法，它的 add/remove/clear 方法会抛出 UnsupportedOperationException 异常。
+          |                   ***asList 的返回对象是一个 Arrays 内部类，并没有实现集合的修改方法。Arrays.asList体现的是适配器模式，
+                                 只是转换接口，后台的数据仍是数组。***
+      ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(arrays));  
+        
+      list.toArray()          这种方式只能获得object[] 不能使用(String[])list.toArray() 这种向下转型是错误的，使用在需要object[] ，所以使用下面方法      
+          |
+      String[] arr = list.toArray(new String[list.size()] ) ;  
+                              <T> T[]  toArray(T[] a)    按适当顺序（从第一个到最后一个元素）返回包含此列表中所有元素的数组；
+                              返回数组的运行时类型是指定数组的运行时类型。
+    
+遍历方式选择
+    1.for         相对于后两者for代表一种逻辑控制block，使用范围更广，功能更强大 。遍历“ 集合和数组 ” 只是小事 ***
+    2.fore        数组 + ArrayList 优先使用 简洁高效  
+    3.iterator    linkedList   
+            Iterator i = coll.iterator();                ===> for(Iterator i = coll.iterator(); i.hasNext();)
+            while(i.hasNext()){                               {  i.next().getValue();
+                 i.next().getValue();
+             }                                                   }
+             
+             
+  for位置不明确问题
+     enum Suit { a ,b ,c ,d}
+     enmu Rank {A ,B ,C D }
+     Collection<Suit> suits = Arrays.asList(Suit.vlaues())  这里的该集合不能增删改 ，但无所谓
+     Collection<Rank> ranks = Arrays.asList(Rank.vlaues())  //注意这里enum 因为在Enum 的 API 文档中也找不到这个方法.values代表每个枚举值
+                                                             //https://blog.csdn.net/kdc18333608478/article/details/72845587
+     List<Card> deck = new ArrayList<Card>();
+      for(Iterator i = suits.iterator(); i.hasNext();)
+        for(Iterator j = ranks.iterator(); j.hasNext();)
+           deck.add(new Card(i.next() ,j.next() ))
+    one one / ...four four   4种  为社么这种调用会不走“ 大循环 ”呢？因为调用了i.next()，他本不因该变的。所以
+      for(Iterator i = suits.iterator(); i.hasNext();)
+        Suit suit = i.next();
+        for(Iterator j = ranks.iterator(); j.hasNext();)
+           deck.add(new Card(suit ,j.next() ))
+    
+    for(Suit suit :suits)
+      for(Rank rank : ranks)
+         deck.add(new Card(suit ,rank ))
+    one one / one two / ..... 16种
+  
+
+  总结： fore循环在简洁性和预防bug方面优于for,并且没有性能损失。但是以下三种无法使用：
+           1.过滤
+                如果需要遍历并删除指定元素，需要显示迭代器，以便调用remove()  删除对象是可以的，但是如果用下标删除就不可以了
+           2.转换
+                如果需要遍历和取代它部分或全部的元素值，就需要列表迭代器或者数组索引，以便设定元素的值  （需要索引）
+           3.平行迭代
+                如果需要并行遍历多个集合，需要显示控制迭代器或者索引变量，以便所有迭代器后者索引变量都可以同步前移。(生成4种情形)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
