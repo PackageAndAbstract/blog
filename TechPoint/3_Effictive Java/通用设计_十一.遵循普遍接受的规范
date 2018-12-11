@@ -1,9 +1,18 @@
 
 #约定大于配置
-<br></br>
   >1.遵循规范便于维护。违反惯例会使代码的程序员带来困惑和苦恼，使他们做出错误的假设，造成程序出错。
-  <br></br>
-    *包     域名 
-    *子包   层次  util.time..... 
-    *类  
-    *类型参数  T:任意类型  E：集合元素  K/V:映射键值  X：异常  任何类型的序列：T U V
+  >2命名注意：
+          *包     域名 
+          *子包   层次 简短(不超多8个字符 首字母缩写) util.time..... 
+          *接口
+          *类     避免使用缩写
+          *方法   
+                返回boolen-> is开头 isEmpty isDigit ... 
+                /get.. generate...
+                返回不同类型的对象：toString  
+                返回视图：asList
+                返回被调用对象同值得基本类型方法：intValue
+                静态工厂常用名称：valueOf .of .getInstance .newInstance .getType ...
+                
+          *域     常量域特殊
+          *类型参数  T:任意类型  E：集合元素  K/V:映射键值  X：异常  任何类型的序列：T U V
