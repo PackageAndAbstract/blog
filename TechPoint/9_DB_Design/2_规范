@@ -1,0 +1,16 @@
+- clean	 
+	命名：
+		 1.字段命名，组合的每个单词都应该对应单独单词不能组成名字的每个小元素由不同的单词组成/类命名，通常以：_为分隔符
+		   缩写规则：
+		 		a．如果可以在字典里找到一个词的缩写，就用这个做为缩写，比如：Monday=Mon、December=Dec，可在此网站下查找到一些英文单词的缩写：http://shortof.com/；
+		 		b．可以删除单词元音(词首字母除外)和每个单词的重复字母来缩写一个单词。比如：Current = Crnt、Address = Adr、Error = Err、Average = Avg；
+		 		c．对于主从表，如果主表名称没有缩写而从表的名称需要缩写，则从表名称从第二个单词开始缩写，第一个名词尽可能和主表保持一致。比如企业基本信息表名称为enterprise，则企业诉讼表enterprise_litigation可简写为enterprise_ltg，企业证书表enterprise_certificate可简写为enterprise_crt。最终的数据库表及由数据库表生成的程序在集成开发环境（IDE，Integrated Development Environment）中是按名称排列的，这样做是为了让相似功能的表、类文件排列在一起，方便开发者操作。
+
+
+		 2.使用明确、统一的标明和列名，例如 School, SchoolCourse, CourceID。
+		 3.数据表名使用单数而不是复数，例如 StudentCourse，而不是StudentCourses。
+	   4.数据表名不要使用不必要的前缀或者后缀，例如使用School，而不是TblSchool，或者SchoolTable等等。
+	   5.使用 bit 作为布尔字段，使用整数或者varcha是浪费。同时，这类字段应该以“Is”开头。
+	字段：
+	   1.创建时表，字段必要的描述
+	   
