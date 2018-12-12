@@ -1,1 +1,16 @@
 
+浮点数是不能用于计算的，因为会有精度缺失，那还有浮点数有啥用？
+
+原因：
+    1.定义类时优先使用“ 基本类型 ” > " 引用类型 "。所以不会选择Float Double
+    2.定义属性选择适当的类型而不是无意义的所有都是 “ String ”
+so:选择float double
+
+但是：会有精度缺失呀，那不是功亏一篑吗？
+   private double money ;
+   .....
+   BigDecimal money  = new BigDecimal(Double.valueOf(money).toString())  vs money+""  
+   注意
+      
+      1.初始化BigDecimal一定是字符串类型
+      2.使用bigDecimal中的add , sub ...等方法可以指定四舍五入规则 和保留精度 money.add(1.023).setScale(2.BigDecimal.ROUND_HALF_UP)//还提供了其他舍入模式
