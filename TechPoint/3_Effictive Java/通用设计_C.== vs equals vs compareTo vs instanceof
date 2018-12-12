@@ -71,91 +71,9 @@
     适用场景分析:HashSet是基于Hash算法实现的，其性能通常都优于TreeSet。我们通常都应该使用HashSet，在我们需要排序的功能时，我们才使用TreeSet。
 	
 注：详尽的解析查看3_Effictiva Java/ equal-hashcode-compare相关章节。
-	
-	
+			 
 
-2.值范围 及 valueOf  parseOf toString 和 基本类型 ，包装器类型 ，String关系，使用场景即转换
-         1）值范围
-		  1） int 最大值10位  long最大值19位 
-		      float最大值3.4028235E38 Double最大值1.7976931348623157E308
-		      BigDecimal和BigInteger 无限大 
-		  2）金额 Double
-		  3) 优先使用  基本类型 而不是包装器类型。用到的时候在转换****
-	 
-	 2）所以对基本类型 -                 包装器类型                     - string类型转换           
-	                -->Double.valueOf               <--  Double.parseOf(d)  
-			  
-			  构造方法
-			   
-			<--d.DoubleValue()              ->toString  
-			   BigDecimal bd.IntValue()
-
-
-3.数组 集合使用场景及相互转换，多层嵌套模型, Collections使用
-       1.数组适用范围更广，当已知数据量不大，并且主要用来存储数据时，首选。也作为接口参数，因为是相对基本类型
-       2.arrays.asList(a)注意这种形成的list是内部list,无法扩容的  new ArrayList(rray.length).addAll(arrays.asList())
-        *  (1) 该方法对于基本数据类型的数组支持并不好,当数组是基本数据类型时不建议使用 
-	 * (2) 当使用asList()方法时，数组就和列表链接在一起了. 
-	 *     当更新其中之一时，另一个将自动获得更新。 
-	 *     注意:仅仅针对对象数组类型,基本数据类型数组不具备该特性 
-	 * (3) asList得到的数组是的没有add和remove方法的 
-	 *  
-	 * 阅读相关:通过查看Arrays类的源码可以知道,asList返回的List是Array中的实现的 
-	 * 内部类,而该类并没有定义add和remove方法.另外,为什么修改其中一个,另一个也自动 
-	 * 获得更新了,因为asList获得List实际引用的就是数组
-	 
-	 
-	 list l .toArray()
-	3.比较list适用list != null && ！list.isEmpty()  而不是适list.size() > 0  复杂度前者更好
-	4.多维
-	   List<List<Student>>   List<Map<String,Student>>   Map<String,List<Studnet>> ... 模型构想不要在遍历时出问题 漏掉
-	   泛型的引入
-	 
-	 
-4.this.super.super() 创建对象到底做了什么为什么构造方法中什么也没有就这么特殊。名字？
-
-
-5.三元表达式
-      下面是一个Boolean简单的例子（boolean基本类型的包装类）。 此方法将boolean基本类型转换为Boolean对象引用：
-             public static Boolean valueOf(boolean b) {
-                 return b ? Boolean.TRUE : Boolean.FALSE;
-             }
-            注意：1.当逻辑简单到判断，返回这种情形时，考虑使用三元表达式来使结构紧凑。如果判断后需要一些逻辑业务处理则不可以使用。
-                 2.同样可以在false之后，接着使用三元表达式进行再判断。
               
-6. 属性/方法私有的意义 ？ 私有为什么还提供公开的getter/setter? 
-    private属性
-        1.属性通常时私有。但如果是为外界展示比如Integer.MAXVALUE 这种” 常量边界 ”供外界使用也是有意义的
-        2.为什么属性要私有，但提供对应的getter/setter呢？    方法可以进行校验以及更多控制。比如类型的转换，码值的转换，校验......
-
-    private方法
-        1.指定该方法只在本类中使用，即使类在其他地方实例化也不可以调用。
-        2.适用于对方法进行重构，重构拆出来的部分只能在本类中使用。
-       
-7.  缓存实例的方式 ：
-        1.静态属性 类中只有一份且保存 单例  实例控制
-        2.工具 如list  map 是否为static需要视情况而定
-        3.域  session
-
-8.字符串
-       1.new Stringbuffer().append("1").append("2").toString() 最终返回String
-       2.拼接字符串时可能存在最后不拼分隔符的情况，这样1.if ..length  2. 全部拼接完，s.subString(0,s.length - 1);
-       3.String[] s = s1.split(","); 并且这种在js中也是适用的
-       
-9.关于return  null问题
-       1.遵循减少null值判断，所以return Collections.EMPTY_LIST; 后台不会返回null而是一定返回值。只不过值可能为空。当有必要
-         判断，如遍历等操作时可以判断list.isEmpty问题，否则没必要
-	 return  new QuoteInfo() ;
-
-10.创建一个类 从类的修饰符-类名-属性修饰符-属性名- 构造方法是否公开/构造方法需要初始化哪些 - get/set/tostring/equals/compareTo/hashcode 
-    - 作为服务方法中的修饰符-返回类型-方法名-参数（个数及类型 是否泛型）方法实现 / 是否有必要将方法重构/是否有必要将方法放入到baseDao或abstractClass
-   类向下 ->对象
-   类向上 -> abstract /接口 /设计模式
-   
-   修饰符分类
-   
-
-
 
 
 
