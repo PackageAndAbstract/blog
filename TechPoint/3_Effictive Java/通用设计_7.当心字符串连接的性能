@@ -1,1 +1,9 @@
+StringBuilder（线程不安全 异步）  > StringBuffer(线程安全 同步)  >  String （当不确定选型是否受到线程影响时，选择最“ 保险 ”的）
 
+StringBuffer sb  = new StringBuffer();
+for(Student s : students){
+  sb.append(s.name().trim());
+  sb.append("#")}
+return sb.toStirng().subString(0,sb.toString9().length-1)
+
+总结：谨慎使用字符串拼接，特别在“ 循环 ”
