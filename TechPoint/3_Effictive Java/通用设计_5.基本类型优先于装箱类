@@ -1,8 +1,27 @@
 
-1.基本类型 > 装箱类型
 
-2.集合中只能是引用类型
+选型：
+    1.基本类型 > 装箱类型
 
-3.只有用到装箱类型的方法时才将基本类型转化
+    2.集合中只能是引用类型
 
-4.小心自动装箱
+    3.只有用到装箱类型的方法时才将基本类型转化
+
+    4.小心自动装箱
+
+转换：
+          值范围 及 valueOf  parseOf toString 和 基本类型 ，包装器类型 ，String关系，使用场景即转换
+                   1）值范围
+                1） int 最大值10位  long最大值19位 
+                    float最大值3.4028235E38 Double最大值1.7976931348623157E308
+                    BigDecimal和BigInteger 无限大 
+                2）金额 Double
+                3) 优先使用  基本类型 而不是包装器类型。用到的时候在转换****
+
+             2）所以对基本类型 -                 包装器类型                     - string类型转换           
+                            -->Double.valueOf               <--  Double.parseOf(d)  
+
+                  构造方法
+
+                <--d.DoubleValue()              ->toString  
+                   BigDecimal bd.IntValue()
