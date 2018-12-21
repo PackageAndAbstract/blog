@@ -2,6 +2,13 @@
 0.帮助 - 搜索命令
    ctrl+shift+a 
    alt+工具栏上有下划线的字母 跳转到该工具  注意进去之后可以按照这种方式进行点击定位到具体的操作
+   alt+enter 提示 修复 相当于eclipse中ctrl+1
+         自动创建函数
+         在字符串首位置调用format/build
+         接口实现
+         单词拼写  当单词有错误时，会有波浪线 提示修改
+         导包 
+         比如重构，不知道怎么写时点击......
 
 1.界面介绍 
     alt+数字键 唤出隐藏部分 如左侧 下侧  右侧 
@@ -35,6 +42,23 @@
    100.for for循环
    new Date().sout 输出前面的值
    在构造方法中 参数.filed 可以补充当前没有的属性到类中
+   需要返回的值.return -> return 返回值
+   name.nn 就是       if (name != null) {}
+   
+   ***其他在ctrl+shifta中搜索postfix查看其他快捷方式
+
+7.重构
+   单词重构  选中 shift+f6 统一修改
+   抽取变量  选中 ctrl+alt+v
+   抽取方法参数  避免依赖成员变量，使方法可以在任何地方使用 选中 ctrl+alt+p
+   抽取函数  选中代码块  ctrl+alt+m 使得抽象层次一致 
+   
+   
+   ctrl+d 复制当前行到下一行
+   home /end
+   ctrl+x 删除当前行
+   
+8.git
    
    
    
