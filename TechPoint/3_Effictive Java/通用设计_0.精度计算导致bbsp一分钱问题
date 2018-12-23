@@ -5,3 +5,8 @@ bbsp 精度计算中导致偶发性一分钱问题
     2.是否是hibernate
     3.是否是前台格式化问题
     4.哪里应该使用String
+    5.jdk不一致
+
+
+问题定位：hibernate框架
+解决：在对象的get/set中对值进行处理
