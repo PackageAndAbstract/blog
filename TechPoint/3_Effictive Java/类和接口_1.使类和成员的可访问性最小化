@@ -10,7 +10,7 @@
  2.             ---访问---                              ---其他----               --注意------两种类型的修饰是可以组合使用的-----
     修饰类：    public / default                      abstract / final      解释：public  不在同一个包中  导入使用  defalut 不在同一个包中  不能导入，导入没用。在一个包下，直接调用
                                                                                     abstract  没有抽象方法也是抽象类 存在抽象方法就一定是抽象类  
-                                                                                    final: 该类不可被继承，该类对象创建后不可被修改。没有入口  和  属性方法定义没有关系 vs   接口定义中定义的属性一定是public static final 类型的，即使你不写，这时保持接口特性的一致性。https://blog.csdn.net/ameyume/article/details/6189749  定义的方法也是public abstract ...
+                         final: 该类不可被继承，【}该类对象创建后不可被修改。没有入口 - 错误理解，这里final修改类还没有做到“ 不可变类 ”查看第三节 】 和  属性方法定义没有关系 vs   接口定义中定义的属性一定是public static final 类型的，即使你不写，这时保持接口特性的一致性。https://blog.csdn.net/ameyume/article/details/6189749  定义的方法也是public abstract ...
     修饰属性：public/protected/default/private       static/final/volidate/transient --类的修饰和属性方法没有关系，特性也是各自约束-（不过属性多以private）-----
     
     修饰方法：public/protected/default/private       synchronized / static /  abstract /final / native     --限制方法为了给继承设计。--来防止无用API泄露
