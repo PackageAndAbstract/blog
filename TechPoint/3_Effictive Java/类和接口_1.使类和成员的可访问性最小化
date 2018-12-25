@@ -7,4 +7,38 @@
          4.复用
          5.降低大型系统风险，即使整个系统不可用，但是这些独立的模块却有可能是可用的。
  
- 2.
+ 2.             ---访问---                              ---其他----               --注意------两种类型的修饰是可以组合使用的-----
+    修饰类：    public / default                      abstract / final      解释：public  不在同一个包中  导入使用  defalut 不在同一个包中  不能导入，导入没用。在一个包下，直接调用
+                                                                                    abstract  没有抽象方法也是抽象类 存在抽象方法就一定是抽象类  
+                                                                                    final: 该类不可被继承  和  属性方法定义没有关系 vs   接口定义中定义的属性一定是public static final 类型的，即使你不写，这时保持接口特性的一致性。https://blog.csdn.net/ameyume/article/details/6189749  定义的方法也是public abstract ...
+    修饰属性：public/protected/default/private       static/final/volidate/transient --类的修饰和属性方法没有关系，特性也是各自约束-（不过属性多以private）-----
+    
+    修饰方法：public/protected/default/private       synchronized / static /  abstract /final / native     --限制方法为了给继承设计。--来防止无用API泄露
+    
+     1.类或者接口做成包级私有的，实际上成了这个包的实现一部分，而不是该包导出的API的一部分(除了该包外，没法访问到)，可以对他进行修改，替换，删除而
+       无需影响到客户端。（类似有私有的方法） 如果公有，你就有责任永远支持它，以保持兼容性。
+       
+     2.对于包级私有的顶层类(或接口)只是在“ 某一个类的内部被用到 ”，就应该考虑使它成为唯一使用它的那个类的“ 私有嵌套类 ”(内部类章节)。这样就可将类缩小
+       到那个类。
+       
+       ---思考 default修饰类 > 内部类 > 私有方法    抽象层次
+     3.一个类实现了一个接口，那么接口中所有的类在这个类中也都必须声明为“ 公有的 ”。接口隐含。
+     
+     4.override时，子类重写访问级别不能高于父类 ，规范：父类出现的地方子类可以出现，但是子类出现的地方父类不一定可以出现。
+     
+     5.实例域决不能是公开的。这样就暴露了修改，并且是线程不安全的。所以private。
+     
+     6.对于静态域public static final String A_B_C = "abc" ;这种常量要包含基本类型值或者指向不可变对象的引用。虽然引用“ 本身 ”不可变。
+       但是如果指向可变对象，这会是灾难性的。
+       
+     7.长度非零的数组总是可变的。*** 所以类具有公开的静态final数组域，或者返回这种域的访问方法，几乎总是错误的。即：集要访问和不可修改与一身。
+        public static final Ting[] VALUES = {...}; -这也是引用 永远都是引用而不是堆中实体。
+        解决方案：private ....
+                 public static final Thing[] values(){
+                   return VALUES.clone();
+                }
+                或者
+                private ...
+                public static final List<Thing> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES))
+                
+                
