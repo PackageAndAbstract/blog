@@ -10,3 +10,4 @@
 4.构造器绝不能调用可被覆盖的方法，无论时直接调用还是间接调用
 
 5.继承设计类时，Cloneable和Serializable接口出现了特殊的困难。详见下面图片：
+   https://github.com/SmileHi/blog/blob/master/TechPoint/respository/123.png
