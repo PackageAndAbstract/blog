@@ -1,0 +1,147 @@
+1.继承是实现代码重用的有力手段，但使用不当会导致软件变得脆弱。如果不是“ 专门为了继承而设计，并且具有很好的文档说明类 ”来说，普通类进行跨越包边界
+  的继承，是非常危险的。
+  类继承(本文) vs  接口继承
+  
+2.与方法调用不同的是，继承“ 打破了封装  ”。
+  1>子类依赖于其超类中特定功能的“ 实现细节 ”。(注意这里是实现细节而不是简单的API)并在override过程中未关联
+  到“ 父类中的关联 ”导致重写预期不符。
+            父类  A  ----  B  有关联
+                  |        |  依赖
+            子类  a  ----- b  导致a b 由于这种牵制不能达到预期效果
+            
+        例子：为了说明的更具体一点，我们假设有一个程序使用了HashSet。为了调优程序的性能，需要查询HashSet,看一看自从它被创建以来曾经添加了多少个
+              元素(不要与它当前的元素混淆起来，元素数目会随着元素的删减而递减)。
+              为了实现，我们编写了HashSet变量，“ 来记录下试图插入的元素数量 ” 
+              
+              public class InstruemntHashSet<E> extends HashSet<E>{
+                    private int addCount = 0 ;
+                    
+                    //无参构造器
+                    
+                    //对应构造器重写  ---> 如何理解super(xx,xx...)  原因:每个隐含super() 构造空白父类，当子类需要构造含有属性时，需要。？为什么不
+                        直接子类this. ....
+                        
+                    @Override
+                      public boolean add(E e){
+                        addCount++;
+                        return super.add(e)  //相当于copy了父类所有该实现
+                      }
+                      
+                       public boolean addAll(Collction<? extends E> c){
+                        addCount+= c.size();
+                        return super.addAll(c) 
+                      }
+                      
+                       public int getAddcount(){
+                        return addcount;
+                       }
+              }
+           这个类看似正常，但却无法得到期望。当new InstrumentSet().addAll(Arrays.asList("a" ,"b" ,"c")) ;
+           getAddCount = 3 但却返回6.
+           
+           原因:hashSet中addAll基于add方法实现。相当于调用了两次。我们继承只去override“ 一个类  ” 就不会破坏这种。
+                这种“ 自用性 ”时实现细节，不是承诺(提供的api是让你调用的，你自己的重写破坏了)，不能保证在Java平台的所有实现中都保持不变，
+                所以这种代码是脆弱的。
+    2>父类迭代过程中新增自用性或者取消，这些都会影响到客户端代码 。 
+    
+    3>子类提供了父类“ 后加  ”的方法具有签名和参数 ，将会在调用中混乱 。
+    
+ ---------通过复合解决-------------
+   复合：将现有类变成了新类的“ 一个组件 ” ，新类中的每个实例方法都可以调用被包含的现有类实例对应的方法，并返回它的结果。这被称为“ 转发 forwarding”
+         这样就实现了将wrapper class(包装类) <--forwarding class(转发类)
+         
+         public class Forwarding implements Set<E>{
+            private final Set<E> e ;
+            
+            public void clear(){s.clear()}   --注意这里已经不是“  重写 ” 而是“ 实现 ”
+            ...contains()
+            ...size()....
+
+         }
+          
+          public class InstrumentsSet extends Forwarding{
+             private int addcount = 0 ;
+             
+             public InstrumentdSet(Set e){super(s)}
+             
+           @Override
+                  public boolean add(E e){
+                    addCount++;
+                    return super.add(e)  //相当于copy了父类所有该实现
+                  }
+
+                   public boolean addAll(Collction<? extends E> c){
+                    addCount+= c.size();
+                    return super.addAll(c) 
+                  }
+          }
+ 
+    这样通过forwarding类“ 隔离 ”关联性
+ 
+ 
+  3>以上除了健壮性外，设计是灵活的。从本质上说这个类把一个set转换为另一个set，同时增加了计数功能。这种包装器类可以包装任何set类。
+    包装器类也正是Decorator模式，装饰者模式。有时候，复合和转发的结合被错误的成为“ 委托 ”。从计数角度看，这不是委托，除非包装对象把自身传递给被包装对象。
+    
+    包装器类几乎没有缺点。需要注意一点，包装器不适合用回调框架(callback framework)中，在回调框架中，对象把自身的引用传递给其他对象，所以它传递一个
+    指向自身的引用，回调时避开了外面的包装对象，这就是SELF问题。
+    
+    这种转发类不会有性能问题，或者说不足以考虑
+    
+    
+  4>正确场景使用
+     1.只有当子类真正时超类的子类型时，才适合用继承。is-a 。如果你打算让B扩展类A ，就应该问问自己：每个B确实也是A吗？如果你不能够确定，那么B
+        就不应该扩展A。若果答案时否定的，B应该包含A的一个私有实例，并且暴露一个较小的，较简单的API：
+          ---------  A本质上不是B的一部分，只是它的实现细节而已。--------------
+     2.对于你正试图扩展的类，他的API中有没有缺陷呢？如果有，你是否愿意把哪些缺陷传播到类的API(公开的方法意为着你发布的API 而不仅仅是实现细节)
+       
+    
+    
+    总结：依赖 > 关联/聚合/组合 > 继承 
+          为了避免脆弱性，可以用复合和转发机制来代替继承，尤其是当存在适当的接口可以实现包装类的时候，包装类不仅比子类更加健壮，而且功能更强大。
+    
+    
+    
+    
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+              
+              
+              
+              
+              
+              
+              
+              
+              
