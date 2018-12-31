@@ -1,0 +1,18 @@
+1.当类实现接口时，接口就充当了可以引用这个类实例的“ 类型 type ”。因此，类实现了接口，就表明客户端可以对这个类的实例实施某些动作，为了任何其他的目的而定义
+  的接口是不恰当的。
+  
+  反例：1.常量接口
+         实现常量接口，会导致把常量定义的实现细节泄露到该类导出的API中(不是)。并且这种实现是没有意义的。从而“  污染 ”类
+           解决：1.如果这些常量与某个现有类或者接口紧密，应该把这些常量添加到这个类或者接口中。
+             例如：Integer / Double 导出的MIN_VALUE / MAX_VALUE 
+                 2.Enum type 
+                 3.工具类
+                      public class PhysicalConstants{
+                          private PhysicalConstants（）{}
+                          public static final double A_B = 2.13;
+                      
+                      }
+                    如果大量使用工具类导出的常量，可以通过“ 静态导入(static import)机制 ”，避免用类名来修饰常量名。1.5后引入
+                    import static com.ef........
+                    
+                    方法中直接使用该属性即 ：A_B*2 而无需类名.属性
