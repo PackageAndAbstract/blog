@@ -1,0 +1,5 @@
+mvc
+
+service中分模块  
+      模块也是一个小型系统，同样需要分层  bbsp中agent和porxy就在代理的基础上分层，再去调用SendService-mule-spring集成了webservice的客户端
+          -使用工具生成客户端
