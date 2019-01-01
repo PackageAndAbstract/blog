@@ -1,0 +1,2 @@
+
+本文涉及：策略模式  匿名内部类  泛型  lambda表达式  ，通过compareTo函数作为参数传入，实现策略的方式。-->java中实现compareTo排序底层jdk实现
