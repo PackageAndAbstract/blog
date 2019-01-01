@@ -1,1 +1,37 @@
 https://www.processon.com/diagraming/5c1b64a8e4b095ccfee8d4ae
+
+
+1.system_killModel
+   技术点：
+      																	第一阶段	 												第二阶段		                  																																														
+   				 1.springboot																										   	5.thread               																																														
+   				 2.idea                                                            	6.redis                																																														
+   				 3.对Java高级技术点                                                	7.数据一致性...问题解决																																														
+   				 							reflect , enum , generic , annotion                  	8.                     																																														
+   				 							clean-code , effective java, design pattern
+   				 4.层，层交互对象，模块抽象认识  
+   				 5.权限 分页  cache 数据库设计...bbsp中的基点实践
+   				 6.日志工具 -> aop  																								监控分析报警 
+  
+  码云项目 - 将上面的项目整合进来
+      上一个项目集中在对代码质量的提升，内功的提升
+      这个项目集中在“ 问题解决方案 ” 当下流行的技术体系
+   		
+   	
+   				 
+   				 
+2.书籍状况：														第一阶段 														第二阶段
+					 1.clean code 		 		15.junit															13.并发 14+16.重构
+					 2.effective java     5.泛型 6.枚举和注解										10.并发 11.序列化 clone
+					 3.design pattern     常用的10种														不常用
+					 4.refector  																								all			
+					 5.core java          作为工具书，辅助其他书籍(实际项目中 不确定的知识点及关联)
+					 6.spring enterprise  作为工具书，辅助其他书籍(实际项目中 模块整合及原理分析)
+					 
+3.源码阅读
+					 1.jdk			https://www.zhihu.com/question/61539640
+					 						阅读顺序：https://blog.csdn.net/qq_21033663/article/details/79571506
+					 2.spring
+					 3.算法和数据结构 常用算法实际使用
+
+4.ali工作招聘查看及对应的知识点准备，关键是使用 问题：如何将这些不常用的知识点映射到已有项目上呢？
