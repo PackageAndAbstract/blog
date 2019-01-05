@@ -1,0 +1,11 @@
+                                   反射(站在类加载信息的层面查看类信息[类加载器，任意属性方法，创建对象等])
+                           
+                           enum(类似集合，其中包含“ 对象 ”，index,desc...)
+                                                                                泛型(为程序实现“ 更高的统一抽象-灵活 ”，约束了“ 内在联系
+                                                                                ” ，避免了“ instanceOf ” )
+                分布式 序列化                                        
+                                                        类-对象                  Array-Arrays / Collection-Collections/ ..工具
+                                                                                Calendar / ApacheCommon ...
+                                                                                
+            annotation(自定义规则，并且“ 自动扫描 ”，实现增强和控制)      innerClass(类中使用了“ 同级别的抽象层次 ”，但这种“ 组件 ”只在当前类中用到)
+                                                                              
