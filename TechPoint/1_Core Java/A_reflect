@@ -1,14 +1,74 @@
 
 **********  当你不确定使用哪个对对象时，但无论是哪个对象都需要执行“ 相同操作 ”，那么就考虑反射。在运行时确定，再去通过“ 定义好的操作执行 ”
             当你不确定使用哪个类时，但无论哪个类都需要执行“ 相同操作 ” ，那么久考虑泛型 
+
+********** 
+            1.Class<?> - xxx.class(Class对象) - .instance就像普通对象调用其中方法一样，获取其中部分，该部分就是“ 我们平时关注的xxx类的实例 ”，
+              因为该对象包含的内容远大于xxx.class，这也说明我们获取其他属性，方法还是需要从“ cls实例 ”出发
+              
+            2.class类就像collection这些一样是“ 容器 ”类。所以会Class<T> 表示某个类的Class形式 如果Class那么就像List一样没有约束具体           
+                 
+            3.Class<T>:T - 由此 Class 对象建模的类的类型。例如， String.class 的类型是 Class<String>。如果将被建模的类未知，则使用 Class<?>。
             
-            class类就像collection这些一样是“ 容器 ”类。所以会Class<T> 表示某个类的Class形式 如果Class那么就像List一样没有约束具体
-            
+            4.Class 类的实例表示正在运行的 Java 应用程序中的类和接口。枚举是一种类，注释是一种接口。每个数组属于被映射为 Class 对象的一个类，
+                所有具有相同元素类型和维数的数组都共享该 Class 对象。基本的 Java 类型（boolean、byte、char、short、int、long、float 和 double）
+                和关键字 void 也表示为 Class 对象。
+
+            5. Class 没有公共构造方法。Class 对象是在加载类时由 Java 虚拟机以及通过调用类加载器中的 defineClass 方法自动构造的。
+
+***********
             反射 (Reflection) 是 Java 的特征之一，它允许运行中的 Java 程序“ 在运行时 ”获取 “ 自身的信息 ”，并且可以“ 操作类或对象的内部属性 ”。
                              程序中一般的对象的类型都是在编译期就确定下来的，而 Java 反射机制可以动态地创建对象并调用其属性，这样的对象的类型在编译期是未知的。
                              (这就需要“ 我们在编写反射性代码时，抽象出公共的部分
                                                                1.对象实例化时该如何构造 newInstance 还是Constructor ”
                                                           --是否需要遍历还是直接获取属性和方法-指定
-                                                               2.这个方法是否和field某种get..有关，给属性塞值
+                                                               2.属性 方法获取 并判断是否和field某种get..有关，给属性塞值
                                                                3.需要invoke哪个方法 这个方法和属性是否有关，name上有啥特征比如getXxx /....
+                                                               4.在运行时判断任意一个对象所属的类；
+                               
+            使用场景：
+               1.使用 IDE(如 Eclipse，IDEA)时，当我们输入一个对象或类并想调用它的属性或方法时，一按点号，编译器就会自动列出它的属性或方法
+               2.开发各种util,框架，插件，组件 等公共服务
+               
+               
+            API:
+               1.实例创建
+                        Class<?> cls = Class.forName("全类名") / 类名.class / 实例.getClass(实例都有还要Class,因为只有从Class入手才得到属性和方法..)
+                                                                             对象在实际的开发中这种形式是常用的，代码用来源可能来自某个传递的对象
+                                                                             (而我们工具从这里开始入手处理)
+                                                               Class<?> classInt = Integer.TYPE;/int.class  下面这两种用于顶层API，客户端传入
+                                                   Class<?> cls =  Class.forName("util.reflect.ABC");
+                        
+                        newInstance 无参构造器  但是有的是没有的比如Integert Long 数组需要指定大小..... --只是创建了凡人的object子类，圣人还是cls
+                        Construstor 有参构造器   Object obj = cls.getConstructor(String.class ,int.class).newInstance("gouzaoqi ",2);
+                                    (api不是重点)
+               2.属性 方法
+                 属性更多的是遍历，方法则更多是直接获取“ 某个有特征的方法 ”
+                        Filed: Field name = cls.getDeclaredField("name"); cls对象的所有方法包括private getFiled指的是所有public包括继承的
+                      
+                                      @xxx
+                        获得结果是：   private String name = "xxx" ;  ---> 对象 任何一个比如注解，类型，修饰符也都是一个类型可单独获取
+                       
+                       API:	getAnnotation(Class<T> annotationClass) 
+                                    	getModifiers() 
+                                              String  getName() 
+                                              getType() 
+                                    ...以上都是可以获取的，当你想要获取具体值“xxx” 或者set时 需要name.setAccessible(true);解除访问限制
+                                    
+                                               for (int i = 0; i < cls.getDeclaredFields().length; i++) {
+                                                    System.out.print("1----"+cls.getDeclaredFields()[i]);
+                                                    System.out.println("2-----"+cls.getDeclaredFields()[i].getName());
+                                                }
+
+                 方法：获取指定方法并调用
+                 
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                          
+                                                               
             
