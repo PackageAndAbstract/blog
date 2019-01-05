@@ -31,6 +31,7 @@
     ctrl+shift+n 搜索文件 ....
     ctrl+shift+alt+n 搜索方法  ....可以搜索非当前文件
     ctrl+shiftf 所有 并且多种定义方法
+    两次shift 查找
 
 4.列操作
    选择字符串 + ctrl+shift+alt+j 进行所有选中匹配 进行相同操作(向左右操作) --> 相同语法修改  json - 枚举
@@ -60,5 +61,6 @@
    
 8.git
    
-   
+9.注释 
+   ctrl+ / 注释当前行
    
