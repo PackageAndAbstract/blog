@@ -83,10 +83,11 @@
                                 
                           翻译泛型方法
                                泛型 vs 多态
-                               桥方法
+                               桥方法 和 协变
+                               https://github.com/SmileHi/blog/blob/master/TechPoint/respository/%E6%B3%9B%E5%9E%8B%E4%B8%AD%E6%A1%A5%E6%96%B9%E6%B3%95%E5%92%8C%E5%8D%8F%E5%8F%98.png
                           
                           调用遗留代码     
-                               
+                               泛型引起的warning
                                
                   4.泛型对象的声明 创建       
         
