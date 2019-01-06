@@ -88,11 +88,89 @@
                           
                           调用遗留代码     
                                泛型引起的warning
+                               https://github.com/SmileHi/blog/blob/master/TechPoint/respository/%E6%B3%9B%E5%9E%8B%E5%BC%95%E8%B5%B7%E4%BB%A3%E7%A0%81warning.png
+                  4.泛型对象的声明 创建 
+                  
+                  5.约束和局限性 ***** 这是重点****区分普通类创建及调用逻辑*****
+                     大多限制是由类型擦除引起的。
+                         1.不能使用基本类型 实例化 类型参数（T...）
+                               没有Pair<doubel> --> Pair<Double>  类型擦除后Object不能存储double值
+                        
+                         2.运行时类型查询只适用于原始类型
+                              虚拟机中对象总有一个“ 特定的非泛型类型 ”。
+                              a instanceof Pair<String> = a instanceof pair<T> 是错误的
+                              Pair<String> p = Pair<String>a ;                 是警告的
+                              StringPair.getClass()== employeePair.getClass()  是正确的  返回都是Pair.class
+                         
+                         3.不能创建参数化泛型数组
+                              Pair<String>[] a = new  Pair<String>[10]         是错误的
+                              如果需要手机“ 参数化类型对象 ”，只有一种安全而有效的方法：使用ArrayList:ArrayList<Pair<String>> 
+                              List<String> list = new ArrayList<>();
+                              List<Object> listObj = (List<Object>)list;是不允许的
+                              
+                              String[] s = new String[1];
+                              Object[] o = s ;              //数组可以将其中元素转为父类 是允许
+                             
+                              因为擦除 创建的对象是Pari<Object>,因为泛型只在“ 编译器进行控制，并在最终获取时由编译器强转来保证看起来是真泛型 ”
+                             
+                              因为这样做会破坏类型安全。
+                              核心的问题在于Java范型和C#范型存在根本区别：Java的范型停留在编译这一层，到了运行时，这些范型的信息其实是被抹掉的；
+                              而C#的范型做到了MSIL这一层。Java的做法不必修改JVM，减少了潜在的大幅改动和随之而来的风险，也许同时也反映出
+                              Java Bytecode规范在设计之初的先天不足；C#则大刀阔斧，连CLR一起改以支持更彻底的范型，换句话说，在范型这一点上，
+                              感觉C#更C++一点。
+                              
+                              在Java中，Object[]数组可以是任何数组的父类，或者说，
+                              ******“ 任何一个“ 数组 ” 都可以向上转型成它在定义时指定元素类型的父类的数组“
+                              这个时候如果我们往里面放不同于原始数据类型 但是满足后来使用的父类类型的话，编译不会有问题，但是在运行时会检查加
+                              入数组的对象的类型，于是会抛ArrayStoreException：String[] strArray = new String[20];
+                              Object[] objArray = strArray;
+                              objArray[0] = new Integer(1); // throws ArrayStoreException at runtime
+                              因为Java的范型会在编译后将类型信息抹掉，这样如果Java允许我们使用类似
+                              Map<Integer, String>[] mapArray = new Map<Integer, String>[20];（）
+                              这样的语句的话，我们在随后的代码中可以把它转型为Object[]然后往里面放Map<Double, String>实例。
+                              这样做不但编译器不能发现类型错误，就连运行时的数组存储检查对它也无能为力，它能看到的是我们往里面放Map的对象，
+                              我们定义的<Integer, String>在这个时候已经被抹掉了，于是而对它而言，只要是Map，都是合法的。
+                              想想看，我们本来定义的是装Map<Integer, String>的数组，结果我们却可以往里面放任何Map，接下来如果有代码试图按原有
+                              的定义去取值，后果是什么不言自明。
+                              
+                              扩展：父类 子类和泛型 https://blog.csdn.net/doudou_demo/article/details/80621182
+                              
+                           4.varvargs警告
+                              向参数个数可变的方法传递一个泛型类型的实例  - 可变参数就是一个数组 - 当不可以和泛型结合时，所以不可以时T[] 
+                              而是T ... ts 
+                              @SafeVarargs 
+                              
+                              扩展：可以声明泛型数组吗？泛型类如何创建T t = new T() ? 如何赋值？
+                           
+                           5.不能实例化类型变量
+                              因为如果你使用new T() ,实质你的本意并不是创建一个Object对象，但是擦除导致，所以这种迷惑性代码直接禁止。
+                              解决方案：通过反射调用Class.newInstacne构造泛型对象
+                                       问题：你不能通过“ 其他部分传递的参数 T类型来简化反射 ” 即：T.class.newInstance() 因为擦除就是Object.class
+                                    所以你只能：public static <T> Pair<T> makePair(Class<T> cl){
+                                           return new Pair<>(cl.newInstance , cl.newInstacne())
+                                    }
+                           6.不能构造泛型数组
+                               就像不能实例化一个泛型实例一样，也不能实例化数组
+                                  T[] t = new T[]      是错误的
+                               解决方案：public static <T extends Compareble> T[] minmax(T... a){
+                                  T[] mm = Array.newInstatnce(a.getClass.getComponnetType(),2)
                                
-                  4.泛型对象的声明 创建       
-        
-        
-        
+                               }  
+                            7.泛型类的静态上下文中类型变量无效
+                               public class Singleton<T>{
+                                   private static T singleInstatnce ;  错误
+                                   
+                                   private static T getSingleInstance(){...}  错误
+                               }
+                              ?没看懂
+                             
+                             8.不能抛出或捕获泛型类的实例
+                               并且泛型类扩展Throwable是不合法的。
+                             
+                              
+                             9.可以消除对受查异常的检查
+                             
+                             10.注意擦除后的冲突 
         
         
         
