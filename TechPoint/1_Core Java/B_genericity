@@ -179,11 +179,14 @@
                              
                               
                              9.可以消除对受查异常的检查
-                             
+                               https://github.com/SmileHi/blog/blob/master/TechPoint/respository/%E6%B3%9B%E5%9E%8B%E6%B6%88%E9%99%A4%E5%8F%97%E6%A3%80%E5%BC%82%E5%B8%B8%E6%A3%80%E6%9F%A5.png
                              10.注意擦除后的冲突 
+                               https://github.com/SmileHi/blog/blob/master/TechPoint/respository/%E6%B3%A8%E6%84%8F%E6%B3%9B%E5%9E%8B%E6%93%A6%E9%99%A4%E5%90%8E%E7%9A%84%E5%86%B2%E7%AA%81.png
         
-        
-        
+                   6.通配符       
+                            ? extends xxx
+                            ? super xxx
+                            可以为方法提供参数，但不能使用返回值
         
         
         
