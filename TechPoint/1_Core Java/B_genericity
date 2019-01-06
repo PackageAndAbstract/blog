@@ -166,6 +166,16 @@
                              
                              8.不能抛出或捕获泛型类的实例
                                并且泛型类扩展Throwable是不合法的。
+                               但是，在异常规范中使用类型变量是允许的，以下是合法的：
+                               public static <T extends Throwable> void doWork(T t) throws T{
+                                  try{
+                                   doWork
+                                  }
+                                  catch(Throwable realCause){
+                                   t.initCause(realCause);            ----> 自定义异常
+                                   throw t ;
+                                  }
+                               }
                              
                               
                              9.可以消除对受查异常的检查
