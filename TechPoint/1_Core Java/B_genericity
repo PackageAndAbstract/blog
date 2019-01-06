@@ -39,7 +39,75 @@
                  return a[a.length / 2];
                }
         
-      3.类型变量的限定和通配符类型        
+      3.类型变量的限定和通配符类型           
+               public static <T> T min(T[] a)
+               {
+                  if(a == null || a.length ==0 ) return null ;
+                  T smallest = a[0];
+                  for(int i = 1; i < a.length ; i++)
+                      if(smallest.compareTo(a[i]) > 0 ) smallest = a[i];
+                      return smallest ;
+               }
+            1.使用了静态方法， 返回类型为泛型，参数为泛型数组  ， 泛型类型变量声明和赋值 T smallest = a[0]
+            2.使用了泛型对象的compareTo方法
+            
+            讲解：1.要想使用compareTo方法就必须要求对象事项compareable接口  -->T在" 声明 " 时  <T extends CompareTo>
+                        1.注意这里的extends不是继承，而是表示“ 子类 ” compareTo是绑定类型 webservie中sub
+                        2.T extends CompareTo & Serializable 可以根据需要拥有多个接口超类型，但限定中“ 至多 ”有一个类，如果
+                           一个类作为限定，他必须是限定列表中的第一个
+                 2.获得最小值，最大值思路 -> 算法排序实现   先将a[0]值赋值给变量，再循环比较赋值
+                        1.T min = a[0] , T max = a[0] ;
+                          for(int i = 1 ; i<a.length ; i++){
+                              if(min.compareTo(a[i]) > 0 ) min = a[i];
+                              if(max.compareTo(a[i] < 0))  max = a[i];
+                          }
+                          return new Pair<>(min,max);
+
+                 3.泛型代码和虚拟机(泛型原理)
+                        1.类型擦除 
+                          无论何时定义一个泛型类型，都自动提供了一个相应的原始类型（raw type）.原始类型的名字就是" 删去类型参数后的‘第一个’泛型类型名 "。
+                           擦除类型变量，并替换限定类型（无限定的变量用object）
+                          Pair<T>  -> privat Object first , .....
+                          
+                          c++注释：就这点而言，java泛型和c++模板有很大的区别，c++中的每个模板的实例化“ 产生不同类型 ”，称为模板代码膨胀
+                          
+                          问题：这种擦除导致T extends Compareable & Serializable中的T替换为Compareable那么需要serialiale接口性质时
+                               “ 编译器在必要时向compareable插入强制类型转换 ”，为了提高效率，应该将标签（tagging）接口（即没有方法的
+                               接口）放在边界列表的末尾。
+                          
+                        2.翻译泛型表达式
+                               Pair<Employee> bud = ....; 
+                               Employee bu = bud.getFirst();
+           ********** 泛型的容器概念和集合容器概念区别：前者需要将泛型类型对象作为当前类的“ 组合部分 ” ，而容器则侧重于“ 每个部分的独立只是类型相同 ”
+                                擦除的返回时Object,编译器自动“ 强制类型转换 ”
+                                
+                          翻译泛型方法
+                               泛型 vs 多态
+                               桥方法
+                          
+                          调用遗留代码     
+                               
+                               
+                  4.泛型对象的声明 创建       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
