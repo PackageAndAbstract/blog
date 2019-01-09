@@ -1,5 +1,13 @@
 
 enum的七中使用场景
+      0.public Enum xxxEnum{        //命名以enum结尾
+            BLUE , RED              //大写
+                                    //隐含属性：name 并在toString默认重写中return name ，name的值就是BLUE 所以当你定义属性时，不要起名name 
+                                               ordinal() 默认方法  返回“ 第几个枚举对象 ”
+                                    //枚举对象比较可以使用“  == ” 而无需equals()
+                                               
+      
+      }
       1.常量
           1.常量 等价于类中的public static final RED = XXX ;
           2.System.out.println(Color.BLUE);  //BLUE   1.注意这里是enum对象  2.对象就是值(对象已经重写了toStirng()) 不像常量需要定义值
@@ -65,9 +73,48 @@ enum的七中使用场景
       
       4.覆盖toStrin()方法
             1.从前面知道，我们输出Color.RED就是RED,那是因为默认调用(不是说一定是sout,而是调用都要默认调用)toString，
-              而toString()被默认重写，现在我们自定义重写满足 ，其实，也可以默认 return Integer.valueOf(index)toString() ;
+              而toString()被默认重写，现在我们自定义重写满足 ，其实，也可以默认 return Integer.valueOf(index).toString() ;/index+"";
               
               定义为int而不是string是因为：这里int更能表示下标，不能因为转换而丧失定义的好处
+      
+       5.实现接口
+             1.返回该调用“ 实例 ” 的name+desc ;
+             2.实现接口的方法只能由“ 实例 ”调用，不可以向前面定义的类定义的方法，“ 只能由类 ”调用。所以这两类方法是有区别的。
+                public String getInfo() {
+                    return name+desc ;  
+                    
+        6.使用接口组织枚举
+                   public interface Food {  
+                      enum Coffee implements Food{  
+                          BLACK_COFFEE,DECAF_COFFEE,LATTE,CAPPUCCINO  
+                      }  
+                      enum Dessert implements Food{  
+                          FRUIT, CAKE, GELATO  
+                      }  
+                  }
+          组织数据为属性 System.out.println(Food.Coffee.BLACK_COFFEE);;
+        
+        7.enumSet enumMap
+        
+        8.通过自己写的那个构造方法给我这个自定义的属性初始化值的。
+           构造方法是不可以，也不被运行public的，不信，你可以试试。
+           你不能对系统自带的name属性，在构造函数里面赋值，没有为什么。
+           
+        9.定义的方法是不是可以抽离出keyValueEnumHelper呢。其中就涉及到泛型和枚举的糅合  --->>>>>待完成
+        
+        
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       
