@@ -1,6 +1,77 @@
 
 enum的七中使用场景
+      1.常量
+          1.常量 等价于类中的public static final RED = XXX ;
+          2.System.out.println(Color.BLUE);  //BLUE   1.注意这里是enum对象  2.对象就是值(对象已经重写了toStirng()) 不像常量需要定义值
+      
+      2.switch
+          1.switch需要变量 定义并提供提供默认值  默认值不能为null  java.lang.NullPointerException 不能定义为null、
+          2.2.格式 （）{}  :
+          3.break 引发思考 method2
+          4.1.7之后支持str进行switch
+                        static  void method1(){
+                            
+                            Color c =  Color.BLUE ; // 1 Color c = null  
+                            switch (c){             // 2
+                                case BLUE:    
+                                    System.out.println("this is blue");
+                                    break;          //3.break 结束域  结束if / for / switch
+                                case RED:
+                            }
+                      String str = "77" ;
+                      switch (str){     //JDK1.6之前的switch语句只支持int,char,enum类型 ;现在是可以支持字符串的
+                          case "1":
+                              System.out.println("111");
+                              break ;
+                          default:
+                              System.out.println("没有定义");
+                      }
+                  }
 
+                  static void method2(){
+                      int i =1 ;
+                      int j =0 ;
+                      for (j = 0; j <100 ; j++) {
+                          if(j==2){
+                              i =2 ;
+                              continue;  //return  跳出最近方法    break：跳出最近循环 所以没有循环是不可以写break ，
+                                         // continue:跳出当前循环，继续下次循环
+                                          //域内没有代码 ，域外可以有 域最小就是if 、for ....
+                          }
+                          j=j+100 ;
+
+                      }
+
+                      i = 4;
+                      System.out.println(i+"000"+j);
+      
+      3.向枚举中添加新方法
+            1.如果打算自定义自己的方法，那么必须在enum实例序列的最后添加一个分号。而且 Java 要求必须先定义 enum 实例。
+            2.定义Color(int index, String name, String desc) {属性，构造 ，get/set
+            3.灵活使用枚举API 比如  Color.vlaues()返回枚举实例数组  Color.valueOf(String name)  Color.valueOf(Class<T> , String name)
+            4.定义自己的方法（根据业务需要）
+                 static int getIndexByNmme(String name ){  //需要在众多中挑选  for+if
+                        for (Color c:Color.values()
+                             ) {
+                            if(StringUtils.isNotBlank(name)&&c.getName().equalsIgnoreCase(name.trim())){
+                                return c.getIndex();
+                            }
+                        }
+                        return  -1 ;
+                    }
+             问题：我应该如何创建“  全 ”的方法使用呢？
+                  1.业务需要
+                  2.从属性获取对象，再从对象获取需要的其他属性  ，这种组合可能多种，同样可以使用Class<T> ...等高级用法结合
+      
+      4.覆盖toStrin()方法
+            1.从前面知道，我们输出Color.RED就是RED,那是因为默认调用(不是说一定是sout,而是调用都要默认调用)toString，
+              而toString()被默认重写，现在我们自定义重写满足 ，其实，也可以默认 return Integer.valueOf(index)toString() ;
+              
+              定义为int而不是string是因为：这里int更能表示下标，不能因为转换而丧失定义的好处
+      
+      
+      
+      
 enum在类的首部分声明含义
 
 enum和list转换
