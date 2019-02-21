@@ -1,1 +1,91 @@
 
+        String str = new String("Abc@12@3  ");
+
+        // 增 - 删 - 改 - 查  -->更高级api(例如charAt ...)
+
+        System.out.println(
+/** 定位 */
+                str.charAt(1) +"  "+  //b
+
+                str.indexOf(1)+"  "+  //-1
+                str.indexOf("1")+"  "+//4
+                str.indexOf("b",3)+"###"+//-1
+
+                str.length()+" "+
+
+                //str.lastIndexOf      //上面为第一次索引，下面为最后一次索引
+
+/** 比较判断 */
+                str.compareTo("Z")+"  "+   //-25  String重写了该方法，从第一个位置开始比较，前者-后者 ascii码
+                "2".compareTo("7")+"  "+      //-5  ***
+                "z".compareToIgnoreCase("Z")+"  "+ //0
+
+                 str.contains("a")+" "+    //false
+
+                 str.equals("a")+"  "+
+                 str.contentEquals(new StringBuffer("A"))+ " " +
+
+                 str.startsWith("A")+" ---"+//TRUE
+                 str.startsWith("A",1)+" "+ //flase
+                 str.endsWith("3")+" "+    //true  判断后缀
+
+                 str.matches("")+" "+ //正则
+                 str.regionMatches(1,"abc",1,3)+" "+ //无需切分直接比较子串
+                 // regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len
+
+                str.isEmpty()+" "+//apache StringUtils.isEmpty() 等价于前者+ !=null 注意 isBlank +不为“ ”
+
+/** add */
+                str.concat("gg")+"  "+ //使用直接拼接 或者+“”转为字符串
+                        str+ "--contant"+ //Abc@12@3--contant
+                new StringBuffer(str).append("gg").toString()+" "+
+
+/** 改 */
+                str.replace("@","")+" "+
+                        //---和正则搭配的都未解决
+
+                str.replaceFirst("$","&")+" " + //Abc@12@3&未匹配到，因为replace不会改变原来的串，只是临时替换，所以想要
+                        //真正替换需要 接受返回值 ，所以下面的str还是原值
+                        //1.定义接受  2.只在当前表达中用到关于replace的东西 .split存了，后面不用到。
+                str.replaceFirst("@","&")+" "+
+                str.replaceAll("$","&")+" "+
+
+                String.format("xx,xx", str)+ ' '+//使用正则处理
+
+                String.valueOf(1) +" "+ //任意类型(基本，数组，object都可以使用该方法转为string，特别是枚举时)
+
+                str.toUpperCase()+" "+
+                        str+""+         //Abc@12@3原值没动
+                str.toUpperCase(Locale.ENGLISH)+" "+ //国际化
+               //toLowerCase
+
+               str.toCharArray()[1]+" "+ //b
+               str.toCharArray().toString()+" "+  //[C@5caf905d --循环获取
+
+               str.split("@")+" "+
+               str.split("@",-1)+" "+ //尽可能多的匹配 ，当为n>0，则最多进行n-1次匹配，注意匹配过程中，拆出来的值不包含分隔符
+
+                str.getBytes()+""+  //编码，解码时重要   和流结合使用
+/** delete */
+                str.trim()+" "+        //临时替换，不改变原值  2.只去除前后空白，对中间不起作用
+                        str +" "+           //带有空格
+                /**
+                 * 切勿:str.trim()
+                 *      str.xxxx进行按照已经处理的来做
+                 */
+
+                str.substring(2)+" "+   //c@12@3
+                str.substring(2,4)+" "+ //c@
+                str          //Abc@12@3
+
+
+/**
+ * @// TODO: 2019/2/21
+ *    1.regex和String结合
+ *    2.getbyte()和stream结合
+ *    3.stringBuffer中insert  delete操作 。。
+ */
+
+
+
+
