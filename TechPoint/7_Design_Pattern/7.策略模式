@@ -1,4 +1,5 @@
 
 问题：策略和多态区别
-     
+      
+      从compareTo --> comparable 入手 对比优缺点， 引入 策略模式
      
