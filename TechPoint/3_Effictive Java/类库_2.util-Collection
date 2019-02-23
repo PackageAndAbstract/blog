@@ -1,3 +1,285 @@
 collection / set /list /map  以及使用场景**工具 / collections辅助类
 
 1.初始化map集合
+
+package util.api.Collections;
+
+import com.sun.org.apache.xerces.internal.xs.StringList;
+
+import java.util.*;
+import java.util.function.BiFunction;
+
+/**知道当前的场景 - 想要得到什么 - 寻找有没有合适的api来判断是否需要自己定义*  通常用到的都已经定义好了API,别老想着遍历判断/
+/**在文档中看到的api不是全的，还要注意“继承”而来的方法 ，对于没有必要的多态-需要使用到子类的特殊方法可以在定义时直接定义子类*/
+public class CollectionTest {
+
+    Stack stack  = new Stack();
+    //private  static HashSet set = new HashSet();
+    private  static TreeSet set = new TreeSet();
+
+    private  static TreeSet setTree =  new TreeSet<String>(new Comparator<String>() {  //new Comparator 或者 Compable接口
+        @Override
+        public int compare(String o1, String o2) {
+//            return o1.hashCode() - o2.hashCode();
+//            return o2.hashCode() - o1.hashCode();
+//            return o2.compareTo(o1);  //[bbc, ac, abc, 11a]
+            return o1.compareTo(o2);    //[11a, abc, ac, bbc]
+            /**
+             * 铁律：
+             *    第一个是调用该方法的对象，第二个值集合中已经存入的对象。
+             *    大于0 ，向后排 ....
+             */
+        }
+    });
+    public static void main(String[] args) {
+
+        /**对于明确大小，临时不作为“复杂”容器操作，中间转换  优先选择数组   --> //@Todo 二维数组 定义使用*/
+        String[] strArray1 = new String[3];
+
+        String[] strArray2 = new String[]{"a","1"};
+        String[] strArray3 = {"a","b"};
+        /**集合初始化    1.内部类  2.一个一个添加  3.调用方法*/
+        ArrayList arrayList = new ArrayList() {
+            {
+                add("a");
+                add("b");
+
+            }
+        };
+        LinkedList linkedList = new LinkedList();
+            //2.一个一个添加
+            linkedList.add("linka");
+            linkedList.add("linkb2");
+            //3定义一个方法在外面 ，需要时就在干净的linklist基础上，调用改方法  -- 改思路应用在"    复杂场景中适当时候初始化数据  "
+        initHashSet();
+
+        //String[] strArray4 =arrayList.toArray(new String[arrayList.size()]);
+        //String[] strArray4 =(String[])arrayList.toArray();  /数组不可以强制类型转换？ 为什么ArrayList可以
+        String[] strArray4 = (String[]) arrayList.toArray(new String[arrayList.size()]);  //jdk8以前无须再次强制类型转换的 - 集合数组间相互转化是非常重要的
+
+        String[][] strs = new String[1][];   /**1.二维数组只需要定义第一层 大小即可   2.这种集合 数组间嵌套*/
+        arrayList.add(1,"abc");
+
+        //设置setTree的初始值
+        setTree.add("abc");
+        setTree.add("bbc");
+        setTree.add("11a");
+        setTree.add("ac");
+
+        HashMap hm = new HashMap<String,String>();
+        hm.put("1", "1");
+        hm.put("2", "2");
+        hm.put("3", "3");
+        TreeMap tm = new TreeMap<String,String >();
+        tm.put("1", "1");
+        tm.put("2", "2");
+        tm.put("3", "3");
+
+        System.out.println(
+                /**Array - Arrays*/
+                strArray1 + "  " +
+                        strArray2 + "  " +
+                        strArray3 + "  " +
+
+
+                        /**Arras*/
+                        Arrays.toString(strArray2) + "  " +  //[a, 1]
+
+
+                        /**ArrysList*/
+                        /**定位 */
+                        arrayList.get(0) + " " +
+
+                        arrayList.indexOf("c") + " " +
+                        arrayList.lastIndexOf("c") + " " +
+
+
+                        /**add*/
+                        arrayList.add("c") + "  " +
+                        //arrayList.add(1,"abc")+" "+ [a, abc, b, c] //因为该方法返回void,所以后面不可以拼接东西  list重写了toString() 插入而不是替换
+                        arrayList.set(1, "ddd") + " " +
+                        //addAll
+
+                        /** 判断 */
+                        arrayList.contains("c") + "  " +   //同样可以判断一个集合是否包含另一个集合元素***
+
+                        arrayList.isEmpty() + " " +   //等价于.size() == 0
+
+
+                        /** delete */
+                        //arrayList.clear();  返回void
+
+                        arrayList.remove(1) + " " +
+                        arrayList.remove("a") + " " +
+                        arrayList.removeAll(Arrays.asList(new String[]{"c"})) + " " + //来自父类的方法 2.new ArrayList<String>(){"c"}list不可以这样初始化，数组可以
+                        // protected  void removeRange(int fromIndex, int toIndex) 想要使用还要自定义list去调用该方法
+                        //arrayList.removeIf() jdk8新加入避免循环就可以删除相关api  https://blog.csdn.net/qq_33829547/article/details/80277956
+
+
+                        /** 改 */
+                        arrayList.subList(0, 1) + " " +
+
+                        arrayList.retainAll(Arrays.asList(new String[]{"c"})) + " " +  //取两个集合的交集  //@TODO : APACHE
+
+                        /*arrayList.sort(new Comparator() {                         //排序  或者使用Collections.sort
+                            @Override
+                            public int compare(Object o1, Object o2) {
+                                return 0;
+                            }
+                        });*/
+
+                        // arrayList.spliterator()
+                        /***
+                         * 从集合的最基本的接口Collection中可以看出Java8中新增了下面几点内容：
+                         1. spliterator
+                         2. stream
+                         3. parallelStream
+                         */
+
+                        //arrayList.iterator();
+                        //arrayList.listIterator();
+                        //arrayList.listIterator(); //返回此列表中的元素的列表迭代器（按适当顺序），从列表中指定位置开始。
+
+                        /**LinkedList
+                         *     1.因为LinkList和arrayList实现了同一接口，继承同一个抽象类，所以很多方法（已重写）是一样，只是底层的实现不同
+                         *       所以这里对于以上"" 相同效果的api就不再赘述***
+                         *     2.LinkList除了实现了List还实现了queue，导致新加了许多关于 queue 的方法
+                         *     3.stack queue模型其实可以有 数组/链表 实现，只不过选择了链表 --> 效率等
+                         * **/
+
+                        /**实现queue*/
+                        //queue linkedList.addFirst("linkaa")+" "+  等价于add(0,"xx") stringbuffer.insert()...
+                        //           addLast
+                        //           getFirst
+                        //           getLast
+                        linkedList.element() + " " +  //return first element  来自实现queue
+                        linkedList.offer("que1") + " " +
+                        //           offerFirst
+                        //           offerLast
+                        //           peekFirst
+                        //           peekLast         这些和上面的一样都是处理queue的 区别：当null调用返回null还是报错
+
+                        linkedList.poll() + " " +    //获取并移除
+                        //         pollFist();
+                        //         pollLast()
+                        linkedList.pop() + " " +   //弹出
+                        //linkedList.push("pushlin");
+
+                        linkedList.descendingIterator() + " " + //因为双向链表 返回以逆向顺序在此双端队列的元素上进行迭代的迭代器。
+
+                        /**stack*/
+                        //stack 被arraylist代替  statck的线程安全由"  获取安全集合  " 来代替
+
+
+                        /**hashSet*/
+                        /**
+                         * 和arrayList一样  区别在于：set是无序不可重复 ，list是有序可重复(序：加入顺序而不是某种逻辑 )
+                         所以选择"   结合业务，是否需要将重复元素过滤掉，需要我们直接使用set，就少了判断 ，并且底层由优化  "
+                         */
+
+                        /**treeSet*/
+                        set.ceiling("set2") + " \n  " + //返回此 set 中大于等于给定元素的最小元素；如果不存在这样的元素，则返回 null。
+                        set.floor("set2") + " " +     //              小于等于         最大元素
+                        set.higher("set2") + " " +      //              大于              最小
+                        set.lower("set2") + " " +
+
+                        set.headSet("set2") + " " + //返回此 set 的部分视图，其元素严格小于 toElement。
+                        // headSet(E toElement, boolean inclusive) 返回此 set 的部分视图，其元素小于（或等于，如果 inclusive 为 true）toElement。
+                        set.tailSet("set2") + " " +
+
+                        set.subSet("set1", true, "set2", true) + " " + //获得指定元素间的字串
+
+                        setTree.comparator() + "  " +       //返回对此 set 中的元素进行排序的比较器；如果此 set 使用其元素的自然顺序，则返回 null。
+                        //创建的时候就可以使用comparator来定义treeset的比较顺序
+                        //遵顼：大于0 向后添加    小于0 向前添加   所以这种规则在重写compareTo时，o1-o2
+
+                        setTree + " " +
+
+
+                        /**map*/
+                       /*hm.replaceAll(new BiFunction() {          //jdk8
+                           @Override
+                           public Object apply(Object o, Object o2) {
+                               return null;
+                           }
+                       })*/
+                        hm.replace("1", "111") + " " +
+                        hm.replace("1", "111", "121") + " " +
+
+                        hm.keySet() + " " +
+                        hm.values() + " " +
+                        hm.entrySet() + " " +
+
+                       /*hm.compute()+" "+        //jdk8配合   指定的key在map中的值进行操作 不管存不存在，操作完成后保存到map中
+                       hm.computeIfAbsent()+" "+      computeIfAbsent的方法有两个参数 第一个是所选map的key，第二个是需要做的操作。这个方法当key值不存在时才起作用。
+                       hm.computeIfPresent()+" "+*///指定的 在map中已经存在的key的value进行操作。只对已经存在key的进行操作，其他不操作
+
+                        hm.containsKey("1") + " " +
+                        hm.containsValue("222") + " " +
+
+                        hm.getOrDefault(1, "2") + " " +
+//
+//                      hm.merge("1",)            //jdk8
+
+                        /**treeMap*/
+                        tm.comparator() + "\n " +
+
+                        /*对比hashset得到对应的大于等于的最小值 ....
+                        tm.ceilingKey()+" "+
+                        tm.ceilingEntry()+" "+
+                        tm.descendingKeySet()+" "+
+                        */
+
+                        /** Arrays - Collections */
+                        /***/
+                        Arrays.toString(new int[]{1, 2, 3})+" "+     //因为list重写了改方法，所以直接就可以展示，但是array需要借助Arrays
+
+                        Arrays.asList(new int[]{1, 2, 3})+" "+   //[[I@372f7a8d] --返回的List 而重写实在AbstractList。并且这里转换的内部Arrays$ArrayList
+
+                        Arrays.sort();
+                        Arrays.binarySearch();
+
+                        Arrays.equals()  //deepEquals  deepToString
+
+                        Arrays.copyOf()  //copyOfRange
+
+                        Arrays.fill();
+
+                        Arrays.stream()
+                        Arrays.spliterator()
+                        Arrays.setAll();
+                        Arrays.parallelPrefix();
+                        Arrays.parallelSort();
+
+                        Collections.EMPTY_LIST
+
+
+
+
+                /***/
+                /***/
+                /***/
+                /***/
+                /***/
+
+
+                ""
+
+
+        );
+    }
+
+    private static void initHashSet(){
+        set.add("set1");
+        set.add("set2");
+        set.add("set3");
+    }
+
+
+    /**
+     * @TODO :
+            1.apache Collections
+     */
+
+}
+
