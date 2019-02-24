@@ -1,16 +1,16 @@
-collection / set /list /map  以及使用场景**工具 / collections辅助类
-
-1.初始化map集合
-
 package util.api.Collections;
 
 import com.sun.org.apache.xerces.internal.xs.StringList;
 
+import java.security.cert.CollectionCertStoreParameters;
 import java.util.*;
 import java.util.function.BiFunction;
 
 /**知道当前的场景 - 想要得到什么 - 寻找有没有合适的api来判断是否需要自己定义*  通常用到的都已经定义好了API,别老想着遍历判断/
 /**在文档中看到的api不是全的，还要注意“继承”而来的方法 ，对于没有必要的多态-需要使用到子类的特殊方法可以在定义时直接定义子类*/
+/**无论是String还是集合 对于下标的定位 ，截取 ，部分操作 都是重要的*/
+/**很多方法是重载的,所以你必须理解参数为 Object 及 T (在返回类型T的场景下)*/
+/**api定义了许多常用的方法，这些自己也是可以定义的，”查看源码对比自己思路 “**/
 public class CollectionTest {
 
     Stack stack  = new Stack();
@@ -75,6 +75,9 @@ public class CollectionTest {
         tm.put("2", "2");
         tm.put("3", "3");
 
+        String[] strArray  = new String[]{"ab","bc","aa","1","3","2"};
+        Arrays.sort(strArray);
+        //Arrays.fill(strArray,"abc");
         System.out.println(
                 /**Array - Arrays*/
                 strArray1 + "  " +
@@ -231,41 +234,119 @@ public class CollectionTest {
                         */
 
                         /** Arrays - Collections */
-                        /***/
-                        Arrays.toString(new int[]{1, 2, 3})+" "+     //因为list重写了改方法，所以直接就可以展示，但是array需要借助Arrays
+                        /**展示*/
+                        Arrays.toString(new int[]{1, 2, 3}) + " " +     //因为list重写了改方法，所以直接就可以展示，但是array需要借助Arrays - deepToString()
 
-                        Arrays.asList(new int[]{1, 2, 3})+" "+   //[[I@372f7a8d] --返回的List 而重写实在AbstractList。并且这里转换的内部Arrays$ArrayList
+                        /**array - list转化*/
+                        Arrays.asList(new int[]{1, 2, 3}) + " " +   //[[I@372f7a8d] --返回的List 而重写实在AbstractList。并且这里转换的内部Arrays$ArrayList
 
-                        Arrays.sort();
-                        Arrays.binarySearch();
+                        /**比较 一维数组没有区别，多维由*/
+                        Arrays.equals(new String[]{"1"},new String[]{"1"})+" "+
+                        Arrays.deepEquals(new String[]{"1"},new String[]{"1"})+" "+  //deepEquals用于判定两个指定数组彼此是否深层相等，此方法适用于任意深度的嵌套数
+                                                                                     //https://blog.csdn.net/gaohuanjie/article/details/39157241
+                        Arrays.toString(strArray)+" "+
+                        /**排序*/
+                        //Arrays.sort(strArray)+" "+      返回void 所以不可以拼接进来
+                        //Arrays.sort("strArray",1,3);
+//                      //Arrays.sort("strArray", new Comparator<T>() {   //引入比较器  - 不指定时则默认比较器  ascii--升序--大于向后
+//                            @Override
+//                            public int compare(T o1, T o2) {
+//                                return 0;
+//                            }
+//                        });
+                        //上面组合 比较器和下标都用上.....
+                        //Arrays.parallelSort();                       //jdk8 超过范围使用多线程再使用归并
+                        /** 搜索 */
+                        Arrays.binarySearch(strArray,"ab")+" "+   //未使用sort时为-7  --> sysout外面使用sort再对比  --> 4
+                        Arrays.binarySearch(strArray,1,2,"ab")+" "+ //注意index是数字而不是string  -3没找到
+                        Arrays.binarySearch(strArray, 1, 2, "abc", new Comparator<String>() {
+                            @Override
+                            public int compare(String o1, String o2) {
+                                return 0;
+                            }
+                        })+" "+
 
-                        Arrays.equals()  //deepEquals  deepToString
+                        /**复制*/
+                        Arrays.toString(Arrays.copyOf(strArray,2))+" "+  //不足则补null(不同类型填充的值不同) 少则截取
+                        //Arrays.copyOf(strArray,10,Integer[].class)+" "+  //1.int[] 不继承于OBJECT[]  2.无法转化 ，因为其中由字母
+                        Arrays.toString(Arrays.copyOf(strArray,10,String[].class))+" "+
+                        Arrays.copyOfRange(strArray,1,3,String[].class)+" \n"+
 
-                        Arrays.copyOf()  //copyOfRange
+                        /**填充 用于创建了数组，填充相同的值进去*/
+                        //Arrays.fill(strArray,"abc")+" "+
+                        //Arrays.parallelPrefix();                          //jdk8 用于并行处理
 
-                        Arrays.fill();
+                        //Arrays.stream()                                   //jdk8 配合lamdar表达式 https://blog.csdn.net/a13662080711/article/details/84928181
 
-                        Arrays.stream()
-                        Arrays.spliterator()
-                        Arrays.setAll();
-                        Arrays.parallelPrefix();
-                        Arrays.parallelSort();
+                        //Arrays.spliterator()                              //jdk8 并行迭代器
 
-                        Collections.EMPTY_LIST
+                        //Arrays.setAll();                                  //遍历元素的索引
+
+                        //Arrays.parallelPrefix();                          //使用元素的索引做些什么
+
+                        //Arrays.parallelSort();
+
+                /**Collections*/
+                       Collections.EMPTY_LIST +" "+         //[]
+                       Collections.EMPTY_SET+" "+           //[]
+                       Collections.EMPTY_MAP+" "+           //{}
+
+                       Collections.addAll(arrayList,arrayList)+" "+
+
+                       //Collections.binarySearch(arrayList, "a", new Comparable<>())+" "+ 加入比较器
+
+                        /**返回指定 collection 的一个动态类型安全视图。试图插入一个错误类型的元素将导致立即抛出 ClassCastException。假设在生成动
+                        * 态类型安全视图之前，collection 不包含任何类型不正确的元素，并且所有对该 collection 的后续访问都通过该视图进行，
+                        * 则可以保证 该 collection 不包含类型不正确的元素。  -- 对比泛型的控制 */
+                       //Collections.checkedCollection(arrayList,String.class).addAll(Arrays.asList(new int[]{1,2}))+" "+//类型异常
+                       //            checkList ....chekmap .....
+
+                       /**复制*/
+                       //Collections.<String>copy(new ArrayList<String>(),Arrays.asList(new String[]{"1","2"}))+" "+     //泛型方法的调用
+                       // Collections.nCopies()  //返回由指定对象的 n 个副本组成的不可变列表。
+
+                       /**对比*/
+                       Collections.disjoint(Arrays.asList(new String[]{"1","2"}),Arrays.asList(new String[]{"1","3"}))+" "+ //如果两个指定 collection 中没有相同的元素，则返回 true。
+                       //TODO:APCHAE COLLECTIONS 中 取交集 并集  差集  ... --> 数据库 数据取
+
+                       /**枚举*/
+                       //Collections.emptyEnumeration()
+                       //Collections.enumeration()
+                       //static <T> ArrayList<T>  ist(Enumeration<T> e)  返回一个数组列表，它按返回顺序包含指定枚举返回的元素。 枚举api获取list
+
+                       /**fill*/
+                       //Collections.fill();
+
+                       /**遍历计数*/
+                       //Collections.frequency()   // 返回指定 collection 中等于指定对象的元素数。 省的自己去遍历 再来个计数器
+
+                       /**下标*/
+                       //Collections.indexOfSubList()
+                       //            lastIndexOfSubList()
+
+                       /**最大最小值*/
+                       //Collections.max(Collection<? extends T> coll, Comparator<? super T> comp); 根据指定比较器产生的顺序，返回给定 collection 的最大元素。
+                       //            min  也可在调用方法时通过泛型指定
+
+                       /**替换*/
+                       //static <T> boolean replaceAll(List<T> list, T oldVal, T newVal)
+                       //static void swap(List<?> list, int i, int j)
+
+                       /**排序 比较器 反转*/
+                      //static <T> void  sort(List<T> list, Comparator<? super T> c)  根据指定比较器产生的顺序对指定列表进行排序。
+                      //reverse(List<?> list)
+                      //static <T> Comparator<T> reverseOrder()
+                      //rotate(List<?> list, int distance)            根据指定的距离轮换指定列表中的元素。
+                      //shuffle(List<?> list)                         使用默认随机源对指定列表进行置换。
+                      //swap(List<?> list, int i, int j)              在指定列表的指定位置处交换元素
+
+                      /**返回*/
+                      //singleton(T o)                                返回一个只包含指定对象的不可变 set  -- list map
 
 
-
-
-                /***/
-                /***/
-                /***/
-                /***/
-                /***/
-
-
+                      /***  并发  ***/
+                     //   synchronizedCollection(Collection<T> c)
                 ""
-
-
         );
     }
 
@@ -282,4 +363,3 @@ public class CollectionTest {
      */
 
 }
-
