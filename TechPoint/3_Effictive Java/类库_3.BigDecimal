@@ -1,0 +1,4 @@
+ java.math包下        ---> Math类   -->为后续的计算工具做准备
+         提供用于执行" 任意精度整数算法 " (BigInteger) 和任意精度小数算法 (BigDecimal) 的类，包括
+              1.curd
+              2.精度控制
