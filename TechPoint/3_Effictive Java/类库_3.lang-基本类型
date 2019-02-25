@@ -1,2 +1,51 @@
 
 Integer / double Double  /bigDicimal .doublevalue ....未后面计算做准备
+package util.api.基本类型;
+
+/**
+ * 1.如何定义合理类型  是全部优先基本类型吗？
+ * 2.属性类型和数据库如何对应合理
+ */
+public class IntergerTest {
+
+    public static void main(String[] args) {
+
+        Integer it = new Integer("123");
+        Double db = new Double("122.1");
+        System.out.println(
+            /**Filed*/
+            Integer.MAX_VALUE +" "+
+            Integer.TYPE +" "+              //int
+
+            /**所有的Integer - Long - Short - Byte - BigDecimal - BigInt ..都继承子Number抽象类 ，该方法由继承来的*/
+            it.byteValue()+" "+       //123 注意计量单位变了 区分于byte[]
+
+            /**jdk提供的api大部都重写了常用的method 比如compareTo - toString - equals.当比较这些时 - 不要简单的以为“-”，他们是对象-*/
+            it.compareTo(Integer.valueOf(123))+" " +  //0     Double类型使用compareTo比较的使用
+            it.equals(Integer.valueOf(123))+" "+      //true
+            it.toString()+" "+
+
+            /**转化以Integer为中心 发散+聚合 valueOf(String) - xx.intValue - int parseInt(String) 注意命名规律*/
+//           String - Integer  或者构造方法
+            (Integer.decode("234") == 234 )+" "+                 //String - Integer  true   可以调用方法
+             Integer.valueOf("123") +" "+                 //String - Integer  true
+//           int - Integer   或者构造方法
+             Integer.valueOf(222)+" "+
+//           Integer - String
+             it.toString()+" "+
+//           Integer - int                               // 也可以是其他“ 类型 ”表示形式，虽然有时看不出来比如byteValue只是底层保存方式变了
+             it.intValue()+" "+ it.doubleValue()+"  "+   //123.0
+             db+"  "+                                    // 1.默认xx.x形式  2.精确展示小数点后14位  3.计算是不精确的 4.金额xx.xx(需要加工)
+//           int - String
+             Integer.toString(111)+" "+                //数字+“”
+//           String - int
+            Integer.parseInt("222")+"  "+
+             /**符号函数 无需自己比较>0 ...*/
+             Integer.signum(222)+" "+        //1  返回指定 int 值的符号函数。（如果指定值为负，则返回 －1；如果指定值为零，则返回 0；如果指定的值为正，则返回 1。）
+             /**返回二进制形式*/
+             Integer.toBinaryString(3344)+" "+ //110100010000
+
+             /**反码补码*/
+              Integer.getInteger("222")+" " +   //null 确定具有指定名称的系统属性的整数值。
+             Integer.highestOneBit(22324)+" "+  //16384  补码
+
