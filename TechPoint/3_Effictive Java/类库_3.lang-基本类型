@@ -2,16 +2,20 @@
 Integer / double Double  /bigDicimal .doublevalue ....未后面计算做准备
 package util.api.基本类型;
 
+package util.api.基本类型;
+
 /**
  * 1.如何定义合理类型  是全部优先基本类型吗？
  * 2.属性类型和数据库如何对应合理
+ * 3.注意“ 类型越界 ” - “ 强制类型转换导致精度缺失 ” -  ”计算“ - ” 四舍五入 “
  */
 public class IntergerTest {
-
+    char cha = '1' ;//char特征：‘’ 且中间为  一个  对象Character
     public static void main(String[] args) {
 
         Integer it = new Integer("123");
         Double db = new Double("122.1");
+        Boolean bl = new Boolean(Boolean.TRUE);
         System.out.println(
             /**Filed*/
             Integer.MAX_VALUE +" "+
@@ -48,4 +52,21 @@ public class IntergerTest {
              /**反码补码*/
               Integer.getInteger("222")+" " +   //null 确定具有指定名称的系统属性的整数值。
              Integer.highestOneBit(22324)+" "+  //16384  补码
+
+
+/**-----------Long------------------------------------------------------------------------------------*/
+              Long.MAX_VALUE +" "+              //9223372036854775807 --19位
+/**-----------Float------------------------------------------------------------------------------------*/
+/**-----------Double------------------------------------------------------------------------------------*/
+             /**属性*/
+             Double.NEGATIVE_INFINITY+" "+    //负无群大
+             Double.POSITIVE_INFINITY+" "+    //正无群大
+
+             Double.compare(1,2)+" "+     /***/
+             db.compareTo(Double.parseDouble("11"))+""+
+
+             db.isNaN()+" "+                 //static boolean	isNaN(double v)     如果此 Double 值是非数字（NaN）值
+             db.isInfinite()+" "+            //static boolean	isInfinite(double v) 还有对应的静态方法  /***/
+/**-----------Boolean---系统设计时以0-1对应boolean值，01用来表示所有的两种选择 ------------------------------*/
+            bl.booleanValue()+" "+           //true
 
