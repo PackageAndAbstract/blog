@@ -1,0 +1,31 @@
+package util.api.Math;
+
+/**
+ * 1.Math操作基本类型，会造成精度丢失吗？  -- Math操作中不存在操作两个精度值，只是对单个值进行操作 。所以说会结合bigDecimal进行操作
+ * 2.因为在目前的项目中使用的计算就是基本的加减乘除 ，所以对于这些“ 高级数学知识 ”未加入使用
+ */
+public class MathTest {
+            static double d = 133.4444 ;
+            public static void main(String[] args) {
+
+                System.out.println(
+                        Math.abs(d) +" "+    //参数可以是int long  float  double
+                        Math.acos(d) +" "+   //返回一个值的反余弦；  --asin atan cos  cosh sin
+                        Math.cbrt(d) +" "+   //立方根
+                        Math.ceil(d) +" "+   //返回最小的（最接近负无穷大）double 值，该值大于等于参数，并等于某个整数。
+                        Math.exp(d) +" "+    //返回欧拉数 e 的 double 次幂的值。
+                        Math.expm1(d)+" "+   //返回 ex -1。
+                        Math.pow(d,3.4)+" "+ //返回第一个参数的第二个参数次幂的值。
+                        Math.random()+" "+   //返回带正号的 double 值，该值大于等于 0.0 且小于 1.0。
+                        Math.rint(d)+" "+    //返回最接近参数并等于某一整数的 double 值。
+                        Math.round(d)+" "+   //参数为double 返回最接近参数的 long。 参数为float --int
+                        Math.sqrt(d)+" "+    //返回正确舍入的 double 值的正平方根。
+                        //max
+                        //min
+                        //log
+                        //log10
+                        //....
+                                ""
+        );
+    }
+}
