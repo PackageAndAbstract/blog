@@ -1,0 +1,60 @@
+package util.api.Math;
+
+import java.math.BigDecimal;
+import java.util.Currency;
+import java.util.Locale;
+
+/***
+ * 1.数字格式  特别是在展示 ，但注意“ 所有的样式都是在 --字符串--前提下展示的”
+ * 2.java.text.Format两个主要子类就是java.text.DateFormat-SimpleDateFormat  / NumberFormat-DecimalFormat
+ * 3.真实项目中处理“ 后台处理”返回json串吗？
+ * 4.能够解析和格式化任意语言环境中的数。它还支持不同类型的数，包括整数 (123)、定点数 (123.4)、科学记数法表示的数 (1.23E4)、百分数 (12%) 和金额 ($123)。所有这些内容都可以本地化。
+ * 5.科学记数法 -- 解决
+ */
+public class DecimalFormat {
+
+    static java.text.DecimalFormat  df = new java.text.DecimalFormat("#,##0.00");
+
+    public static void main(String[] args) throws  Exception{
+        df.setCurrency(Currency.getInstance(Locale.CHINA));      //Locale 设置本地 --> 本地化 --> 国际化
+        System.out.println(
+                df.format(11223.44556)+" "+             //11,223.45   使用上面定义的标度-2 默认使用RoundingMode.HALF_EVEN相邻偶数 5.5-6 2.5-2
+                df.format(11223.44456)+" "+             //11,223.44   直接舍弃 其实就是四舍五入
+                df.format(11223.44656)+" "+             //11,223.45   直接舍弃 其实就是四舍五入
+                df.format(11223.43656)+" "+             //11,223.45   直接舍弃 其实就是四舍五入
+                /**问题：这里的默认舍入模式没有搞懂？？？*/
+                //df.format(11223.44456,new StringBuffer("abc"),null)+" "+ //null值可以对不打算使用的参数而又调用了方法 -> 空指针
+
+                 df.parse("122,224.3456")+" "+               //122224.3456  按照格式解析String生成Number类型
+
+                 /**金额*/
+                 df.getCurrency().getDisplayName()+" "+           //人民币
+                 df.getCurrency().getSymbol()+" "+                //￥
+                 df.getMultiplier()+" "+
+//                 df.getCurrency().+" "+
+
+                 /**获取数位*/
+                 df.getMaximumIntegerDigits()+" "+        //2147483647
+                 df.getMaximumFractionDigits()+" "+       //2
+                 df.getPositivePrefix()+" "+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        ""
+
+        );
+    }
+
+
+}
