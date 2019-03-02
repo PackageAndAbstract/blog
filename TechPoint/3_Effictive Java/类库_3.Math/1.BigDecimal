@@ -1,0 +1,67 @@
+package util.api.Math;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.Arrays;
+
+/***o
+ * 1.抽象类 Number 是 BigDecimal、BigInteger、Byte、Double、Float、Integer、Long 和 Short 类的超类。
+ * 2.BigDecimal 类提供以下操作：算术、标度操作、舍入、比较、哈希算法和格式转换。toString() 方法提供 BigDecimal 的规范表示形式。
+ * 3.如果 BigDecimal 对象用作 SortedMap 中的键或 SortedSet 中的元素，则应特别小心，因为 BigDecimal 的自然排序与 equals 方法不一致。有关更多信息，请参见 Comparable、SortedMap 或 SortedSet。
+ */
+public class BigDecimalTest {
+    static BigDecimal bd = new BigDecimal("222.222");
+    static BigDecimal bd2 = new BigDecimal(new BigInteger("111"),0);
+    /**一定要使用String来创建BigDecimal 以免出现精度丢失*/
+
+    public static void main(String[] args) {
+        System.out.println(
+                /**舍入模式  这里是常量-为方法起作用-注意这种工具类中提供了对应的参数值，可以使方法更加灵活 -->也可以使用对应的枚举值*/
+                BigDecimal.ROUND_UP+"  "+            //0   远离0  --进一法
+                        BigDecimal.ROUND_DOWN+"  "+          //1   接近0  --去尾法
+                        BigDecimal.ROUND_CEILING+"  "+       //2
+                        BigDecimal.ROUND_FLOOR+"  "+         //3
+                        BigDecimal.ROUND_HALF_UP+"  " +       //4    四舍五入
+                        BigDecimal.ROUND_HALF_DOWN+"  "+     //5    五舍六入
+                        BigDecimal.ROUND_HALF_EVEN+"  "+     //6    向相邻偶数
+                        BigDecimal.ROUND_UNNECESSARY+"  "+   //7
+
+                /**对象的创建*/
+                        bd2+"  "+                            //0.0111 bigDecimal由bigint表示整数位，integer.max表示小数位  所以不用考虑最大值，足够内存
+
+                /**基本计算方法 --> Math*/
+                        bd.add(bd2)+"  "+                    //333.222 标度为 max(this.scale(), augend.scale())
+                        bd+bd2+" "+                          //222.222111 字符串拼接  只有基本类型才可以直接使用+ ..等符号，一旦到类使用方法
+                        bd.subtract(bd2)+"  "+               //111.222        max(this.scale(), augend.scale())
+                        bd.multiply(bd2)+"  "+               //24666.642  其标度为 (this.scale() + multiplicand.scale())。
+
+                        //  bd.divide(bd2)+"  "+               //其首选标度为 (this.scale() - divisor.scale())；如果无法表示准确的商值（因为它有无穷的十进制扩展），则抛出 ArithmeticException。
+                        bd.divide(bd2,BigDecimal.ROUND_UP)+"  "+ //返回一个 BigDecimal，其值为 (this / divisor)，其标度为 this.scale()。
+                        bd.divide(bd2,2,RoundingMode.HALF_UP)+"  "+
+                        Arrays.toString(bd.divideAndRemainder(bd2))+" "+  //返回 整数和余数的数组  [2.000, 0.222]
+                        bd.divideToIntegralValue(bd2)+" "+      //2.000  获得整数位
+                        bd.remainder(bd2)+" "+                  //获得余数位
+                        bd.abs()+" "+                           //222.222
+                        bd.max(bd2)+" "+
+                        bd.min(bd2)+" "+
+                        bd.negate()+" "+                         //-222.222
+                        bd.pow(2)+" "+                           //返回其值为 (thisn) 的 BigDecimal，准确计算该幂，使其具有无限精度。
+                        bd.scaleByPowerOfTen(2)+" "+             //返回其数值等于 (this * 10n) 的 BigDecimal。
+
+                /**向基本类型转化 - 创建使用string ,反过来可以直接*/
+                        bd.intValue()+" "+                       //222 同样可以实现去尾方法
+                        bd.doubleValue()+" "+                    //222.222 double默认精度0.0  --> 超过同样会表示，但是计算会造成精度丢失
+                        bd.floatValue()+" "+
+                        bd.longValue()+" \n"+
+                        BigDecimal.valueOf(1122.222)+" "+        //使用 Double.toString(double) 方法提供的 double 规范的字符串表示形式将 double 转换为 BigDecimal
+
+                        bd.scale()+" "+                            //3 标度值  小数位
+                        bd.precision()+" "+                        //6 非标度值的数字个数   及所有数位
+                        bd.setScale(4)+" "+                        //222.2220
+                        bd.toEngineeringString()+" "+
+                        "");
+
+
+    }
+}
