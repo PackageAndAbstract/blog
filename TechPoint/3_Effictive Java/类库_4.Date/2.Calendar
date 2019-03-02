@@ -1,1 +1,75 @@
 
+package util.api.Date;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+/***  -- 日历 ---
+ * 1.与其他语言环境敏感类一样，Calendar 提供了一个类方法 getInstance，以获得此类型的一个通用的对象。Calendar 的 getInstance 方法返回一个 Calendar 对象，
+ *   其日历字段已由当前日期和时间初始化：
+   2.节假日维护  顺延   有效天数计算（毫秒数减法/24*60*60*1000）（算前算后  不算前....）
+
+ */
+public class CalendarTest {
+                static Calendar cal0 = Calendar.getInstance();
+                static Calendar cal1 = new GregorianCalendar(); //公历
+
+                public static void main(String[] args) {
+                    System.out.println(
+                     /**对象创建*/
+                            cal0+" "+      //java.util.GregorianCalendar[time=1551523723164,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id="Asia/Shanghai",offset=28800000,dstSavings=0,useDaylight=false,transitions=19,lastRule=null],firstDayOfWeek=1,minimalDaysInFirstWeek=1,ERA=1,YEAR=2019,MONTH=2,WEEK_OF_YEAR=9,WEEK_OF_MONTH=1,DAY_OF_MONTH=2,DAY_OF_YEAR=61,DAY_OF_WEEK=7,DAY_OF_WEEK_IN_MONTH=1,AM_PM=1,HOUR=6,HOUR_OF_DAY=18,MINUTE=48,SECOND=43,MILLISECOND=164,ZONE_OFFSET=28800000,DST_OFFSET=0]
+                            cal1+"\n "+      //toString是详细的，但是是不友好的。
+
+                     /**Field - 字段值提供了许多返回int的常量值 ，学会一个方法因为参数不同，返会不同，而不是原来简单的get/xx方法某个类型参数*/
+                     /**这些参数码值配上get()就组成了 --> getxxx() 拆成直接获取，拆分的更小呢*/
+                     Calendar.YEAR +"  "+                              //1
+                     Calendar.MONTH +"  "+                             //2
+                     Calendar.WEEK_OF_YEAR +"  "+                      //3
+                     Calendar.WEEK_OF_MONTH+"  "+                      //4
+                     Calendar.DAY_OF_MONTH+"  "+                       //5
+                     Calendar.DAY_OF_YEAR+"  "+                        //6
+                     Calendar.DAY_OF_WEEK+"  "+                        //7
+                     Calendar.DAY_OF_WEEK_IN_MONTH +"  "+              //8
+                     Calendar.HOUR +" "+                               //10
+                     Calendar.HOUR_OF_DAY+" "+                         //11
+
+                     /**月对应得int值*/
+                     Calendar.DECEMBER+" "+                            //11        从0开始算
+                     //....
+
+
+
+                     cal0.get(Calendar.YEAR)+" "+
+                      (cal0.get(Calendar.MONTH)+1)+" "+                 //因为是    从0开始的，所以要+1
+                      cal0.get(Calendar.WEEK_OF_YEAR)+" "+              //
+                      cal0.get(Calendar.WEEK_OF_MONTH)+" "+             //
+                      cal0.get(Calendar.DAY_OF_MONTH)+" "+              //
+                      cal0.get(Calendar.DAY_OF_YEAR)+" "+               //
+                      cal0.get(Calendar.DAY_OF_WEEK)+" "+               //         从周日开始算一周开始
+                      cal0.get(Calendar.DAY_OF_WEEK_IN_MONTH)+" "+      //
+                      cal0.get(Calendar.HOUR)+" "+                      //12小时
+                      cal0.get(Calendar.HOUR_OF_DAY)+" "+               //24小时
+
+
+                      //cal0.add(Calendar.YEAR,1);                     //给定的日历" 字段添加 "或减去指定的时间量。负数则减
+                      //cal0.set()  为给定的时间域赋值  设置时区 ...
+                      //after - before - compareTo - clear - clear(某个域)
+
+                      /**Date - Calendar */
+                       cal0.getTime()+" "+                              //返回Date的对象 - date的该方法返回毫秒数
+                       //cal0.setTime(new Date());
+
+                        new Date().getTime()+" "+
+                        cal0.getTimeInMillis()+" "+
+
+
+
+
+
+
+
+
+                            "");
+                }
+}
