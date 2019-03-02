@@ -1,1 +1,26 @@
 
+package util.api.Date;
+
+import java.util.Date;
+
+/***
+ * 1.夏令时-冬令时 问题
+ */
+public class DateTest {
+            static Date date = new Date();                 //参数未long表示 -表示自从标准基准时间（称为“历元（epoch）”，即 1970 年 1 月 1 日 00:00:00 GMT）以来的指定毫秒数
+            public static void main(String[] args) {
+                System.out.println(
+
+             /**构建*/
+             date +" "+                                     //Date的默认显示Sat Mar 02 18:27:39 CST 2019  CST可视为美国、澳大利亚、古巴或中国的标准时间。
+
+             /**基本方法*/
+             date.equals(new Date())+" "+                  //false
+             date.compareTo(new Date())+" "+               //-1
+             date.before(new Date())+" "+                  //true
+             date.after(new Date())+" "+                   //false
+
+                "");
+
+    }
+}
