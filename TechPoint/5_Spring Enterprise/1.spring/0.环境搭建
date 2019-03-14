@@ -1,0 +1,6 @@
+2019-03-14    mysql
+              maven    问题：1.配置ali镜像 
+                             2.idea中配置mvn-home / user-setting(自己修改ali云位置)/ respository  
+                             3.配置参数-DarchetypeCatalog=local  并下载Generating Project in Batch mode 卡住，原因是网络带宽不足问题！需要下载一个约4.1M的archetype-catalog.xml文件。
+                             
+              创建spring-maven项目
