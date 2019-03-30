@@ -1,0 +1,5 @@
+前台标签就像一个类 有属性 属性有值 ，可以直接赋值或者js取值赋值  。包括disabled
+
+style就像标签的一个属性，该属性不是简单属性而也是一个类，类下面也有属性,比如color , fond , left ...
+
+window.load(funciton(){.....})   js中使用dom事件 
