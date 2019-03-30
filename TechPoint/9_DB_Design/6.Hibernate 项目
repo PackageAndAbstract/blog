@@ -2,5 +2,6 @@
       https://www.cnblogs.com/xrab/p/5586775.html
       
 2.bbsp对hibernate方法封装 ， 分页查询封装(condition / searchBean / ..)
-
+      Object / T / 反射 
+      
 3.Dao封装
