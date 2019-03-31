@@ -1,0 +1,2 @@
+当前代码作为“ 最终客户端 ”，可以通过日志等信息来定位问题，但当作为‘ 工具开发 ’时，注意建立exception sys 。以至于调用者可以通过异常信息定位问题。
+    参考： DB2 错误码sqlcode对应表  https://blog.csdn.net/embedded_sky/article/details/42612719(任何工具)
