@@ -1,0 +1,22 @@
+org.apache.commons.lang.StringUtils.join(list.toArray(), separator);
+
+String str = String.join(",", list);
+
+
+1.字符串转字符串数组或者集合
+    String str = "1,2,3";
+    String strArr[] = StringUtils.split(str, ",");
+     以，(逗号)切割，转换为字符串数组.但该代码需要依赖于commons-lang.jar
+     
+2.Set<String> setArr = new HashSet<String>();
+  org.apache.commons.collections.CollectionUtils.addAll(setArr, strArr);     没有想象的复杂，完全自己可写的。只是学会使用轮子
+  
+3.集合的交并集
+    集合a: {1,2,3,3,4,5}  
+    集合b: {3,4,4,5,6,7}  
+    CollectionUtils.union(a, b)(并集): {1,2,3,3,4,4,5,6,7}  
+    CollectionUtils.intersection(a, b)(交集): {3,4,5}  
+    CollectionUtils.disjunction(a, b)(交集的补集): {1,2,3,4,6,7}  
+    CollectionUtils.disjunction(b, a)(交集的补集): {1,2,3,4,6,7}  
+    CollectionUtils.subtract(a, b)(A与B的差): {1,2,3}  
+    CollectionUtils.subtract(b, a)(B与A的差): {4,6,7}  
