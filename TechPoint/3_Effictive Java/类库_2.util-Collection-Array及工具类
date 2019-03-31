@@ -1,3 +1,8 @@
+******************
+*  当你想操作这些元素时，先思考一下是否有 ‘ 现成 ’的类 ， 方法   ******
+*
+******************
+
 package util.api.Collections;
 
 import com.sun.org.apache.xerces.internal.xs.StringList;
