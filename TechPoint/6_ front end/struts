@@ -3,3 +3,6 @@
     
 2.拦截器
     https://www.cnblogs.com/liqiangchn/p/6539443.html
+    
+3.前台表达式 el jstl springel ..除了有取值赋值的功能外，还具有计算，map/list 操作的功能。
+  所以：应该将这种逻辑放到前台还是后台，合适的位置是值得考量的。
