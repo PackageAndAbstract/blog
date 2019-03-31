@@ -18,3 +18,5 @@
         image = ImageIO.read(url);
         
         ImageIO类的使用:https://blog.csdn.net/weixin_36279318/article/details/77446605
+        
+        js中image对象：https://blog.csdn.net/hdchangchang/article/details/9036511
