@@ -5,7 +5,8 @@
 
 实现
 1webservice
-    cxf  发布代理类
+    cxf  发布代理类 http://blog.sina.com.cn/s/blog_6182547f01017pak.html  
+         cxf和spring整合  https://blog.csdn.net/kris234seth/article/details/50509053
     axis 生成代理类
     
 2.mq  ，r如何解析和拼接一设计模式
