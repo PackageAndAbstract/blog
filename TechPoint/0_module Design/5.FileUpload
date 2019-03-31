@@ -2,3 +2,19 @@
 2.目录创建  文件判断   base64
 3.文件服务器
 4.重构 及 工具类反射 -yzg代码
+
+
+    // Read from a file
+        File sourceimage = new File("source.gif");
+        image = ImageIO.read(sourceimage);
+
+        // Read from an input stream
+        InputStream is = new BufferedInputStream(
+           new FileInputStream("mid.jpg")); 
+        image = ImageIO.read(is);
+
+        // Read from a URL
+        URL url = new URL("http://www.javaworld.com/images/012407-tipsbox.jpg");
+        image = ImageIO.read(url);
+        
+        ImageIO类的使用:https://blog.csdn.net/weixin_36279318/article/details/77446605
