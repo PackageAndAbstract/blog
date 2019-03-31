@@ -5,6 +5,9 @@
 
 实现
 1webservice
+    cxf  发布代理类
+    axis 生成代理类
+    
 2.mq  ，r如何解析和拼接一设计模式
 3.json ajax
 4.微服务 
