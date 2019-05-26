@@ -1,1 +1,8 @@
-https://github.com/corPrgrm/blog/blob/master/TechPoint/respository/SQLandORM.jpg
+   https://github.com/corPrgrm/blog/blob/master/TechPoint/respository/SQLandORM.jpg
+
+hibernateTemplate是spring对hibernate方法封装( Query对象 )
+  http://www.cnblogs.com/xrab/p/5586775.html
+  https://blog.csdn.net/zjkC050818/article/details/72529071
+
+为什么使用hibernateCallBack()函数
+  https://blog.csdn.net/qq_15150353/article/details/52748555
