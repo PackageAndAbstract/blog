@@ -2,3 +2,6 @@ quartz 设计 service 之后，通常会为后台管理提供controller
 quartz 高级配合listener对前置条件判断，hander对后置结果处理 
 调度时间选择 监控
 联机还是批量 ftp http socket  联机获得ftp地址
+
+
+quartz中expression含义：https://blog.csdn.net/l344438713/article/details/84471074
