@@ -47,6 +47,8 @@
                   vs concat
                 2.对于长string进行换行 在“”中点enter，在编辑器中自动换行 ， 这种形式不是拼接 只是格式化
                 3.使用buffer操作。所有的操作尽量不要出现魔幻数字 ，比如截取可以通过charAt进行定位 indexOf ... 
+                
+                String aa  = String.join("!", new String[]{"a","b","c"});
 
 /** 改 */
                 str.replace("@","")+" "+
