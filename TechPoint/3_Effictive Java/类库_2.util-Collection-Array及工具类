@@ -16,7 +16,8 @@ import java.util.function.BiFunction;
 /**无论是String还是集合 对于下标的定位 ，截取 ，部分操作 都是重要的*/
 /**很多方法是重载的,所以你必须理解参数为 Object 及 T (在返回类型T的场景下)*/
 /**api定义了许多常用的方法，这些自己也是可以定义的，”查看源码对比自己思路 “**/
-/**明确接口返回格式 List<Map<String,Object>> 还是什么  比如 orm hibernate返回 和 sql关系  是个工具但同时反映了‘ 数据组织设计结构 ’*/
+/**明确接口返回格式 List<Map<String,Object>> 还是什么  比如 orm hibernate返回 和 sql关系  是个工具但同时反映了‘ 数据组织设计结构 ’*
+/*数据结构相比于list map 。接着就是时间复杂度。算法。ArrayQueue LinkedList stack 场景**/
 
 
 public class CollectionTest {
