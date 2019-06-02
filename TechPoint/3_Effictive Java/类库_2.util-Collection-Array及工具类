@@ -16,6 +16,9 @@ import java.util.function.BiFunction;
 /**无论是String还是集合 对于下标的定位 ，截取 ，部分操作 都是重要的*/
 /**很多方法是重载的,所以你必须理解参数为 Object 及 T (在返回类型T的场景下)*/
 /**api定义了许多常用的方法，这些自己也是可以定义的，”查看源码对比自己思路 “**/
+/**明确接口返回格式 List<Map<String,Object>> 还是什么  比如 orm hibernate返回 和 sql关系  是个工具但同时反映了‘ 数据组织设计结构 ’*/
+
+
 public class CollectionTest {
 
     Stack stack  = new Stack();
@@ -80,18 +83,6 @@ public class CollectionTest {
         tm.put("2", "2");
         tm.put("3", "3");
 
-        String[] strArray  = new String[]{"ab","bc","aa","1","3","2"};
-        Arrays.sort(strArray);
-        //Arrays.fill(strArray,"abc");
-        System.out.println(
-                /**Array - Arrays*/
-                strArray1 + "  " +
-                        strArray2 + "  " +
-                        strArray3 + "  " +
-
-
-                        /**Arras*/
-                        Arrays.toString(strArray2) + "  " +  //[a, 1]
 
 
                         /**ArrysList*/
@@ -106,12 +97,8 @@ public class CollectionTest {
                         arrayList.add("c") + "  " +
                         //arrayList.add(1,"abc")+" "+ [a, abc, b, c] //因为该方法返回void,所以后面不可以拼接东西  list重写了toString() 插入而不是替换
                         arrayList.set(1, "ddd") + " " +
-                        //addAll
-
-                        /** 判断 */
-                        arrayList.contains("c") + "  " +   //同样可以判断一个集合是否包含另一个集合元素***
-
-                        arrayList.isEmpty() + " " +   //等价于.size() == 0
+                          注：可以定点插入add(int index, E element) 
+                              可以addAll(index , Collection)将一个集合添加到另一个集合中    
 
 
                         /** delete */
@@ -120,8 +107,10 @@ public class CollectionTest {
                         arrayList.remove(1) + " " +
                         arrayList.remove("a") + " " +
                         arrayList.removeAll(Arrays.asList(new String[]{"c"})) + " " + //来自父类的方法 2.new ArrayList<String>(){"c"}list不可以这样初始化，数组可以
+                        上一个api只能删除第一个，这个则可以删除所有。并且批量。
                         // protected  void removeRange(int fromIndex, int toIndex) 想要使用还要自定义list去调用该方法
-                        //arrayList.removeIf() jdk8新加入避免循环就可以删除相关api  https://blog.csdn.net/qq_33829547/article/details/80277956
+                      
+                      //arrayList.removeIf() jdk8新加入避免循环就可以删除相关api  https://blog.csdn.net/qq_33829547/article/details/80277956
 
 
                         /** 改 */
@@ -136,6 +125,16 @@ public class CollectionTest {
                             }
                         });*/
 
+
+
+                        /** 判断 */
+                        get(index)
+                        
+                        indexof()
+                        
+                        arrayList.contains("c") + "  " +   //同样可以判断一个集合是否包含另一个集合元素***
+
+                        arrayList.isEmpty() + " " +   //等价于.size() == 0
                         // arrayList.spliterator()
                         /***
                          * 从集合的最基本的接口Collection中可以看出Java8中新增了下面几点内容：
@@ -151,6 +150,8 @@ public class CollectionTest {
                         /**LinkedList
                          *     1.因为LinkList和arrayList实现了同一接口，继承同一个抽象类，所以很多方法（已重写）是一样，只是底层的实现不同
                          *       所以这里对于以上"" 相同效果的api就不再赘述***
+                               使用pop ，push等api可以直观的表示当前使用linkedList中的 队列还是stack ...
+                         
                          *     2.LinkList除了实现了List还实现了queue，导致新加了许多关于 queue 的方法
                          *     3.stack queue模型其实可以有 数组/链表 实现，只不过选择了链表 --> 效率等
                          * **/
@@ -183,6 +184,8 @@ public class CollectionTest {
                         /**
                          * 和arrayList一样  区别在于：set是无序不可重复 ，list是有序可重复(序：加入顺序而不是某种逻辑 )
                          所以选择"   结合业务，是否需要将重复元素过滤掉，需要我们直接使用set，就少了判断 ，并且底层由优化  "
+                         
+                         许多使用set和list的组合来‘ 过滤 ’集合中重复的 ，再通过集合间加减来再次过滤。
                          */
 
                         /**treeSet*/
@@ -249,11 +252,25 @@ public class CollectionTest {
                         Arrays.equals(new String[]{"1"},new String[]{"1"})+" "+
                         Arrays.deepEquals(new String[]{"1"},new String[]{"1"})+" "+  //deepEquals用于判定两个指定数组彼此是否深层相等，此方法适用于任意深度的嵌套数
                                                                                      //https://blog.csdn.net/gaohuanjie/article/details/39157241
-                        Arrays.toString(strArray)+" "+
-                        /**排序*/
+
+    Array  
+      1.                   = {“a”,“b”} 
+                           =new String[3] 必须指定   new String[3][] 二维数组
+        String[] strArray  = new String[]{"ab","bc","aa","1","3","2"};  用的最多，是在已知所有的‘ 场景 ’可以使用
+        Arrays.sort(strArray);
+        System.out.println(Arrays.toString(strArray));  //对象toString
+        
+        //Arrays.fill(strArray,"abc");
+
+
+       2.asList()-去使用list的api    vs toArray(new Stirng[list.size()])
+       
+       3.    
+       /**排序*/
                         //Arrays.sort(strArray)+" "+      返回void 所以不可以拼接进来
                         //Arrays.sort("strArray",1,3);
-//                      //Arrays.sort("strArray", new Comparator<T>() {   //引入比较器  - 不指定时则默认比较器  ascii--升序--大于向后
+//                      //Arrays.sort("strArray", new Comparator<T>() {   
+        //引入比较器  - 1.不指定时则默认比较器  ascii--升序--2.大于向后  3.o1代表新值，o2代表已经在容器中的值**     
 //                            @Override
 //                            public int compare(T o1, T o2) {
 //                                return 0;
@@ -261,24 +278,36 @@ public class CollectionTest {
 //                        });
                         //上面组合 比较器和下标都用上.....
                         //Arrays.parallelSort();                       //jdk8 超过范围使用多线程再使用归并
-                        /** 搜索 */
+       
+       
+        /** 搜索 */
                         Arrays.binarySearch(strArray,"ab")+" "+   //未使用sort时为-7  --> sysout外面使用sort再对比  --> 4
                         Arrays.binarySearch(strArray,1,2,"ab")+" "+ //注意index是数字而不是string  -3没找到
-                        Arrays.binarySearch(strArray, 1, 2, "abc", new Comparator<String>() {
+                       
+                     ***Arrays.binarySearch(strArray, 1, 2, "abc", new Comparator<String>() {
                             @Override
                             public int compare(String o1, String o2) {
                                 return 0;
                             }
                         })+" "+
-
-                        /**复制*/
+        //这种符合结构写法 ，其实是对‘ 每一个api都熟悉的前提下，紧凑写法 ’。这里需要传入compare实现类，内部类直接new 接口 写对应方法实现{}
+       
+   
+                      
+        /**复制*/      都是从‘  0 ’ 开始截取的 后面也有api是截取开 ，结束的 copyOfRange(int[] original, int from, int to) 
                         Arrays.toString(Arrays.copyOf(strArray,2))+" "+  //不足则补null(不同类型填充的值不同) 少则截取
                         //Arrays.copyOf(strArray,10,Integer[].class)+" "+  //1.int[] 不继承于OBJECT[]  2.无法转化 ，因为其中由字母
-                        Arrays.toString(Arrays.copyOf(strArray,10,String[].class))+" "+
+                        Arrays.toString(Arrays.copyOf(strArray,10,String[].class))+" "+*** 中和了转换
                         Arrays.copyOfRange(strArray,1,3,String[].class)+" \n"+
 
-                        /**填充 用于创建了数组，填充相同的值进去*/
-                        //Arrays.fill(strArray,"abc")+" "+
+        /**填充 用于创建了数组，填充相同的值进去*/
+                        //Arrays.fill(strArray,"abc")+" "+   将指定的char值分配给指定的char数组的指定范围的每个元素。
+        /***equals**/  Arrays.equals(a , b)  可以进行比较
+                    deepEquals(Object[] a1, Object[] a2) 
+                    deepEquals(Object[] a1, Object[] a2) 
+                    deepToString(Object[] a) 
+
+       /***jdk8***特有/
                         //Arrays.parallelPrefix();                          //jdk8 用于并行处理
 
                         //Arrays.stream()                                   //jdk8 配合lamdar表达式 https://blog.csdn.net/a13662080711/article/details/84928181
@@ -289,7 +318,7 @@ public class CollectionTest {
 
                         //Arrays.parallelPrefix();                          //使用元素的索引做些什么
 
-                        //Arrays.parallelSort();
+                        //Ar    rays.parallelSort();
 
                 /**Collections*/
                        Collections.EMPTY_LIST +" "+         //[]
