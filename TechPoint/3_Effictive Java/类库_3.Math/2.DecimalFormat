@@ -5,6 +5,17 @@ import java.util.Currency;
 import java.util.Locale;
 
 /***
+    
+     //区分开时间格式化 ， 这些默认格式都可以抽到工具类中
+        BigDecimal bd2  = new BigDecimal("22323221.113222");
+		java.text.DecimalFormat  df111 = new java.text.DecimalFormat("#,##0.00");//也可以直接加元或者￥符号
+		df111.setNegativeSuffix(Currency.getInstance(Locale.CHINA).getSymbol());
+		df111.setPositiveSuffix(Currency.getInstance(Locale.CHINA).getSymbol());  //后缀  --> 设置前后缀
+		System.out.println(df111.format(bd2.doubleValue())); //22,323,221.11
+		
+
+
+
  * 1.数字格式  特别是在展示 ，但注意“ 所有的样式都是在 --字符串--前提下展示的”
  * 2.java.text.Format两个主要子类就是java.text.DateFormat-SimpleDateFormat  / NumberFormat-DecimalFormat
  * 3.真实项目中处理“ 后台处理”返回json串吗？
