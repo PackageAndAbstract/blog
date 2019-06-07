@@ -5,9 +5,32 @@ package util.api.基本类型;
 package util.api.基本类型;
 
 /**
- * 1.如何定义合理类型  是全部优先基本类型吗？
- * 2.属性类型和数据库如何对应合理
- * 3.注意“ 类型越界 ” - “ 强制类型转换导致精度缺失 ” -  ”计算“ - ” 四舍五入 “
+ * 1.如何定义合理类型  是全部优先基本类型吗？     
+        int / long / double / boolean 使用最多。 
+        基本类型 - string - 包装器类型 转化
+        选择double /Double 是足以满足要求，无需复杂的加减乘除，和精度控制无需使用bigdecimal.
+                equals
+                static int compare(double d1, double d2)  
+                int compareTo(Double anotherDouble)  
+                static double max(double a, double b)  
+                static double sum(double a, double b)                          
+                
+ *      属性类型和数据库如何对应合理         详见：
+ *
+ 
+    2.注意“ 类型越界 ” - “ 强制类型转换导致精度缺失 ” -  ”计算“ - ” 四舍五入 “
+        System.out.println(dd1-dd2);
+		
+		System.out.println(dd1+dd2);
+		System.out.println(Double.sum(dd2, dd1));
+		System.out.println(BigDecimal.valueOf(dd1).add(BigDecimal.valueOf(dd2)));
+
+       1.直接使用+ - ..不明确，应尽量使用方法
+       2.精度问题
+       3.四舍五入问题
+       
+       --BigDecimal
+    
  */
 public class IntergerTest {
     char cha = '1' ;//char特征：‘’ 且中间为  一个  对象Character
