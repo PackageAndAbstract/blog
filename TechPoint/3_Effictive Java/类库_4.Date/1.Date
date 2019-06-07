@@ -6,21 +6,80 @@ import java.util.Date;
 /***
  * 1.夏令时-冬令时 问题
  */
-public class DateTest {
-            static Date date = new Date();                 //参数未long表示 -表示自从标准基准时间（称为“历元（epoch）”，即 1970 年 1 月 1 日 00:00:00 GMT）以来的指定毫秒数
-            public static void main(String[] args) {
-                System.out.println(
-
-             /**构建*/
-             date +" "+                                     //Date的默认显示Sat Mar 02 18:27:39 CST 2019  CST可视为美国、澳大利亚、古巴或中国的标准时间。
-
-             /**基本方法*/
-             date.equals(new Date())+" "+                  //false
-             date.compareTo(new Date())+" "+               //-1
-             date.before(new Date())+" "+                  //true
-             date.after(new Date())+" "+                   //false
-
-                "");
-
-    }
-}
+	
+			
+		Date d = new Date();
+		System.out.println(d);  //Fri Jun 07 13:30:35 CST 2019
+		
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMDD hh:mm:ss"); //201906158 01:30:35
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd hh:mm:ss");    //20190607 01:31:26 对应字母对应域
+		System.out.println(sdf.format(d));
+		
+		//将当前时间转为固定格式的date类型  - 根本就不会出现yyyymmdd...格式date类型的东西
+		System.out.println(sdf.parse(sdf.format(new Date()))); //Fri Jun 07 01:34:02 CST 2019   这种写法没有意义 错误，看后面截取就会用到，单独是有意义的。date类型格式都一样
+		
+		//比较
+		String date1 = "20190507 00:00:00";
+		String date2 = "20190507 00:00:00";
+		
+		System.out.println(sdf.parse(date1).getTime() - (sdf.parse(date2).getTime()));  //最不推荐 不使用api
+		
+		System.out.println(sdf.parse(date1).after(sdf.parse(date2))); //相等时 false  --> 想要考虑相等情况 无需配合equals
+		System.out.println(sdf.parse(date1).equals(sdf.parse(date2)));//
+		
+		System.out.println(sdf.parse(date1).compareTo(sdf.parse(date2)));  //0   --> 比较就是加减 在往上看看有没有api 不要+-操作 有风险的
+		
+		//calendar  -> 日历 只要你api没问题，那么无需关心月底，年底等
+		final Calendar instance = Calendar.getInstance();
+		System.out.println(instance.getTime()); //Fri Jun 07 14:08:49 CST 2019  vs date.getTime()得到的时间 Long 
+		System.out.println(instance.get(Calendar.HOUR_OF_DAY)+"---");  //11个属性值
+		//System.out.println(instance.get(Calendar.ERA));
+		//System.out.println(instance.get(Calendar.DST_OFFSET));
+		System.out.println(instance.get(Calendar.DATE));  
+		System.out.println(instance.get(Calendar.MINUTE));  
+		
+		instance.add(Calendar.HOUR, -1);   //*** 添加时间差  - 添加之后再去判断 ‘节假日 ’ 系统维护(国家政策)  --> 执行节假日逻辑 ***
+		System.out.println(instance.get(Calendar.HOUR)); 
+		
+		//set(int year, int month, int date, int hourOfDay, int minute, int second)   //自定义日期  比如起始日期 ，参考日期等		
+		instance.setTime(new Date()); //也就提供了string '2008-08-08'  - parse - 塞入
+	
+		instance.set(Calendar.HOUR, 25); //修改某个filed属性值
+		System.out.println(instance.getTime());  //at Jun 08 13:27:23 CST 2019 直接过了一天后  所以这种日历是智能的
+		
+		//相差 - 算前不算后...等需求
+		//1.格式化部分field进行比较  比如只比较小时问题 需要simpleDateFormat(HH:mm)获取到两个时间 ，比较小时上前后 。这种需求不是说
+		//第二天的这个时间就比前一天的这个时间大，而是只比较小时
+		//需求：账务关闭时间为15:30 - 17:30 则每天这个时间不发交易
+		//思路1.塞一个相同的年月日 利用calendar api 比较     2.解析为date类型 ，使用date api .如下 3.字符串截取比较(不推荐)
+		final SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+		
+		if(format.parse(format.format(new Date())).after(format.parse("16:30")) && 
+				format.parse(format.format(new Date())).before(format.parse("17:30"))){
+			System.out.println("------------");
+			     return ;
+		}
+	
+		//需求：时间相差两个小时 
+		//思路1:使用date或者calendar   2.使用截取的部分 进行判断 这样需要考虑 隔日后时间点数 23 vs 次日1  所以判断分成了 xx || xx
+		//如果说不考虑秒等信息  也可以通过格式化将秒的部分去掉
+		
+		final SimpleDateFormat format1= new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String d1 = "2019-01-01 23:00:12";
+		String d2 = "2019-01-02 00:59:23";  //这样同样可以解析
+		boolean  ret = format1.parse(d2).getTime() - format1.parse(d1).getTime() >= 2*60*60*1000 ? true  :  false  ;//long 没有浮点位 不存在精度问题
+		System.out.println(ret);
+		
+	
+		//天数 过几点后算新的一天 相差天数计算
+		
+		//java.util.date vs java.sql.date 对比 并比较orm过程操作  vs 和calendar
+		instance.setTime(new Date()); 
+		
+		java.sql.Date date=new java.sql.Date(d.getTime());  //（其中d是java.util.Date类型）  。 工具类完成较多 getyyyyMMdd()  / getyyyMMdd...等方法
+		//pstmt.setDate(3, date);
+		//相反  也可以转化
+		
+		//定义vo时，Date类型使用哪种呢？  orm 映射文件 自动生成的注意查看其中类型 以及 orm底层对类型的判断转化
+	
+		//数据库函数 时间操作   to_char() / to_date()
