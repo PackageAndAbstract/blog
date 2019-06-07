@@ -6,9 +6,39 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 
 /***o
- * 1.抽象类 Number 是 BigDecimal、BigInteger、Byte、Double、Float、Integer、Long 和 Short 类的超类。
- * 2.BigDecimal 类提供以下操作：算术、标度操作、舍入、比较、哈希算法和格式转换。toString() 方法提供 BigDecimal 的规范表示形式。
- * 3.如果 BigDecimal 对象用作 SortedMap 中的键或 SortedSet 中的元素，则应特别小心，因为 BigDecimal 的自然排序与 equals 方法不一致。有关更多信息，请参见 Comparable、SortedMap 或 SortedSet。
+ *  1.BigDecimal 类提供以下操作：算术、标度操作、舍入、比较、哈希算法和格式转换。toString() 方法提供 BigDecimal 的规范表示形式。
+        1.mathContext
+             MathContext mc = new MathContext(2, RoundingMode.HALF_UP); 
+             //2指的是有效数字  1.2E+3 == 1.2*10^3 先进行完全运算，再根据精度和舍入输出
+            double dt1 = 1141.2222222223333333333334444444;
+            double dt2 = 11.3434354546565653434343 ;
+            final BigDecimal add = BigDecimal.valueOf(dt1).add(BigDecimal.valueOf(dt2), mc);
+            System.out.println(add);
+        
+        2.scale 精度就伴随着 四舍五入  ， 具体业务中明确到底是计算时按照多少精度进行，最后保留多少。defaultScale()自定义
+       
+            BigDecimal bd1  = new BigDecimal("11.1122");
+            BigDecimal bd2  = new BigDecimal("11.1122");
+
+            System.out.println(bd1.add(bd2));  		//22.2244
+            System.out.println(bd1.multiply(bd2));  //123.48098884
+
+            bd1.add(bd2).subtract(bd1); //链式  循环
+
+            System.out.println(bd1.add(bd2).setScale(2, RoundingMode.HALF_UP));//22.22  
+            //2指的是小数位 当不适用setScale将会自动根据两个参数进行取大 ，取和...
+		
+        3.重载的api   
+            ..
+            BigDecimal divideToIntegralValue(BigDecimal divisor)  返回它的值是 BigDecimal的整数部分 (this / divisor)取整。 
+            BigDecimal remainder(BigDecimal divisor)   返回 BigDecimal ，其值是 (this % divisor) 。   取余 - 基偶判断
+                    final BigDecimal divideAndRemainder = bd1.remainder(bd2);
+                    System.out.println(divideAndRemainder.intValue());
+            String toPlainString()       返回没有指数字段的此 BigDecimal的字符串表示形式。而不是科学技术法形式，整数达到位数或小数达到都会变    
+            
+            
+    2.抽象类 Number 是 BigDecimal、BigInteger、Byte、Double、Float、Integer、Long 和 Short 类的超类。
+ *  3.如果 BigDecimal 对象用作 SortedMap 中的键或 SortedSet 中的元素，则应特别小心，因为 BigDecimal 的自然排序与 equals 方法不一致。有关更多信息，请参见 Comparable、SortedMap 或 SortedSet。
  */
 public class BigDecimalTest {
     static BigDecimal bd = new BigDecimal("222.222");
@@ -48,6 +78,13 @@ public class BigDecimalTest {
                         bd.negate()+" "+                         //-222.222
                         bd.pow(2)+" "+                           //返回其值为 (thisn) 的 BigDecimal，准确计算该幂，使其具有无限精度。
                         bd.scaleByPowerOfTen(2)+" "+             //返回其数值等于 (this * 10n) 的 BigDecimal。
+                        
+                        BigDecimal divideToIntegralValue(BigDecimal divisor)  返回它的值是 BigDecimal的整数部分 (this / divisor)取整。 
+                        BigDecimal remainder(BigDecimal divisor)   返回 BigDecimal ，其值是 (this % divisor) 。   取余 - 基偶判断
+                        		
+                                final BigDecimal divideAndRemainder = bd1.remainder(bd2);
+	                        	System.out.println(divideAndRemainder.intValue());
+                        String toPlainString()       返回没有指数字段的此 BigDecimal的字符串表示形式。         
 
                 /**向基本类型转化 - 创建使用string ,反过来可以直接*/
                         bd.intValue()+" "+                       //222 同样可以实现去尾方法
