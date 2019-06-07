@@ -19,11 +19,17 @@ package util.api.基本类型;
  *
  
     2.注意“ 类型越界 ” - “ 强制类型转换导致精度缺失 ” -  ”计算“ - ” 四舍五入 “
-        System.out.println(dd1-dd2);
+        //注意金额类计算千万不能使用‘ + ’或者 Double提供的简单方法  ，必须均 使用BigDecimal
+		double dd1 = 0.2;
+		double dd2 = 0.4;
+		System.out.println(Double.valueOf(dd1).compareTo(Double.valueOf(dd2)));
+		System.out.println(Double.valueOf(dd1).isNaN());
 		
-		System.out.println(dd1+dd2);
-		System.out.println(Double.sum(dd2, dd1));
-		System.out.println(BigDecimal.valueOf(dd1).add(BigDecimal.valueOf(dd2)));
+		System.out.println(dd1-dd2);  //-0.2
+		
+		System.out.println(dd1+dd2); //0.6000000000000001
+		System.out.println(Double.sum(dd2, dd1));//0.6000000000000001
+		System.out.println(BigDecimal.valueOf(dd1).add(BigDecimal.valueOf(dd2)));//0.6
 
        1.直接使用+ - ..不明确，应尽量使用方法
        2.精度问题
