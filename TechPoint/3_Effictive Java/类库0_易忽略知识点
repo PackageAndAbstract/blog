@@ -1,0 +1,11 @@
+《核心技术》书籍配合学习
+
+  1.String 和正则的 配合使用   getbyte和stream关系
+  2.valueOf parsexxx(String )doubleValue toArray  toJSONObject toJSONString getxxxAsSring defaultScale()
+  3.Double Integer 等都对应着doubleValue / intValue ... 还有BigDecimal 所以这些都是像用不同的 ‘ 单位 ’ 表示一样 。底层不同。  
+  	double/float 默认值0.0格式，所以金额格式化
+  4.使用static final 声明常量  --定义工具类 重载方法	
+  5.多去思考有没有现成的api(date/calendar... )，可能需要两个或多个api辅助完成，一个功能又需要多个知识点辅助完成，一个系统又需要多个功能完成
+  6.基本类型取值范围 注意越界问题
+  7.运算符顺序 && || ！ + - 等信息.
+  8.强制类型转换和toString() 哪些情况需要强转
