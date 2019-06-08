@@ -1,5 +1,4 @@
 《核心技术》书籍配合学习
-
   1.String 和正则的 配合使用   getbyte和stream关系
   2.valueOf parsexxx(String )doubleValue toArray  toJSONObject toJSONString getxxxAsSring defaultScale()
   3.Double Integer 等都对应着doubleValue / intValue ... 还有BigDecimal 所以这些都是像用不同的 ‘ 单位 ’ 表示一样 。底层不同。  
@@ -9,3 +8,5 @@
   6.基本类型取值范围 注意越界问题
   7.运算符顺序 && || ！ + - 等信息.
   8.强制类型转换和toString() 哪些情况需要强转
+  9.流操作和字符编码 ，包装 ，外界交互  
+  10.类设计 - 类、属性、方法修饰符  局部变量不可以使用private ,  变量的声明和初始化  满足要求的前提下，尽量缩小域
