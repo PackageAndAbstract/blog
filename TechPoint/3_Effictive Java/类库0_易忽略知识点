@@ -10,3 +10,41 @@
   8.强制类型转换和toString() 哪些情况需要强转
   9.流操作和字符编码 ，包装 ，外界交互  
   10.类设计 - 类、属性、方法修饰符  局部变量不可以使用private ,  变量的声明和初始化  满足要求的前提下，尽量缩小域
+  
+  
+  		double dd = 1.234 ;
+		System.out.println(dd/0); //Infinity
+		
+		for(int i = 0 ; i<4;++i){
+			System.out.println(i);
+		}
+	
+		int j = 0 ;
+		for(int i = 0 ; i<2;++i){
+			int jj = j++ ;
+			System.out.println(jj);  //0 1
+		}
+		int j1 = 0 ;
+		for(int i = 0 ; i<2;++i){
+			int jjj = ++j1;
+			System.out.println(jjj);  //1 2
+		}
+		
+		
+		System.out.println(!true || true);  //true !高于&& ||
+		
+		//break continue是跳出当前循环还是嵌套循环  -- 跳出当前循环  - 跳出整个循环呢 ,在该循环下增加增加判断，此时需要将里面的变量申明到外面点 -错误，如下
+		//增加read_data: 直接跳到了最外层
+		//return 跳出方法， return 有值则表示返回值  return xxx表达式 直接无需再定义一个变量   
+		//continue同样可以跳到标签位置
+		read_data:
+		for(int x  = 0 ; x<3 ;x++){
+			for(int y = 0 ; y<2 ;y++){
+				if(y == 0){
+					System.out.println("跳出y值"+y +"x值"+x);
+					break read_data ;
+					//continue  ;
+					//return  ;
+				}
+			}
+		}
