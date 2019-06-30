@@ -5,3 +5,4 @@ bbsp中dao继承baseDao和实现daoInterface和这里是有区别的。因为这
 
 
 适配器模式：https://www.cnblogs.com/java-my-life/archive/2012/04/13/2442795.html
+           类比于‘ 方法重载 ’
