@@ -18,3 +18,35 @@ bbsp中dicUtil/shcpeDictionaryCache设计及反思
           对外提供方法是明确参数，参数类型、参数是否为null/“”特殊情况 ，返回无bug  内部逻辑清晰而不是无意义的if
           是否可以泛型
       5.确定核心方法后提供对外等多种变种如 date yyyymmddHH ...等多个变种dateUitl / mathUtil / scaleUtil /....
+ 
+ 
+ 
+ 项目启动引入缓存的几种方式：
+       1.（1）通过@PostConstruct方法实现初始化bean进行操作
+       2.（2）通过在bean相关的xml配置文件中配置init-method方法
+       3.（3）通过bean实现InitializingBean接口  https://www.cnblogs.com/hustzzl/p/7056487.html
+       4.通过servlet init()   http://www.51gjie.com/javaweb/849.html
+       
+       区分开：直接写静态成员变量去调用 -- 需要静态方法 - 静态方法中不能有动态参数(查数据库此时就不行了)
+              使用static{} / 构造方式 init() / {} 都存在问题  ， 需要清除此时的容器(spring / tomcat-servlet)加载问题+对象实例化顺序
+              
+              
+  初始化内容通常分类:
+        1.字典
+        2.连接
+        ...未完成
+        
+ 
+ 引入实现redis memcache ..
+ 
+ 
+ 缓存通常问题：
+       1.一致性  刷新频率 、 refresh / lock ..
+       2.击穿
+       3.雪崩
+       ...
+       
+
+        
+  
+  
