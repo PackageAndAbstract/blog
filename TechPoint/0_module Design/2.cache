@@ -47,6 +47,8 @@ bbsp中dicUtil/shcpeDictionaryCache设计及反思
        ...
        
 
-        
+  将缓存模块和实现模块关联起来 取值
+       1.
+       2.
   
   
