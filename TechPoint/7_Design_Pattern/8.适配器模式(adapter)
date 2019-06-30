@@ -2,3 +2,6 @@
 
 bbsp中dao继承baseDao和实现daoInterface和这里是有区别的。因为这里的baseDao只是将“ 基础的操作 curd ”抽出来了，并没有说“ 目的性的实现功能并且和
   此时接口需求冲突  ”
+
+
+适配器模式：https://www.cnblogs.com/java-my-life/archive/2012/04/13/2442795.html
