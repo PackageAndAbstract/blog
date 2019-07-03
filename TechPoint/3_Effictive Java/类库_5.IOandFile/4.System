@@ -1,0 +1,1 @@
+System.getProperty("xx.xxx");  //从系统层次获取配置信息
