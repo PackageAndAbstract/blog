@@ -1,1 +1,4 @@
 
+1. Element namespace schema xsd 
+
+2. 解析方式  dom sax ... xstream  --微信上对xml解析的关注，有的关注结构，有的关注内容-直接映射为对象
