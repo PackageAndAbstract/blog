@@ -1,4 +1,9 @@
 
-1. Element namespace schema xsd 
+1. Element namespace schema xsd --> 完全自定义xml结构 根据业务需要  机具es服务
 
-2. 解析方式  dom sax ... xstream  --微信上对xml解析的关注，有的关注结构，有的关注内容-直接映射为对象
+2. 解析方式  dom sax ... xstream  --微信上对xml解析的关注，有的关注xml结构，有的关注内容映射-直接映射为对象
+   这种方式必须是‘ 公用的，不单独针对某个xml ’
+
+3.为什么真正系统中看起来复杂，不易理解？
+   像机具中的es一样，与jbpm,设计模式，异常，线程等柔和在一起使用
+   像bbsp中schema校验，加解密，mq,对象映射，模板方法柔和在一起使用
