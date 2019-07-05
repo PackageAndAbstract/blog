@@ -3,5 +3,6 @@
   scanner
   
 2. httpClient 
+    使用HttpClient发送和接收请求数据:https://blog.csdn.net/salahelx/article/details/46582485
 
 3. webService 及常用工具
