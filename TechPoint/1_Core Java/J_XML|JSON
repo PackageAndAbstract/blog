@@ -7,3 +7,8 @@
 3.为什么真正系统中看起来复杂，不易理解？
    像机具中的es一样，与jbpm,设计模式，异常，线程等柔和在一起使用
    像bbsp中schema校验，加解密，mq,对象映射，模板方法柔和在一起使用
+      schema校验：https://www.jianshu.com/p/39710eb79f26
+                  https://blog.51cto.com/lavasoft/97597
+                  
+                  
+                  
