@@ -1,8 +1,20 @@
 
 1.socket - CBOD 接口文档中对每个byte的描述，组装和解析    tomcat / netty
-  scanner
+  scanner 
+  《core java》 这块
+  https://www.cnblogs.com/coder-wzr/p/7838553.html
+  -->CBOD参数封装
   
 2. httpClient 
     使用HttpClient发送和接收请求数据:https://blog.csdn.net/salahelx/article/details/46582485
+    https://blog.csdn.net/justry_deng/article/details/81042379
+    https://blog.csdn.net/ling1234ling1234/article/details/80678329
 
-3. webService 及常用工具
+3.ftpClient
+   固定模式
+   
+   
+   --- 柔和其他 ....
+
+3.  内容格式 其实不符合这里     webService 及常用工具  
+                               xml ....
