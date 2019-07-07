@@ -1,0 +1,64 @@
+package util.api.IOandFile;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.SourceLoader;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+/**
+ * @author YangWenjun
+ * @date 2019/7/7 12:38
+ * @project BaseJava
+ * @title: SystemTest
+ * @description:
+ */
+public class SystemTest {
+
+ /**
+         * 1.加载方式  路径  当前  当前下一集xx/xx   绝对路劲：/xx （此时/就是根）
+         * 2.将属性列表输出到指定的输出流         
+         */
+
+    public static void main(String[] args) throws IOException {
+
+       
+        //System.load("C:\\aabbcc\\a.txt"); 无法加载
+        System.out.println(System.getProperty("abc"));
+        //修改1 - 文件系统加载..
+        Properties ps = new Properties();
+        ps.load(new FileInputStream("C:\\\\aabbcc\\\\a.txt"));
+        System.out.println(ps.getProperty("abc"));
+        //修改2  - 类加载   ResourceAsStream
+        //Thread.currentThread().getContextClassLoader().getResourceAsStream("a.txt");
+        //SystemTest.class.getResourceAsStream("");
+        //ps.load(上面)
+
+        //修改3 spring
+
+        //修改4.apache Configure  https://blog.csdn.net/qq_16465949/article/details/48418973
+        Configuration config = new PropertiesConfiguration(PropertiesConfigurationDemo.class.getResource("system-config.properties"));
+
+        String resource = "main/global.xml";
+        Configuration config = new XMLConfiguration(resource);
+
+        //混合
+        CompositeConfiguration config = new CompositeConfiguration();
+        config.addConfiguration(new PropertiesConfiguration(
+                "main/global.properties"));
+        config.addConfiguration(new XMLConfiguration("main/global.xml"));
+
+        // 2.将属性列表输出到指定的输出流   
+        list(PrintStream out)  将属性列表输出到指定的输出流
+        store(OutputStream out, String comments) 
+          以适合使用 load(InputStream) 方法加载到 Properties 表中的格式，将此 Properties 表中的属性列表（键和元素对）写入输出流。
+          
+        xml格式配置
+        storeToXML(OutputStream os, String comment) 
+          发出一个表示此表中包含的所有属性的 XML 文档。   
+        apache .... 符合对应的dtd文件
+          
+
+    }
+}
