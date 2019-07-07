@@ -1,1 +1,24 @@
-System.getProperty("xx.xxx");  //从系统层次获取配置信息
+//结合Property使用
+package util.api.IOandFile;
+
+public class SystemTest {
+
+    /**
+     * 在 System
+     *          类提供的设施中，有标准输入、标准输出和错误输出流；
+     *         1. 对外部定义的属性和环境变量的访问；
+     *         2. 还有快速复制数组的一部分的实用方法。
+     *         3. 加载文件和库的方法；
+     *
+     * 1.系统资源获取  https://www.cnblogs.com/jianlun/p/4773711.html  setProperty(String key , String value
+     */
+    public static void main(String[] args) {
+
+        int[] b = new int[100];
+        System.arraycopy(new int[]{1,2} , 1, b, 1 , 1);
+        System.out.println(b[1]);
+
+        System.load("C:\\aabbcc\\a.txt");
+        System.out.println(System.getProperty("abc"));
+    }
+}
