@@ -1,7 +1,7 @@
-1.流(有序的序列)展现：1.内存  2.与文件系统交互，磁盘读写   3.网络(服务器系统间/client-server)
-																									        协议：1.http   												 2.socket        3.ftp
-																									          交互方式：xml - webservice			  Nio(netty)     excel解析
-																									         					 json
+1.流(有序的序列)展现：1.内存  2.与文件系统交互，磁盘读写   3.网络(服务器系统间/client-server) - 通讯
+							协议：1.http   				 2.socket        3.ftp
+							  交互方式：xml - webservice			  Nio(netty)     excel解析
+								   json
 																									         					 
 																									         					 
 2.io 
@@ -30,8 +30,10 @@
 		   4.io工具类(FileHandlerUtil)    文件copy - system.copy - File - 第三方copy 	
        
        5.NIO AIO netty
-       
+       	           1.FileChannle  内存映射文件
+		   
        6.包装器模式
+       		    1.设计模式模块查看
 
 
 
