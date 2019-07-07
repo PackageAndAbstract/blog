@@ -1,5 +1,65 @@
+package util.api.IOandFile;
 
-File类的list() 和 FileList()
-    https://www.cnblogs.com/DaCang/p/5363350.html
-    
-removeTo() 移动并重命名    
+import java.io.*;
+
+public class FileTest {
+    /**
+     * 1.File ：文件和目录路径名的 抽象 表示形式。 字符串 / 视图
+     * 2.linux  操作 - java操作
+     * 3.separator  /  相对System.getProperty("user.dir" )/ getParent  / 读写权限控制
+     * 4.树形结构 - 单点 for 递归  父子 Element
+     */
+    public static void main(String[] args) throws Exception {
+
+        new File("c:\\aabbcc").mkdirs();              //通过后缀问题来判断是目录还是文件 mkdir vs createFile
+
+        new File(new StringBuffer(System.getProperty("user.home")).append(System.getProperty("file.separator")).append("imgFolder").toString()
+        ).mkdirs();   //避免根/盘符问题 使用相对路径
+
+        File b =  new File("c:\\aabbccdd" , "ee"); //父子 虚拟路径，未刷新至磁盘
+
+        /*while(new FileInputStream(a).read(new byte[1024]) != -1){
+            new FileOutputStream("c:\\").write(new FileInputStream(a).read(new byte[1024]));
+        }*/
+
+        //创建
+        new File("c:\\aabbcc\\abc.txt").createNewFile(); //前缀后缀
+        //删除
+        new File("c:\\aabbcc\\abc.txt").delete();
+        //改
+        new File("c:\\aabbcc\\abc.txt").renameTo(new File("c:\\aabbcc\\abc_del.txt"));
+        //查  rwx
+        System.out.println(new File("c:\\aabbcc").canRead());  //setxxx赋权
+        System.out.println(new File("c:\\aabbcc").canWrite());
+        System.out.println(new File("c:\\aabbcc").canExecute());
+        //modify
+
+        System.out.println(new File("c:\\aabbcc\\abc.txt").getAbsoluteFile());
+        System.out.println(new File("c:\\aabbcc\\abc.txt").getAbsolutePath());
+        System.out.println(new File("c:\\aabbcc\\abc.txt").getCanonicalPath());
+
+        System.out.println(new File("c:\\aabbcc\\abc.txt").getFreeSpace());  //totalSpace  usespace
+
+        System.out.println(new File("c:\\aabbcc\\abc.txt").exists());
+        System.out.println(new File("c:\\aabbcc\\abc.txt").isFile());
+        System.out.println(new File("c:\\aabbcc\\abc.txt").isDirectory());
+
+        System.out.println(new File("c:\\aabbcc\\abc.txt").getParent());
+
+        //compareTo()
+
+        //遍历
+
+        new File("c:\\aabbcc").listFiles();
+        new File("c:\\aabbcc\\abc.txt").list();
+        new File("c:\\aabbcc\\abc.txt").listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) { //配合过滤器  这里就是将 if 中条件拿出来而已
+                return false;
+            }
+        });
+
+    }
+
+}
+ 
