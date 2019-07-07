@@ -6,19 +6,26 @@
 																									         					 
 2.io 
 		   1.流结构体系  
-		   				1.场景使用合适的流  
-                 https://github.com/corPrgrm/blog/blob/master/TechPoint/respository/io.png
-    
-		   				2.read:available()/reset()/clib()..    write:flush()    二者都有close
-		   					inputStream(抽象类不是接口)中aviable()  read(byte[]) reset()...都调用了抽象方法read(),子类只需实现它就好
-		   					虽然流的种类很多，其实就是read()的方式不同罢了，根据场景有更好的实现 。但是这与你read(byte[] by)是不矛盾的(上层)
-		   				
-              3.api及相关移步到：https://github.com/corPrgrm/blog/tree/master/TechPoint/3_Effictive%20Java/%E7%B1%BB%E5%BA%93_5.IOandFile
-              
-		   2.阻塞超时    
-		   				1.io阻塞 / net阻塞   
-		   				2.阻塞是否会失去当前资源的占用
-		   3.编码        客户端vs服务器
+				1.场景使用合适的流  
+					https://github.com/corPrgrm/blog/blob/master/TechPoint/respository/io.png
+
+				2.read:available()/reset()/clib()..    write:flush()    二者都有close
+					inputStream(抽象类不是接口)中aviable()  read(byte[]) reset()...都调用了抽象方法read(),子类只需实现它就好
+					虽然流的种类很多，其实就是read()的方式不同罢了，根据场景有更好的实现 。但是这与你read(byte[] by)是不矛盾的(上层)
+
+				3.api及相关移步到：https://github.com/corPrgrm/blog/tree/master/TechPoint/3_Effictive%20Java/%E7%B1%BB%E5%BA%93_5.IOandFile
+
+   		   2.阻塞超时    
+				1.io阻塞 / net阻塞   
+				2.阻塞是否会失去当前资源的占用
+				
+		   3.编码       Charset类 客户端vs服务器  String操作和io之间经常涉及 字节和字符
+		                本地的编码方式模式不能表示所有的Unicode字符，如果某个字符不能表示，他将被转成？ 
+					byteBuffer bf = new Charset("utf8").encode(str);byte[] b = bf.array(); 解码 
+					cset.wrap( ByteBuffer.wrap(xxx)).toString() 编码
+					 
+				编码和一个字符几个字节关系
+				
        
 		   4.io工具类(FileHandlerUtil)    文件copy - system.copy - File - 第三方copy 	
        
