@@ -1,8 +1,0 @@
-回调 - 钩子
-装饰模式和继承的主要区别是。装饰模式是针对对象的，而继承是针对类的。
-https://www.cnblogs.com/java-my-life/archive/2012/04/20/2455726.html
-
-
-添加装饰的几种：
-			1.接口(实现不同接口)  
-			2.包装器 定义DataInputStream(InputStream is) 层层包装想要的功能。 vs 构造器builder.append().. VS 链模式
