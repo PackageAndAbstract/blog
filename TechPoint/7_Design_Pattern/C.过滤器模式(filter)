@@ -1,2 +1,5 @@
+将if  删选判断  逻辑抽象到类中，输入输出 Filter 这样就可以灵活是否使用Filter ,以及Filter具体实现了。 (if分支 策略模式)
+
+
 集合(白名单集合)
 责任链（chain）/拦截器（intercepter ：https://www.jianshu.com/p/8a157cb73434 过滤规则可能是replace .. / 集合匹配 ....
