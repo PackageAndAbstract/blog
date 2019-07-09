@@ -1,4 +1,101 @@
 
+---20190709 seconed-----
+		泛型（T E K/V）
+		 0.为了编写的代码可以被不同类型的对象所重用(提高代码重用性|创建容器类)，使用Object地方 入参/出参 ，引入泛型。类型检查/避免强制类型转换
+		 
+             1.当返回类型为具体类型而不是Object(由前台再去判断)时，引入  
+		     public <T> T getInfo(String n ,T t){ ... return (T)xx ;}
+		   泛型单独 - 当使用反射单独Class<?> = ?.class
+		 
+		 2.如果完成反射基础上，需要指定返回类型 那么泛型可以代替class 则 T t 传入t后，t.class 来连接 查看hook unMarshallDom()
+		 
+		 3.不能new  调用者必须在使用时，继承时就指定具体类型
+		 
+             4.擦除 及反射时不能调用t 而是Object..
+		 
+             5.一次使用? 无需声明<T> 
+		   private <E> void swap(List<E> list, int i, int j) {
+                      //...
+                  }
+                  private void swap(List<?> list, int i, int j){
+                      //...
+                  }
+		   <? extends String>  参数化的类型可能是所指定的类型，或者是此类型的子类  vs super  边界
+		  
+              6.数组中没有泛型  - 使用list  并不是 没有 T[] T[]是正确的
+		  
+              
+              泛型 只使用T / T t  , 泛型类定义(属性 方法都用到T (方法无需单独声明))  / 泛型方法定义 / 泛型接口定义
+		   		public class GenericClass<F> {     *******--> 容器类 <--- *****
+				    private F mContent;
+				
+				    public GenericClass(F content){
+				        mContent = content;
+				    }
+				
+				    /**
+				     * 泛型方法
+				     * @return
+				     */
+				    public F getContent() {
+				        return mContent;
+				    }
+				
+				    public void setContent(F content) {
+				        mContent = content;
+				    }
+				
+				    /**
+				     * 泛型接口    
+				     * @param <T>
+				     */
+				    public interface GenericInterface<T>{
+				        void doSomething(T t);
+				    }
+				}
+                  泛型接口比较实用的使用场景就是用作策略模式的公共策略	
+                  public interface Comparator<T> {
+
+                      public int compare(T lhs, T rhs);
+
+                      public boolean equals(Object object);
+                  }
+
+		通配符的选择和使用
+		private <E> void add(List<? super E> dst, List<E> src){
+    for (E e : src) {
+        dst.add(e);
+    }
+}
+		7.擦除导致泛型的不可变性***？？？
+		 你可以把任何带参数的类型传递给原始类型 List，但却不能把 List< String> 传递给接受 List< Object> 的方法，因为泛型的不可变性，会产生编译错误。 
+            泛型中没有逻辑上的父子关系，如 List 并不是 List 的父类。两者擦除之后都是List，所以形如下面的代码，编译器会报错：
+
+            /**
+             * 两者并不是方法的重载。擦除之后都是同一方法，所以编译不会通过。
+             * 擦除之后：
+             * 
+             * void m(List numbers){}
+             * void m(List strings){} //编译不通过，已经存在相同方法签名
+             */
+            void method(List<Object> numbers) {
+
+            }
+
+            void method(List<String> strings) {
+
+            }
+            泛型的这种情况称为 不可变性，与之对应的概念是 协变、逆变：
+
+            协变：如果 A 是 B 的父类，并且 A 的容器（比如 List< A>） 也是 B 的容器（List< B>）的父类，则称之为协变的（父子关系保持一致）
+            逆变：如果 A 是 B 的父类，但是 A 的容器 是 B 的容器的子类，则称之为逆变（放入容器就篡位了）
+            不可变：不论 A B 有什么关系，A 的容器和 B 的容器都没有父子关系，称之为不可变
+            Java 中数组是协变的，泛型是不可变的。
+
+------------------
+
+
+
 1.为什么使用泛型
       1.可读性 编写的代码可以被“ 不同类型的对象 ’重用  --> 像反射一样从普通class向上提升 
               对具有公共逻辑的类或方法提供更高抽象，这种类型参数在入参，局部变量，成员变量及方法调用间固定了逻辑，避免了单个类单个类创建，而这些类
@@ -94,7 +191,7 @@
                   5.约束和局限性 ***** 这是重点****区分普通类创建及调用逻辑*****
                      大多限制是由类型擦除引起的。
                          1.不能使用基本类型 实例化 类型参数（T...）
-                               没有Pair<doubel> --> Pair<Double>  类型擦除后Object不能存储double值
+                               没有Pair<doubel> --> Pair<Double>  类型擦除后Object不能存储double值  ****
                         
                          2.运行时类型查询只适用于原始类型
                               虚拟机中对象总有一个“ 特定的非泛型类型 ”。
@@ -152,7 +249,7 @@
                            6.不能构造泛型数组
                                就像不能实例化一个泛型实例一样，也不能实例化数组
                                   T[] t = new T[]      是错误的
-                               解决方案：public static <T extends Compareble> T[] minmax(T... a){
+                               解决方案：public static <T extends Compareble> T[] minmax(T... a){   *****
                                   T[] mm = Array.newInstatnce(a.getClass.getComponnetType(),2)
                                
                                }  
