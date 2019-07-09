@@ -1,3 +1,28 @@
+---20190709  third-----
+	  1.泛型创建 
+	 		 public class Test<T> {
+			    T t;
+			    public T create(){
+				t = new T();
+			    }
+			}
+	     ---编译通不过---
+	              public class Test<T> {
+			    T t;
+			    public void create(Class<T> clazz){
+				try {
+				    t = clazz.newInstance();
+				} catch (InstantiationException e) {
+				    e.printStackTrace();
+				} catch (IllegalAccessException e) {
+				    e.printStackTrace();
+				}
+			    }
+
+         2.数组为什么不支持泛型  <String,String>也是泛型哈 不一定是T E ....
+	   https://www.zhihu.com/question/20928981
+
+
 
 ---20190709 seconed-----
 		泛型（T E K/V）
