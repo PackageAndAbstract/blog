@@ -1,3 +1,147 @@
+------------API------------
+package util.reflect;
+
+import jdk.management.resource.internal.inst.UnixAsynchronousServerSocketChannelImplRMHooks;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+public class ReflectTest {
+    /**
+     * 0.对类级别，加载的抽象
+     * 1.API中 ‘ 此 ’表示该调到用对象 。
+     * 2.Class操作不只是class 包括对 数组 ，注解 ，枚举 ... 操作
+     * 3.作为工具类的基础，类级别抽象基础，那么对‘ 类组件 ’的各种都需要有操作api  全面(类-方法-属性组成)+域使用
+     */
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException, NoSuchFieldException {
+
+        /***---------------Class------------**/
+        //创建
+        Class<?> aClass = Class.forName("util.reflect.UserSon");//完全限定名：从sourceRoot开始  表示编译路径  vs 资源文件从项目根开始
+        Class<?> aClassStr = Class.forName("java.lang.String");
+
+        new User().getClass();
+
+        //User.class;
+
+        Object o = aClass.newInstance();
+
+        //查
+        Annotation[] annotations = Class.forName("util.reflect.UserSon").getAnnotations();                  //vs 属性 方法注解获取
+        Annotation annotations1 = Class.forName("util.reflect.UserSon").getAnnotation(Deprecated.class);
+        System.out.println(annotations1);
+
+        System.out.println(aClass.getCanonicalName());
+        //getName()返回的是虚拟机里面的class的表 getCanonicalName()返回的是更容易理解的表示 gerSimpleName()
+        //比如byte[]类型,前者就是[B,后者就是byte[]
+        //比如byte[][]类型,前者就是[[B,后者就是byte[][]
+
+        System.out.println(aClass.getClasses()[0]);
+        //getClasses得到该类及其父类所有的public的内部类。
+        //getDeclaredClasses得到该类所有的内部类，除去父类的。
+
+        System.out.println(aClass.getClassLoader());
+
+        System.out.println(new String[1].getClass().getComponentType());
+        //返回类的组件类型的数组。如果这个类并不代表一个数组类，此方法返回null。
+
+        //*****
+        //getConstructor(Class<?>... parameterTypes)
+        //getConstructors()  返回数组
+        //getDeclaredConstructor(Class<?>... parameterTypes)
+        //类似的：getDeclaredField(String name)  ...  Method getDeclaredMethod(String name, Class<?>... parameterTypes)
+        //getPackage
+        //getModifier
+        //getSuperClass
+
+        System.out.println(aClass.getSigners()+"===");
+        System.out.println(aClass.getDeclaredClasses() + "---");
+        //
+        System.out.println(aClass.getResourceAsStream(""));
+
+        //判断
+        System.out.println(aClass.isPrimitive());//是否基本类型 - 包装类  / 转换
+        System.out.println(aClass.isInterface());//是否接口
+        System.out.println(aClass.isEnum());
+        System.out.println(aClass.isArray());
+        //是否是注解..
+
+        System.out.println(aClass.isLocalClass());
+        //内部类相关  当底层类是成员类 ...
+
+
+        //强转
+        if(User.class.isAssignableFrom(aClassStr)) {                             //是否可转换从...
+            Class<? extends User> aClassStr1 = aClassStr.asSubclass(User.class); //参照instance of 对象是否类型  类型窄化(子类)
+            System.out.println(aClassStr1);                                      //窄话失败会报错 -添加判断
+        }
+
+        if(User.class.isInstance(new User())) {   //判定指定的 Object 是否与此 Class 所表示的对象赋值兼容。源码中有判断，不符合会抛异常|obj 和Class关系
+            System.out.println(User.class.cast(new UserSon()));     //等价与(T)obj 源码/ Tree.class = Class<Tree>
+        }
+
+        /***---------------Class------------**/
+
+        /***-------------- Method------------**/
+        Method mm = UserSon.class.getDeclaredMethod("setHeight", String.class);
+        Deprecated setHeight = mm.getAnnotation(Deprecated.class);
+        System.out.println(setHeight);
+
+        System.out.println(mm.getDeclaringClass());
+
+        System.out.println(mm.getDefaultValue());
+
+        System.out.println(Arrays.toString(mm.getExceptionTypes()));
+        System.out.println(mm.getGenericExceptionTypes()[0]);
+        //class java.lang.Exception  vs [Ljava.lang.Class;@6b884d57 其中[L
+        //Element Type        Encoding
+        //boolean             Z
+        //byte                B
+        //char                C
+        //double              D
+        //float               F
+        //int                 I
+        //long                J
+        //short               S
+        //class or interface  Lclassname;
+        //详见:https://stackoverflow.com/questions/3442090/what-is-this-ljava-lang-object
+        System.out.println(mm.getGenericReturnType());                     //获取返回值进行封装 处理
+        System.out.println(mm.getReturnType());                            //返回Class<?>
+        System.out.println(Arrays.toString(mm.getGenericParameterTypes()));//获取参数 进行invoke
+        System.out.println(mm.getParameterTypes());
+        System.out.println(mm.getModifiers());                             //通过Modify获取对应值
+        System.out.println(mm.getName());                                  //获取名称 invoke
+        System.out.println(mm.getParameterAnnotations());                  //[[Ljava.lang.annotation.Annotation;@38af3868 一个参数多个注解，多个参数 所以是二维
+
+        mm.invoke(new UserSon() , "111");                           //调用：注意参数
+
+        System.out.println(mm.toString());
+        System.out.println(mm.toGenericString());                           //public void util.reflect.UserSon.setHeight(java.lang.String) throws java.lang.Exception
+
+        /***-------------- Method------------**/
+
+        /***-------------- Filed------------**/
+       // Field height = UserSon.class.getField("height");                   //获取不到
+        Field height = UserSon.class.getDeclaredField("height");
+        System.out.println(height);
+        UserSon userSon = new UserSon("1213");
+        height.setAccessible(true);                                           //开放权限
+        System.out.println(height.get(userSon));
+
+        height.set(userSon,"77888");
+        System.out.println(height.get(userSon));
+        /***-------------- Filed------------**/
+
+        /***-------------- Constructor------------**/
+
+        //获取不同参数构造方法，进行对象创建
+
+--------------API----------------------------
+
+
 
 **********  当你不确定使用哪个对对象时，但无论是哪个对象都需要执行“ 相同操作 ”，那么就考虑反射。在运行时确定，再去通过“ 定义好的操作执行 ”
             当你不确定使用哪个类时，但无论哪个类都需要执行“ 相同操作 ” ，那么久考虑泛型 
@@ -81,15 +225,7 @@
                        URLgetResource(String name)  查找带有给定名称的资源。
                        InputStream	getResourceAsStream(String name)  找具有给定名称的资源。
                                  
- 第二阶段：
-            classLoader
-             数据资源的加载
-                          
-                          
-                          
-                          
-                          
-                          
+                        
                           
                           
                                                                
