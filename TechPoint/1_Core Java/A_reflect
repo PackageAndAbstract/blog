@@ -141,6 +141,9 @@ public class ReflectTest {
 
 --------------API----------------------------
 
+反射常见的坑:https://blog.csdn.net/briblue/article/details/76223206#%E8%B0%A8%E6%85%8E%E4%BD%BF%E7%94%A8-methodinvoke-%E6%96%B9%E6%B3%95
+            https://cloud.tencent.com/developer/article/1015080
+
 
 
 **********  当你不确定使用哪个对对象时，但无论是哪个对象都需要执行“ 相同操作 ”，那么就考虑反射。在运行时确定，再去通过“ 定义好的操作执行 ”
