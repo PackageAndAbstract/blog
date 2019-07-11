@@ -7,6 +7,19 @@
    dom4j和sax解析实现： https://github.com/corPrgrm/VeteransLoveWars/blob/master/20190710_xml%E8%A7%A3%E6%9E%90%E6%80%9D%E8%80%83%E5%BE%AA%E7%8E%AF%E9%80%92%E5%BD%92%E5%8F%8D%E5%B0%84%E6%B3%9B%E5%9E%8B%E5%8F%8A%E6%A1%86%E6%9E%B6%E5%BF%AB%E9%80%9F%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8
                        hook下utils/XMLconvertUtils
               sax解析：https://blog.csdn.net/lp284558195/article/details/79136322
+   
+   schema,namespace校验：https://www.jianshu.com/p/39710eb79f26  还是基于Doucument api 。获取schema，校验当前文档，在这个基础上添加了开关...
+   
+   xstream..多种映射实现：
+         DOM 、SAX、StAX技术都是从XML的角度来处理文档和建立模型，这对于只关注文档XML结构应用程序来说是适用的，
+         但是很多应用程序仅仅将XML作为数据交换的媒介，更多的关注的是文档数据本身，为此人们又提出了一种XML数据绑定技术，可以忽略XML文档的实际结构，
+         而直接使用文档的数据内容,比如Castor、JAXB、JiBX、Qucik和Zeus等。 xtream , xpath ...
+         
+         XML 和 Java 技术: 数据绑定的多种用法:https://blog.csdn.net/fightplane/article/details/1586610
+         打造完美的xml技术解决方案（dom4j/xstream）:https://blog.csdn.net/thunder09/article/details/5555946  
+            xml/string/bean转换 xmljson转换  dom4j/xstream实现
+            
+
                        
 3.为什么真正系统中看起来复杂，不易理解？
    像机具中的es一样，与jbpm,设计模式，异常，线程等柔和在一起使用
