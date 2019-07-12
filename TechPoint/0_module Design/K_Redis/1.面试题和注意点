@@ -4,3 +4,5 @@
 
 redis实现：
     hash槽：https://www.jianshu.com/p/3ca1f9f0c2ff?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+    
+一文看懂Redis的持久化原理：https://juejin.im/post/5b70dfcf518825610f1f5c16
