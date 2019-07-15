@@ -20,6 +20,22 @@ thread和runnable区别。runnable内部类方式如何加锁？
    10.每个线程都有独立的栈吗?独立的资源，方法是copy吗？局部变量 。 压栈弹栈
    11.死锁：锁和条件不能解决多线程中的所有问题 。如何灵活的判断是否形成死锁？
    12.并发类 使用和api
+   13.锁
+          1.数据库锁  	
+       			如何添加行级锁  
+       				  共享锁（S）：SELECT * FROM table_name WHERE ... LOCK IN SHARE MODE
+			          排他锁（X)：SELECT * FROM table_name WHERE ... FOR UPDATE
+       			为什么Java开发人员必须要了解数据库锁？https://blog.csdn.net/qq_41701956/article/details/81623448
+  
+          2.Java锁      					
+  			https://blog.csdn.net/qq_41181619/article/details/81407289  
+			自旋锁、阻塞锁、可重入锁使用解析:https://blog.csdn.net/qq_33404395/article/details/88896602
+			JAVA中锁的介绍及使用建议:https://blog.csdn.net/tanyunlong_nice/article/details/80486762
+			什么时候使用乐观锁，悲观锁及乐观锁的内容：https://blog.csdn.net/yansong_8686/article/details/39325429       
+       
+          3.关联 
+      			 1.可能是最漂亮的Spring事务管理详解  https://juejin.im/post/5b00c52ef265da0b95276091
+			 
    --------------------------------
 0.准备
       1.方法级别的多线程中断 vs 指令级别的中断  。 中断的地方远比自己认为的要多 xx = new xx () 这个也有可能中断
