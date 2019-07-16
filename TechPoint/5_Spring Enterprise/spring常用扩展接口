@@ -1,0 +1,20 @@
+
+1.通过基于XML和基于Java的配置扩展，可以使用户通过Spring使用我们研发的组件，提供很好的易用性。
+				https://nobodyiam.com/2017/02/26/several-ways-to-extend-spring/
+
+2.通过Spring容器最常用的两个扩展点：BeanFactoryPostProcessor和BeanPostProcessor，可以使我们的程序逻辑和Spring容器紧密合作，无缝插入到用户bean的生命周期中，发挥更强大的作用。
+				spring常用扩展接口
+							Java对象创建流程--spring实例化初始化
+												 
+						  https://www.cnblogs.com/xrq730/p/5721366.html
+						  		InitialingBean和DisposableBean
+						  		BeanNameAware、ApplicationContextAware和BeanFactoryAware( 从Context中获取的信息，servlet,各个框架..)
+									FactoryBean sping配合策略模式创建实现
+									BeanPostProcessor 重点
+									BeanFactoryPostProcessor
+									InstantiationAwareBeanPostProcessor
+									
+						  https://juejin.im/post/5b7964d6f265da43412866c7
+						     	ApplicationListener
+						     	
+		     	
