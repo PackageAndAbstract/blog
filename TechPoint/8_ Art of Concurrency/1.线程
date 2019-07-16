@@ -277,13 +277,44 @@ thread和runnable区别。runnable内部类方式如何加锁？
 							incrementAndGet方法以原子方式将 AtomicLong自增 ，并返回自增后的值 。也就是说 ，
 							获得值、增 1 并设置然后生成新值的操作不会中断 。可以保证即使是多个线程并发地访问同
                   5.线程安全集合
-                  6.其他线程安全类 CountDownLatch
+          
+	      4.协同类( -- 查看baseJava/test --)
+			java.util.concurrent包包含了几个能帮助人们管理相互合作的线程集的类见表 14-5 。这
+			些机制具有为线程之间的共用集结点模式（common rendezvous patterns ) 提供的“ 预置功能”
+			( canned functionality )0 如果有一个相互合作的线程集满足这些行为模式之一 ，那么应该直接
+			重用合适的库类而不要试图提供手工的锁与条件的集合 。
 
-             以上都是在同步基础上，并发结构基础上，封装为方法
-        
-        4.线程池
-               1.Future callable()...
-               2.几种池对比
-               3.
+			CyclicBarrier
+						允许线程集等待直至其中预定数目的线程到达一个公共障栅（barrier )，然后可以选择执行一个处理障栅的动作
+						当大量的线程需要在它们的结果可用之前完成时
+
+			CountDownLatch 
+						允许线程集等待直到计数器减为0
+						当一个或多个线程需要等待直到指定数目的事件发生
+
+			Semaphore   前面问题是任务和线程，这个是  任务开始  需要线程间申请获取。申请材料大于任务数(线程数)
+						允许线程集等待直到被允许继续运行为止
+						限制访问资源的线程总数 。如果许可数是1 ，常常阻塞线程直到另一个线程给出许可为止
+
+			Exchanger
+						允许两个线程在要交换的对象准备好时交换对象
+						当两个线程工作在同一数据结构的两个实例上的时候 ，一个向实例添加数据而另一个从实例清除数据
+
+			Phaser
+						类似于循环障栅， 不过有一个可变的    
+						计数 Java SE 7中引人
+
+			SynchronousQueue 
+						允许一个线程把对象交给另一个线程 
+						在没有显式同步的情况下 ， 当两个线程准备好将一个对象从一个线程传递到另一个时
+
+
+
+
+                5.线程池 
+			 https://juejin.im/entry/58fada5d570c350058d3aaad 
+			 https://liuzho.github.io/2017/04/17/%E7%BA%BF%E7%A8%8B%E6%B1%A0%EF%BC%8C%E8%BF%99%E4%B8%80%E7%AF%87%E6%88%96%E8%AE%B8%E5%B0%B1%E5%A4%9F%E4%BA%86/
+			 Callable、Future和FutureTask：https://www.cnblogs.com/dolphin0520/p/3949310.html
+
            
            
