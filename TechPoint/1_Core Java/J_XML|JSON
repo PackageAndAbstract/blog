@@ -28,5 +28,57 @@
                   https://blog.51cto.com/lavasoft/97597
                   https://blog.csdn.net/u012843873/article/details/85756563
                   
-                  
+ 4.0.oxm 常用技术  
+1.xml element  （查看hook/util/xmlutil)
+		1.更好的解决了层级问题 vs proerpty中dbname.info.name.alias= ...平面结构及键唯一
+		2.序列化 对象传递 webservice .. vs serialiable
+		
+		1.结构
+		   <? xml version="" encoding=""?>  头文件  可选  处理指令
+		   
+		   <!DOCTYPE configuration ...."http://java.sun.com/.../..2.2.dtd"  文档类型定义dtd 可选
+		   
+		   <xx>
+		   			<xx> ...                    xml正文
+		   <student name="name">	   				<student> 元素 / name 属性  /xiaoming 文本 / 子元素 孙元素(层级) 
+		   				xiaoming
+		   				<school>xiaohebei<school> 设计时应避免文本和子元素混合，简化解析过程
+		   </student>  
+		
+		2.元素 vs 属性
+		  属性:修改值的解释  比如 单位(可以不使用)
+		  元素：最小的粒度，不可分割。
+		  
+		3.特殊的字符 < > & ... 处理
+		   1.转义   &lt; &gt;...
+		   2.<![CDATA[ xx ]]> xx为可以包含特殊字符  <> is my best
+		   
+2.解析和拼接( ***公用*** api？jdk本身Doucument SAXparse  org.. javax...等 )  util  
+		完全清晰结构才能编写出for if等情况 以及多层for ...  --xml结构|map|list...嵌套问题 树..
+		
+		抽到递归
+
+    （ dom / sax ）4种 xpath  
+     如何验证schema 
+     构建obj-xml
+     获取值方式 + webservice解析方式(https://blog.csdn.net/chenleixing/article/details/44958549)
+	
+	抽象到方法之上 - 类(反射 泛型 设计模式)	
+		反射  
+		 	api 
+		 			1.基本的 Java 类型（boolean、byte、char、short、int、long、float 和 double）和关键字 void 也表示为 Class 对象--基本类型参数转化。/非基本类型呢？
+		 			2.Class 没有公共构造方法 -- 构造路径
+		 			3.
+		 	坑 
+		  https://blog.csdn.net/briblue/article/details/76223206#%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0-method
+		  https://blog.csdn.net/hbcui1984/article/details/2719089
+		  
+		  使用场景
+		  		对象映射 结合泛型  子类对泛型影响  子类和父类 ..
+		  		注解获取
+
+		dom - dom4j解析 总结 递归(自己认识有问题)....
+		sax解析  qname 
+	
+	相关的框架使用 映射到对象 对比自己的实现                 
                   
