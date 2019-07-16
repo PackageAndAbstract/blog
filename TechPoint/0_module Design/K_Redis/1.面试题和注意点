@@ -1,3 +1,7 @@
+redis:
+ REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。通过一个软件搭建了一个服务器。通过公用内存实现快速使用
+ Redis 在网络事件处理上采用的是非阻塞多路复用模型。
+
 面试题：https://juejin.im/post/5cb13b4d6fb9a0687b7dd0bd
 
 什么是一致性Hash算法？：https://zhuanlan.zhihu.com/p/34985026
@@ -6,3 +10,4 @@ redis实现：
     hash槽：https://www.jianshu.com/p/3ca1f9f0c2ff?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
     
 一文看懂Redis的持久化原理：https://juejin.im/post/5b70dfcf518825610f1f5c16
+
