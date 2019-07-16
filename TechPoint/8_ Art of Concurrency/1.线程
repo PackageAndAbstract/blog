@@ -104,7 +104,12 @@ thread和runnable区别。runnable内部类方式如何加锁？
          16.守护线程 -计时器线程
           这是很危险的 。守护线程应该永远不去访问固有资源 ， 如文件、 数据库 ，因为它会在任何时
 					候甚至在一个操作的中间发生中断 。
-         17.
+         17.aqs vs cas
+		  juc:java.util.concurrent
+		  aqs:AbstractQueuedSynchronizer
+		  cas:Compare and Swap 乐观锁实现  
+			AtomicInteger  http://www.hollischuang.com/archives/1537?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io
+
       
 1.是什么
       1.一把利剑，可以提高效率，使用不当会造成系统风险。
