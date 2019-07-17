@@ -52,6 +52,26 @@
             通常用于setxxx(实现类)这里讲实现类（监听类 ，thread类）hibernate函数...
             扩展：compareTo()用于Collections排序时，再去定义比较规则使用的就是内部类  vs js中接口回调
             
+               Map m = new HashMap(){
+            //可以对m进行操作 添加方法或者重写|接口(实现)
+            @Override
+            public Object put(Object key, Object value) {
+                 super.put(key, value);
+                 return get(key).toString()+"111";
+            }
+            //不能传递到外面调用
+            public void nowAdd(){
+
+            }
+            //初始化容器  匿名内部类
+            {
+                put(1, 1);
+                put(1, 1);
+            }
+        };
+        System.out.println(m.put(123, 123));//123111
+    }
+            
       4.局部内部类
       
       
