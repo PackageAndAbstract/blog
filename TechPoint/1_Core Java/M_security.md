@@ -1,18 +1,20 @@
 
-图解密码学：https://blog.csdn.net/weixin_39190897/article/details/82223408
-数据加解密：https://blog.csdn.net/weixin_39190897/article/details/82220653
+    1.安全
+        1.编写代码
+            1.代码签名 ....其他。。。
+            2.类加载 字节码校验   双亲委派机制及自定义加载器实现     https://www.cnblogs.com/wxd0108/p/6681618.html
+        2.用户认证  加密
+        3.数字签名
 
-1.Permission使用:https://www.yiibai.com/java/java-set-file-permissions-posixfilepermission.html
-
-2.shiro 
-
-3.登陆权限 ... 模块级安全
+            |
+         用户登陆
 
 
-------------------------编写安全可靠程序的75条建议---------------------------------
+
+-------------代码编写-----------编写安全可靠程序的75条建议-----https://yq.aliyun.com/articles/92618----------------------------
 安全 确保Java应用程序安全性的编码建议
 
-建议1：限制敏感数据的生命周期
+[建议1：限制敏感数据的生命周期](https://yq.aliyun.com/articles/92416)
 
 建议2：不要在客户端存储未经加密的敏感数据
 
