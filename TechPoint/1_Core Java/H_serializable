@@ -1,1 +1,11 @@
+对象序列化（serialization）和反序列化（deserialization）是将对象转化为便于传输的格式进行发送和接收的两个操作。
+常见的序列化格式有字节数组，json字符串，xml字符串等。
 
+1.serialVersionUID :覆盖重写是为了修改该类时，未完成的对象仍然可以兼容，而不是jvm生成的特定的
+
+2.序列化几种方式
+      1.byte
+      2.json
+      3.xml
+
+3.序列化和mq之间关系及实现
