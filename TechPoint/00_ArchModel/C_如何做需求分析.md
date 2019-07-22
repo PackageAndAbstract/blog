@@ -12,7 +12,7 @@
 8.部署 
 9.生产问题定位解决
 
-详细内容：![需求分析](https://www.cnblogs.com/my-worldlet/p/10817830.html)
+详细内容：[需求分析](https://www.cnblogs.com/my-worldlet/p/10817830.html)
 
 
 
