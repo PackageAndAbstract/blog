@@ -135,12 +135,16 @@ Java中创建对象方式（6种）
       2. spring(初始化)
             1.set ..
             2.Aware接口
-            3.beanpostProcessor
-            4.initMethod..
-            5.... 7个
+            3.BeanPostProcessor 前置
+            4.initializinBean afterPropertiesSet
+            5.initMethod..
+            6.BeanPostProcessor 后置
+            7.Destruction回调接口
       
       
-      
+destroy
+            1.
+            2.
       
       
       
