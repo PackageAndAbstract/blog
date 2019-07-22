@@ -1,6 +1,6 @@
-转载自：https://www.cnblogs.com/my-worldlet/p/10817830.html
-        https://fangang.iteye.com/category/200994
 
+
+里程碑/迭代
 
 1.需求讨论
 2.功能角色/用例图/场景图     --签字/说明书
@@ -11,6 +11,8 @@
 7.送测 /bug修复 / 总结
 8.部署 
 9.生产问题定位解决
+
+详细内容：![需求分析](https://www.cnblogs.com/my-worldlet/p/10817830.html)
 
 
 
