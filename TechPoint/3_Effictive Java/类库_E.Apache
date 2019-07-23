@@ -1,2 +1,64 @@
-apache常用类库
-      https://www.cnblogs.com/koal/p/5161743.html
+apache常用类库（包，这些包下还有许多类） api:http://commons.apache.org/proper/xx/javadocs/..
+     
+     Lang	      Java基本对象方法的工具类包 如：StringUtils,ArrayUtils等等.
+                  api:http://commons.apache.org/proper/commons-lang/javadocs/api-release/index.html         
+                  常用类:ArrayUtils  ClassUtils  Conversion  StringUtils Validate 以及lang下其他子包：NumberUtils DateFormatUitls
+                  
+     BeanUtils	提供了对于JavaBean进行各种操作，克隆对象,属性等等.
+                  api:http://commons.apache.org/proper/commons-beanutils/javadocs/v1.8.3/apidocs/
+                  常用类:BeanUtils  ConvertUtils  MethodUtils  PropertyUtils
+     
+     Collections	java集合框架操作.
+                  api:http://commons.apache.org/proper/commons-collections/javadocs/api-4.4/index.html
+                  常用类：CollectionUtils ListUtils MapUtils 
+     
+     IO	      io工具的封装.
+                  api:http://commons.apache.org/proper/commons-io/javadocs/api-release/index.html
+                  常用类:IOutils FileUtils
+    
+     HttpClient  提供HTTP客户端与服务器的各种通讯操作
+                  api:
+                  常用类
+                  
+     FileUpload	提供文件上传功能.
+                  api:http://commons.apache.org/proper/commons-fileupload/javadocs/api-release/index.html
+                  常用类：ParameterParser FileUpload
+                  
+     Betwixt	XML与Java对象之间相互转换.
+                  api:
+                  常用类
+                  
+     Codec	      处理常用的编码方法的工具类包 例如DES、SHA1、MD5、Base64等.
+                  api:
+                  常用类
+                  
+     Compress	java提供文件打包 压缩类库.
+                   api:
+                  常用类
+    
+     DBCP	      提供数据库连接池服务.
+                   api:
+                  常用类
+                  
+     DbUtils	提供对jdbc 的操作封装来简化数据查询和记录读取操作.
+                   api:
+                  常用类
+                  
+      Configuration	一个java应用程序的配置管理类库.
+                   api:
+                  常用类
+                  
+      Email	java发送邮件 对javamail的封装.
+                  api:
+                  常用类
+                  
+      Logging	提供的是一个Java 的日志接口.
+                   api:
+                  常用类
+      
+      Validator	提供了客户端和服务器端的数据验证框架.
+                  api:
+                  常用类
+            
+     
+     
