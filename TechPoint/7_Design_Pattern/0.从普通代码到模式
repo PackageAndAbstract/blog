@@ -169,3 +169,85 @@
 ② 缺点：
 
 继承复用破坏包装，因为继承将基类的实现细节暴露给派生类，这种复用也称为白箱复用;如果基类的实现发生改变，那么派生类的实现也不得不发生改变;从基类继承而来的实现是静态的，不可能在运行时发生改变，不够灵活。
+
+----can kao cai niao jiao cheng -----------
+ 扩展: spring中使用类抽象 / 类之间组织(模式 /体系)  导致使用起来都是进行值的设置。所以不清晰
+         1.每个接口的使用场景
+         2.设计模式  5中创建
+
+                     8个结构  这些设计模式关注类和对象的组合。继承的概念被用来组合接口和定义组合对象获得新功能的方式。
+                              允许向一个现有的对象添加新的功能，同时又不改变其结构。
+
+                     装饰器/代理
+                            代替继承
+                       装饰者：抽象类实现接口 并拿着引用进行实现。再定义一个类继承抽象类，覆写接口中的写。super()+新方法  --静态代理
+                       代理：
+                            1、和适配器模式的区别：适配器模式主要改变所考虑对象的接口，而代理模式不能改变所代理类的接口。 2、和装饰器模式的区别：装饰器模式为了增强功能，而代理模式是为了加以控制。
+                            2、jdk/cglib糅合许多其他的知识，导致看起来动态代理复杂，本质就是完全控制真实对象。
+                                  public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                                        System.out.println("调用代理类");
+                                        if(method.getName().equals("sellBooks")){
+                                            int invoke = (int)method.invoke(realSubject, args);//子类通过构造进入
+
+                                            ///spring中许多参数都封装成了对象，思考更多，更全面，传递时也是以对象的。
+
+                                   Subject proxyClass = (Subject) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[]{Subject.class}, myInvocationHandler);
+                               jdk 针对于 实现接口   / cglib 针对于 类  但是不能实现final/private修饰的方法 - 互相补充
+
+                     适配器 类似于工具类中重载  复用
+                            对当前已经有工作的，为了前移或者功能扩展，所以使用了适配，而不是构建初期就使用
+                            三个重要类 adapter/新功能类(引用了adapter)/接口 完成后下一次如果还扩展，将这个整体看作是接口再去同样定义
+                            就可以实现。这样来无需考虑底层的底层的if..实现 。只要向外包即可
+                            --新增功能和原功能是if关系---
+
+                     桥接   https://www.runoob.com/design-pattern/bridge-pattern.html
+                            三个重要类  抽象类shape 桥接了接口和需要新添加的功能。继承抽象类的类和调用类。调用类需要指明具体子类
+                            --新增功能和功能是合作完成作用-- 颜色和形状
+                            --由调用者决定 对于装饰着来说。装饰者是将这种自由写进代码中
+
+                     过滤/拦截   list集合+and/or操作
+
+                     组合   父子/树/文件夹
+                            自己关联自己
+                            super 1.重写是为了替换，则直接写  2.重写为了扩展 则需要super(xx)参数  3.构造器中super()/super(xx)继承中构建父类，注意子类使用父类的属性和方法...
+                                  2.List<employee>  add remove getSubEmployee()..
+
+                     享元   位于单例和各个实例中间，对‘分组’进行共享
+                             private static final HashMap<String, Shape> circleMap = new HashMap<>();
+
+                               public static Shape getCircle(String color) {  //hash string
+                                  Circle circle = (Circle)circleMap.get(color);
+
+                                  if(circle == null) {
+                                     circle = new Circle(color);
+                                     circleMap.put(color, circle);
+                      外观
+
+                      12个行为型  特别关注对象之间的通信。
+                      观察者(监听)
+                              subject 中由List<Observer> notifyAll{obs.update..}..setState(调用notify). / Observer中持有subject 抽象类
+                      策略
+                      模板
+                      中介者 服务器/wto/桌游 由中介者完成分散再各个子类中的逻辑，这个逻辑具有相同的逻辑及不会因为子类个性化。
+                             新增加一个同事类时，不得不去修改抽象中介者类和具体中介者类，此时可以使用观察者模式和状态模式来解决这个问题。
+                      状态/命令 消除if/else | 行为随状态改变而改变的场景
+                         状态：state和context相互引用
+                      责任链(拦截器/过滤器) 不是简单的list<Obj> 再去for...而是 类似于组合模式，组合模式基础上，通过setxx形成链 。类似于Stringbuilder..
+                      迭代器 iterator 将hasNext()和next()独立到类中
+                      访问者 将数据结构与数据操作分离。
+                      解释器
+                      备忘录 回滚/事务/后退/后悔药 /镜像
+                      空对象
+
+                      j2ee
+                      MVC 模式（MVC Pattern）
+                      业务代表模式（Business Delegate Pattern）
+                      组合实体模式（Composite Entity Pattern）
+                      数据访问对象模式（Data Access Object Pattern）
+                      前端控制器模式（Front Controller Pattern）
+                      拦截过滤器模式（Intercepting Filter Pattern）
+                      服务定位器模式（Service Locator Pattern）
+                      传输对象模式（Transfer Object Pattern）
+
+          拦截器/过滤器/监听器再javaee中的区别：http://m.zhizuobiao.com/blog/skills/skills-18040800036/
+
