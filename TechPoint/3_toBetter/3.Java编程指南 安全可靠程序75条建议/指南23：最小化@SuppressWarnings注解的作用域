@@ -1,0 +1,72 @@
+编译器在为泛型代码添加类型的时候，如果检测到潜在的类型安全问题，会抛出未检查警告（unchecked warnings），其中包括
+          未检查的类型转换警告（unchecked cast warnings）
+          未检查的代码调用警告（unchecked method invocation warnings）
+          未检查的泛型数组创建警告（unchecked generic array creation warnings）
+          未检查的数据转换警告（unchecked conversion warnings）[Bloch 2008]。
+      当且仅当触发警告的代码确实可以保证其类型安全的情况下，开发者才可以使用@SuppressWarnings("unchecked")注解忽略这些未检查警告。
+      最常见的用例就是在新的客户端代码中要重用一些老程序。关于忽略未检查警告的风险在《CERT®Oracle®Secure Coding Standard for Java™》[Long 2012]的“OBJ03-J. Do not mix generic with non- generic raw types in new code.”中有着更广泛的讨论。
+
+在Java API文档中，关于@SuppressWarnings注解有如下描述[API 2013]：
+      作为一种编码风格，程序员应该尽可能地把该注解添加到最靠近其作用域的元素上。
+      如果想忽略某个方法中的警告，就应该把注解添加到该方法上，而不是该方法的类上。
+
+@SuppressWarnings注解可以应用在变量、方法乃至整个类的声明语句上，
+      因此，在使用该注解的时候，一定要注意缩小该注解的作用域，让其只作用在明确需要忽略警告的范围内。
+
+违规代码示例
+在下面的违规代码示例中，@SuppressWarnings注解的作用域是整个类。
+@SuppressWarnings("unchecked")
+class Legacy {
+  Set s = new HashSet();
+  public final void doLogic(int a, char c) {
+  s.add(a);
+  s.add(c); // Type-unsafe operation, ignored
+  }
+}
+这段代码很危险，因为它忽略了该类中所有的未检查警告，这种性质的疏忽可能会导致程序在运行时出现ClassCastException异常。
+合规解决方案
+@SuppressWarnings注解的作用域应限制到最靠近产生警告的代码上，在下面的合规解决方案中，@SuppressWarnings注解被放在了声明Set变量s的代码上。
+class Legacy {
+  @SuppressWarnings("unchecked")
+  Set s = new HashSet();
+  public final void doLogic(int a, char c) {
+  s.add(a); // Produces unchecked warning
+  s.add(c); // Produces unchecked warning
+  }
+}
+
+违规代码示例（ArrayList）
+下面的违规代码示例来自java.util.ArrayList的老版本实现。
+SuppressWarnings("unchecked")
+public <T> T[] toArray(T[] a) {
+  if (a.length < size) {
+  // Produces unchecked warning
+  return (T[]) Arrays.copyOf(elements, size, a.getClass());
+  }
+  // ...
+}
+这段代码在编译时，会抛出一个未检查的类型转换警告：
+// Unchecked cast warning
+ArrayList.java:305: warning: [unchecked] unchecked cast found :
+    Object[], required: T[]  --向下转型
+return (T[]) Arrays.copyOf(elements, size, a.getClass());
+  
+  因为return语句不是一个“ 声明语句 ”，所以不能在这条语句上添加@Suppress Warnings忽略这个警告[JLS 2013]。
+  结果，程序员就忽略了整个方法的警告，这会导致以后在该方法上添加的类型不安全的操作，所产生的类型安全警告被直接忽略的问题[Bloch 2008]。
+合规解决方案（ArrayList）
+当无法在合适的作用域使用@SuppressWarnnings注解时，就像上一个违规代码示例一样，可以声明一个新的变量来存储返回值，并在这个变量声明中使用@SuppressWarnnings注解。
+// ...
+@SuppressWarnings("unchecked")
+  T[] result = (T[]) Arrays.copyOf(elements, size, a.getClass());
+  return result;
+// ...
+
+适用性
+    未能减小@SuppressWarnnings注解的作用域，导致运行时异常，破坏了程序的类型安全机制。
+    尽管本指南的要求并不能完全通过静态分来加强，但静态分析在一些特殊情况下仍然非常有用。
+    
+参考文献
+[API 2013]　　　Annotation Type SuppressWarnings
+[Bloch 2008]　　 Item 24, “Eliminate Unchecked Warnings”
+[Long 2012]　　 OBJ03-J.Do not mix generic with nongeneric raw types in new code
+
