@@ -76,12 +76,34 @@
             5.开发实现(整洁/高效/高性能/扩展) - 优化   
             
             -----代码编写宗旨：	
-								 实现										 - 安全 									- 简洁/高效/高性能/高可用
+			 实现					 - 安全 								- 简洁/高效/高性能/高可用
                        jdk/apache/spring/mybatis
-           ..流程图....effective java       		         《编写安全代码》						clean code / 线程
+           ..流程图....effective java       		         《编写安全代码》						clean code / 线程  / 数据结构算法 / 部署 
                           core java
                           设计模式
                           151个高效建议
+			  
+
+																	执行器：线程池 Excutor
+
+																	协作和同步   
+																	协作(生产消费)：condition wait notify lock.newCondition() 
+																															返回一个新Condition绑定到该实例Lock实例。
+
+																	同步:
+																	1.小粒度  成员变量修饰符  AtomicInteger.. 并发容器vector -->concurrentHashamap /阻塞队列 linkedBlockQueue 协作  threadLocal  volatile  reetrentLock 读写锁  死锁  超时   
+																	2.synchronized 块
+																	3.方法
+																	4.类
+
+																	0.信号量 / 栅栏 / 门闩 / 队列
+
+
+																	返回值
+																	 Callable Future  FutureTask
+
+
+																	并发中设计模式
                           
             6.单元测试 测试联调  -- 优化   
             7.送测 /bug修复 / 总结   
