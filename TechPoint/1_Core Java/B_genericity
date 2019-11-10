@@ -22,7 +22,8 @@
          2.数组为什么不支持泛型  <String,String>也是泛型哈 不一定是T E ....
 	   https://www.zhihu.com/question/20928981
 
-
+         3.java 泛型详解-绝对是对泛型方法讲解最详细的，没有之一
+	   https://blog.csdn.net/s10461/article/details/53941091
 
 ---20190709 seconed-----
 		泛型（T E K/V）
