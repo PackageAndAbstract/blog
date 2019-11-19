@@ -275,76 +275,20 @@ public class CollectionTest {
                         /**比较 一维数组没有区别，多维由*/
                         Arrays.equals(new String[]{"1"},new String[]{"1"})+" "+
                         Arrays.deepEquals(new String[]{"1"},new String[]{"1"})+" "+  //deepEquals用于判定两个指定数组彼此是否深层相等，此方法适用于任意深度的嵌套数
-                                                                                     //https://blog.csdn.net/gaohuanjie/article/details/39157241
-
-    Array  
-      1.                   = {“a”,“b”} 
-                           =new String[3] 必须指定   new String[3][] 二维数组
-        String[] strArray  = new String[]{"ab","bc","aa","1","3","2"};  用的最多，是在已知所有的‘ 场景 ’可以使用
-        Arrays.sort(strArray);
-        System.out.println(Arrays.toString(strArray));  //对象toString
-        
-        //Arrays.fill(strArray,"abc");
-
-
-       2.asList()-去使用list的api    vs toArray(new Stirng[list.size()])
+ 
+Arrays:
+       asList  binarySearch copyOf deepEquals equals fill sort toString
        
-       3.    
-       /**排序*/
-                        //Arrays.sort(strArray)+" "+      返回void 所以不可以拼接进来
-                        //Arrays.sort("strArray",1,3);
-//                      //Arrays.sort("strArray", new Comparator<T>() {   
-        //引入比较器  - 1.不指定时则默认比较器  ascii--升序--2.大于向后  3.o1代表新值，o2代表已经在容器中的值**     
-//                            @Override
-//                            public int compare(T o1, T o2) {
-//                                return 0;
-//                            }
-//                        });
-                        //上面组合 比较器和下标都用上.....
-                        //Arrays.parallelSort();                       //jdk8 超过范围使用多线程再使用归并
+       parallelPrefix(double[] array, DoubleBinaryOperator op) 并行计算
+       setAll(double[] array, IntToDoubleFunction generator) 
+       spliterator(double[] array) 
+       Stream
        
-       
-        /** 搜索 */
-                        Arrays.binarySearch(strArray,"ab")+" "+   //未使用sort时为-7  --> sysout外面使用sort再对比  --> 4
-                        Arrays.binarySearch(strArray,1,2,"ab")+" "+ //注意index是数字而不是string  -3没找到
-                       
-                     ***Arrays.binarySearch(strArray, 1, 2, "abc", new Comparator<String>() {
-                            @Override
-                            public int compare(String o1, String o2) {
-                                return 0;
-                            }
-                        })+" "+
-        //这种符合结构写法 ，其实是对‘ 每一个api都熟悉的前提下，紧凑写法 ’。这里需要传入compare实现类，内部类直接new 接口 写对应方法实现{}
-       
-   
-                      
-        /**复制*/      都是从‘  0 ’ 开始截取的 后面也有api是截取开 ，结束的 copyOfRange(int[] original, int from, int to) 
-                        Arrays.toString(Arrays.copyOf(strArray,2))+" "+  //不足则补null(不同类型填充的值不同) 少则截取
-                        //Arrays.copyOf(strArray,10,Integer[].class)+" "+  //1.int[] 不继承于OBJECT[]  2.无法转化 ，因为其中由字母
-                        Arrays.toString(Arrays.copyOf(strArray,10,String[].class))+" "+*** 中和了转换
-                        Arrays.copyOfRange(strArray,1,3,String[].class)+" \n"+
 
-        /**填充 用于创建了数组，填充相同的值进去*/
-                        //Arrays.fill(strArray,"abc")+" "+   将指定的char值分配给指定的char数组的指定范围的每个元素。
-        /***equals**/  Arrays.equals(a , b)  可以进行比较
-                    deepEquals(Object[] a1, Object[] a2) 
-                    deepEquals(Object[] a1, Object[] a2) 
-                    deepToString(Object[] a) 
 
-       /***jdk8***特有/
-                        //Arrays.parallelPrefix();                          //jdk8 用于并行处理
 
-                        //Arrays.stream()                                   //jdk8 配合lamdar表达式 https://blog.csdn.net/a13662080711/article/details/84928181
 
-                        //Arrays.spliterator()                              //jdk8 并行迭代器
-
-                        //Arrays.setAll();                                  //遍历元素的索引
-
-                        //Arrays.parallelPrefix();                          //使用元素的索引做些什么
-
-                        //Ar    rays.parallelSort();
-
-                /**Collections*/
+/**Collections*/
                        Collections.EMPTY_LIST +" "+         //[]
                        Collections.EMPTY_SET+" "+           //[]
                        Collections.EMPTY_MAP+" "+           //{}
@@ -376,11 +320,14 @@ public class CollectionTest {
                        //Collections.fill();
 
                        /**遍历计数*/
-                       //Collections.frequency()   // 返回指定 collection 中等于指定对象的元素数。 省的自己去遍历 再来个计数器
+                       //Collections.frequency(Collection<?> c, Object o)   // 返回指定 collection 中等于指定对象的元素数。 省的自己去遍历 再来个计数器
 
                        /**下标*/
-                       //Collections.indexOfSubList()
+                       //Collections.indexOfSubList()  返回指定源列表中指定目标列表的第一次出现的起始位置，如果没有此类事件，则返回-1。
                        //            lastIndexOfSubList()
+                       
+                       /**集合和enum**/
+                       static <T> ArrayList<T> list(Enumeration<T> e)    返回一个数组列表，其中包含由枚举返回的顺序由指定的枚举返回的元素。 
 
                        /**最大最小值*/
                        //Collections.max(Collection<? extends T> coll, Comparator<? super T> comp); 根据指定比较器产生的顺序，返回给定 collection 的最大元素。
