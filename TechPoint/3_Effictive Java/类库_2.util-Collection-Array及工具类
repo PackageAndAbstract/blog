@@ -211,6 +211,18 @@ public class CollectionTest {
                         //遵顼：大于0 向后添加    小于0 向前添加   所以这种规则在重写compareTo时，o1-o2
 
                         setTree + " " +
+                        
+
+-----增---删----改----查(定位)----判断------
+     1     2    1     6
+            
+            增：put / putAll putIfAbsent(K key, V value) 
+            删：remove(Object key) /clear
+            改：replace(K key, V oldValue, V newValue) 
+            查：entrySet() /keySet() /values() /containsKey(Object key) /containsValue(Object value) /getOrDefault(Object key, V defaultValue) 
+            clone
+
+
 
 
                         /**map*/
@@ -246,6 +258,12 @@ public class CollectionTest {
                         tm.ceilingEntry()+" "+
                         tm.descendingKeySet()+" "+
                         */
+                        
+                        
+                        
+                        
+                        
+                        
 
                         /** Arrays - Collections */
                         /**展示*/
