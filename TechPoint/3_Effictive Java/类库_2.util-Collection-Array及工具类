@@ -11,13 +11,15 @@ import java.security.cert.CollectionCertStoreParameters;
 import java.util.*;
 import java.util.function.BiFunction;
 
-/**知道当前的场景 - 想要得到什么 - 寻找有没有合适的api来判断是否需要自己定义*  通常用到的都已经定义好了API,别老想着遍历判断/
+/**知道当前的场景 - 想要得到什么 - 寻找有没有合适的api来判断是否需要自己定义*  
+            通常用到的都已经定义好了API,别老想着遍历判断。想着特征，反转，算法，时间复杂度.../
 /**在文档中看到的api不是全的，还要注意“继承”而来的方法 ，对于没有必要的多态-需要使用到子类的特殊方法可以在定义时直接定义子类*/
 /**无论是String还是集合 对于下标的定位 ，截取 ，部分操作 都是重要的*/
 /**很多方法是重载的,所以你必须理解参数为 Object 及 T (在返回类型T的场景下)*/
 /**api定义了许多常用的方法，这些自己也是可以定义的，”查看源码对比自己思路 “**/
 /**明确接口返回格式 List<Map<String,Object>> 还是什么  比如 orm hibernate返回 和 sql关系  是个工具但同时反映了‘ 数据组织设计结构 ’*
 /*数据结构相比于list map 。接着就是时间复杂度。算法。ArrayQueue LinkedList stack 场景**/
+/**map 相对于 list是高级的，map.entry可以遍历 包含着list的属性 **/
 
 
 public class CollectionTest {
@@ -31,7 +33,7 @@ public class CollectionTest {
         public int compare(String o1, String o2) {
 //            return o1.hashCode() - o2.hashCode();
 //            return o2.hashCode() - o1.hashCode();
-//            return o2.compareTo(o1);  //[bbc, ac, abc, 11a]
+//            return o2.compareTo(o1);  //[bbc, ac, abc, 11a]   ----实现了该compare接口的对象那个可以直接传入，自动按找compareTo排序
             return o1.compareTo(o2);    //[11a, abc, ac, bbc]
             /**
              * 铁律：
@@ -84,6 +86,9 @@ public class CollectionTest {
         tm.put("2", "2");
         tm.put("3", "3");
 
+--------------增-----删----改----查（定位）----比较-------
+               2     2      2       2           2
+
 
 
                         /**ArrysList*/
@@ -95,11 +100,14 @@ public class CollectionTest {
 
 
                         /**add*/
-                        arrayList.add("c") + "  " +
+                        arrayList.add("c") + "  " +  
                         //arrayList.add(1,"abc")+" "+ [a, abc, b, c] //因为该方法返回void,所以后面不可以拼接东西  list重写了toString() 插入而不是替换
                         arrayList.set(1, "ddd") + " " +
+                        
                           注：可以定点插入add(int index, E element) 
-                              可以addAll(index , Collection)将一个集合添加到另一个集合中    
+                              可以addAll(index , Collection)将一个集合添加到另一个集合中   
+                              
+                              set 则是替换
 
 
                         /** delete */
@@ -129,9 +137,6 @@ public class CollectionTest {
 
 
                         /** 判断 */
-                        get(index)
-                        
-                        indexof()
                         
                         arrayList.contains("c") + "  " +   //同样可以判断一个集合是否包含另一个集合元素***
 
