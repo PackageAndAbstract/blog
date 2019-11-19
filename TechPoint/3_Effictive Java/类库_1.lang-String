@@ -1,7 +1,7 @@
 
         String str = new String("Abc@12@3  ");
 
-        // 增 - 删 - 改 - 查  -->更高级api(例如charAt ...)   
+        // 增 - 删 - 改 - 查(定位) - 比较 更高级api(例如charAt ...)    -->组合
            api中可以截取串的 ‘ 某个段 ’进行判断  int offset , int length
 
         System.out.println(
