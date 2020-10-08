@@ -1,6 +1,0 @@
-
-2006     1.0 - 2.0     新增了xml命名空间、AspectJ及spring MVC功能 
-         2.5           引入注解驱动配置支持，进一步完善了SpringMVC功能
-2009     2.5 - 3.0     新增SpEl 、OXM 、REST 、验证和格式化等功能，全面支持Java5.0
-2013     3.0 - 4.0     新增Groovy Bean配置 、 Html 、WebSocket 支持功能 ，最低要求Java6.0
-         4.2           新增泛型依赖注入、Lamda表达式支持、Groovy DSL定义的Bean 、核心容器增强 、 webk框架增强、REST风格、websocket模块实现
