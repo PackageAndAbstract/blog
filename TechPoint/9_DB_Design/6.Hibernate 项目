@@ -1,8 +1,0 @@
-1.spring对Hibernate支持，hibernateTemplet / session callBack 
-      https://www.cnblogs.com/xrab/p/5586775.html
-      https://blog.csdn.net/zjkc050818/article/details/72529071
-      
-2.bbsp对hibernate方法封装 ， 分页查询封装(condition / searchBean / ..)
-      Object / T / 反射 
-      
-3.Dao封装
