@@ -1,6 +1,0 @@
-1.映射类可以大于等于数据库字段
-        增加一个映射类UsersVoGoods.java，添加需要查询的信息相关的所有属性，本例中添加userName, telephone, address, goodsName。
-        并为这几个属性添加setter和getter方法，增加构造函数，参数与这四个属性对应，那么可以用hql查询方式：
-        String hql = "select new com.test.UsersVoGoods(u.userName, u.teltphone, u.address, g.goodsName) from Users u, Goods g where u.userId=g.userId";
-        query.list()的返回值List中的值都是UsersVoGoods型的，直接使用get()就能获取。
-        其实不增加映射类也是可以的，只需要在Users.java实体类里增加一个构造函数，函数参数还是需要的所有字段，并为这些参数中Users实体原来没有的字段添加属性和getter() setter()即可。
