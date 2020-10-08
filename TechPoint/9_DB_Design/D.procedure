@@ -1,8 +1,0 @@
-
-
-技术文档：procedure   https://www.cnblogs.com/zhao123/p/3911537.html   
-         cursor      https://blog.csdn.net/wangxy799/article/details/51211397  
-         
-         java调用存储过程："{call xxx()}"完成
-         
-         问题：数据库自己的定时任务  trigger 完成数据库操作
