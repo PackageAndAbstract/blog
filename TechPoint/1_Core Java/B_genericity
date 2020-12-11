@@ -1,3 +1,17 @@
+使用场景：
+	  1.操作之意:抽象后，有< T extends Collections>上限/下限 ， 泛型类可以对这类公共的接口比如拿collections进行统一操作，并返回
+	  2.见名之意:不对具体操作，只是让高抽象比如模板方法中有见名之意
+	  	    public abstract class rrr<QUERY, CONDITION, RESPONSE, RESULT> { 
+		    	private ppp1<QUERY, CONDITION> pppppp;
+			   
+			    private List<ppp2<CONDITION, RESPONSE>> dddd;
+			    
+			    具体模板逻辑对这些ppp1/ppp2类型(接口)进行调用处理，这里不对泛型处理，返回代表的具体类型，每 ‘ 套 ’ 模板中 ‘ 流 ’ 式传递。 并各自处理
+			    
+		    其实每个子类会通过构造将对应的属性赋值给抽象类，而对应的实现类会具体操作这些。
+
+
+
 ---20190709  third-----
 	  1.泛型创建 
 	 		 public class Test<T> {
