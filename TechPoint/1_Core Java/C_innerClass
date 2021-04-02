@@ -1,5 +1,50 @@
 当当前类的 ‘ 域 ’级别控制无法通过属性时，而该‘ 域 ’又是该类独立拥有的，此时引入内部类 - 4种  ** 粒度 **
 
+
+使用场景：https://www.cnblogs.com/chenssy/p/3388487.html
+---------------------------------
+
+public class OptionalTest {
+
+    public static void main(String[] args) {
+        //匿名内部类 - lambda
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName()+"== 匿名内部类");
+            }
+        }).start();
+
+        new Thread(() -> System.out.println(Thread.currentThread().getName()+"== 匿名内部类")).start();
+
+
+        //静态内部类 - 定义数据结构 - 复杂点可以使用外围类静态属性进行操作 - 创建简单
+        Inner inner = new Inner();
+
+        //成员内部类 - 需要创建外围类才能创建成员内部类
+        ChenyuanInner chenyuanInner = new OptionalTest().new ChenyuanInner();
+        System.out.println(chenyuanInner.cyname);
+
+        //局部内部类
+
+    }
+
+    static class Inner{
+        private String name ;
+    }
+
+    class ChenyuanInner{
+        private String cyname = "成员内部类" ;
+    }
+
+}
+
+
+----------------------------------
+
+
+
+
   1.基本语法及访问关系
     
     1.成员内部类 ***
